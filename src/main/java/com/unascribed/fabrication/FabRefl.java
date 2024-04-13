@@ -263,8 +263,6 @@ public class FabRefl {
 			throw rethrow(t);
 		}
 	}
-
-	/////
 	@FabReflField
 	private static final String e_setSprinting_field = "Lnet/minecraft/entity/Entity;setSprinting(Z)V";
 	private static final MethodHandle e_setSprinting = unreflectMethod("Entity", () -> Entity.class, e_setSprinting_field, void.class, boolean.class)
@@ -287,7 +285,6 @@ public class FabRefl {
 			throw rethrow(t);
 		}
 	}
-	/////
 	@FabReflField
 	private static final String gc_execute_field = "Lnet/minecraft/server/command/GiveCommand;execute(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/argument/ItemStackArgument;Ljava/util/Collection;I)I";
 	private static final MethodHandle gc_execute = unreflectMethod("GiveCommand", () -> GiveCommand.class, gc_execute_field,
