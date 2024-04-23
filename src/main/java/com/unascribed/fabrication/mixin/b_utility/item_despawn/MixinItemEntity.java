@@ -69,9 +69,10 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 			itemAge--;
 		}
 		fabrication$trueAge++;
-		if (getPos().y < world.getBottomY()-32) {
+		int worldBottom = world.getBottomY();
+		if (getPos().y < worldBottom-32) {
 			if (fabrication$invincible) {
-				teleport(getPos().x, 1, getPos().z);
+				teleport(getPos().x, worldBottom+1, getPos().z);
 				setVelocity(0,0,0);
 				if (!world.isClient) {
 					((ServerWorld)world).getChunkManager().sendToNearbyPlayers(this, new EntityPositionS2CPacket(this));
