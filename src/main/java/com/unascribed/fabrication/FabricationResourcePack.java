@@ -129,6 +129,7 @@ public class FabricationResourcePack implements ResourcePack {
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
+		} catch (Exception ignore) {
 		}
 	}
 
