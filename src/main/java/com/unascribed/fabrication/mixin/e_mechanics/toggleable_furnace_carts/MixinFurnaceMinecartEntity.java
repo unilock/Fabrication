@@ -50,7 +50,7 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 			fabrication$pauseFuel = 0;
 			Direction dir = this.getMovementDirection();
 			pushX = dir.getOffsetX();
-			pushZ = dir.getOffsetY();
+			pushZ = dir.getOffsetZ();
 		}
 	}
 
