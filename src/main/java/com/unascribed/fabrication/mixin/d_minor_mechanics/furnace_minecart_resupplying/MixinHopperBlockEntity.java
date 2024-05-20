@@ -3,6 +3,8 @@ package com.unascribed.fabrication.mixin.d_minor_mechanics.furnace_minecart_resu
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.ResupplyingFurnaceCart;
 import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.FailOn;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import com.unascribed.fabrication.support.injection.FabModifyArg;
 import com.unascribed.fabrication.support.injection.ModifyReturn;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -15,6 +17,8 @@ import java.util.function.Predicate;
 
 @Mixin(HopperBlockEntity.class)
 @EligibleIf(configAvailable="*.furnace_minecart_resupplying")
+//For the sake of compat this should probably be redone at some point, i'm not too inclined to put time into it since furnace should probably just implement inventory
+@FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinHopperBlockEntity {
 
 	@FabModifyArg(method="getInventoryAt(Lnet/minecraft/world/World;DDD)Lnet/minecraft/inventory/Inventory;", at=@At(value="INVOKE", target="Lnet/minecraft/world/World;getOtherEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;"))
