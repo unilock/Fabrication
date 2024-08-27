@@ -5,6 +5,7 @@ import java.util.List;
 import com.unascribed.fabrication.support.injection.FabInject;
 import net.minecraft.block.BlockState;
 import com.unascribed.fabrication.FabConf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,9 +47,15 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 	@FabInject(at=@At("TAIL"), method="tick()V")
 	public void tick(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.repelling_void")) return;
-		if (isOnGround()) {
-			fabrication$lastGroundPos = getPos();
-			fabrication$lastLandingPos = getSteppingPos();
+		Entity entity = this;
+		Entity vehicle = this.getVehicle();
+		while (vehicle != null) {
+			entity = vehicle;
+			vehicle = vehicle.getVehicle();
+		}
+		if (entity.isOnGround()) {
+			fabrication$lastGroundPos = entity.getPos();
+			fabrication$lastLandingPos = entity.getSteppingPos();
 			fabrication$voidFallTrail.clear();
 		} else if (fabrication$voidFallTrail.size() < 20) {
 			fabrication$voidFallTrail.add(getPos());
