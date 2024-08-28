@@ -3,10 +3,11 @@ package com.unascribed.fabrication.mixin.a_fixes.fix_dragon_egg_trails;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.injection.FabInject;
+import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -22,10 +23,11 @@ import java.util.Random;
 public class MixinClientPlayNetworkHandler {
 	private static final Random fabrication$RANDOM = new Random();
 
-	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/s2c/play/CustomPayloadS2CPacket;)V", cancellable=true)
-	public void onCustomPayload(CustomPayloadS2CPacket packet, CallbackInfo ci) {
-		if (packet.getChannel().getNamespace().equals("fabrication") && packet.getChannel().getPath().equals("dragon_egg_trail")) {
-			PacketByteBuf buf = packet.getData();
+	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
+	public void onCustomPayload(CustomPayload packet, CallbackInfo ci) {
+		if (!(packet instanceof ByteBufCustomPayload)) return;
+		if (packet.id().getNamespace().equals("fabrication") && packet.id().getPath().equals("dragon_egg_trail")) {
+			PacketByteBuf buf = ((ByteBufCustomPayload) packet).buf;
 			BlockPos pos = buf.readBlockPos();
 			BlockPos newPos = buf.readBlockPos();
 			World world = MinecraftClient.getInstance().world;

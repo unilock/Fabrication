@@ -5,12 +5,13 @@ import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.support.injection.HijackReturn;
+import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DragonEggBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
+import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +31,7 @@ public class MixinDragonEggBlock {
 					PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 					data.writeBlockPos(pos);
 					data.writeBlockPos(newPos);
-					CustomPayloadS2CPacket pkt = new CustomPayloadS2CPacket(new Identifier("fabrication", "dragon_egg_trail"), data);
+					CustomPayloadS2CPacket pkt = new CustomPayloadS2CPacket(new ByteBufCustomPayload(new Identifier("fabrication", "dragon_egg_trail"), data));
 					((ServerPlayerEntity)ent).networkHandler.sendPacket(pkt);
 				}
 			}
