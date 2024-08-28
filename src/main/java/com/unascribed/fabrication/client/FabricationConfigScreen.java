@@ -898,7 +898,9 @@ public class FabricationConfigScreen extends Screen {
 		boolean click = false;
 		boolean hover = mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h;
 		drawContext.fill(x, y, x+w, y+h, FabConf.isEnabled("general.dark_mode") ? 0x44FFFFFF : 0x55000000);
+		int textColor = -1;
 		if (hover) {
+			if (FabConf.isEnabled("*.yellow_button_hover")) textColor = 0xFFFFFFA0;
 			drawContext.fill(x, y, x+w, y+1, -1);
 			drawContext.fill(x, y, x+1, y+h, -1);
 			drawContext.fill(x, y+h-1, x+w, y+h, -1);
@@ -909,14 +911,16 @@ public class FabricationConfigScreen extends Screen {
 			}
 		}
 		int textWidth = client.textRenderer.getWidth(text);
-		drawContext.drawText(client.textRenderer, text, x+((w-textWidth)/2), y+((h-8)/2), -1, false);
+		drawContext.drawText(client.textRenderer, text, x+((w-textWidth)/2), y+((h-8)/2), textColor, false);
 		return click;
 	}
 
 	public static boolean drawToggleButton(DrawContext drawContext, int x, int y, int w, int h, String text, float mouseX, float mouseY, boolean toggle, boolean didClick, MinecraftClient client) {
 		boolean click = false;
 		boolean hover = mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h;
+		int textColor = -1;
 		if (hover ^ toggle) {
+			if (FabConf.isEnabled("*.yellow_button_hover")) textColor = 0xFFFFFFA0;
 			drawContext.fill(x, y, x + w, y + 1, -1);
 			drawContext.fill(x, y, x + 1, y + h, -1);
 			drawContext.fill(x, y + h - 1, x + w, y + h, -1);
@@ -927,7 +931,7 @@ public class FabricationConfigScreen extends Screen {
 			click = true;
 		}
 		int textWidth = client.textRenderer.getWidth(text);
-		drawContext.drawText(client.textRenderer, text, (int) (x+((w-textWidth)/2f)), (int) (y+((h-8)/2f)), -1, false);
+		drawContext.drawText(client.textRenderer, text, (int) (x+((w-textWidth)/2f)), (int) (y+((h-8)/2f)), textColor, false);
 		return click;
 	}
 	private int drawCategoryValue(DrawContext drawContext, String key, String title, String desc, int y, float mouseX, float mouseY) {
