@@ -3,6 +3,8 @@ package com.unascribed.fabrication.mixin.a_fixes.fix_dragon_egg_trails;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
 import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.FailOn;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.support.injection.HijackReturn;
 import io.netty.buffer.Unpooled;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(DragonEggBlock.class)
 @EligibleIf(configAvailable="*.fix_dragon_egg_trails")
+@FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinDragonEggBlock {
 
 	@Hijack(method="teleport(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", target="Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z")
