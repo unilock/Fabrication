@@ -15,9 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Random;
+
 @Mixin(ClientPlayNetworkHandler.class)
 @EligibleIf(configAvailable="*.fix_dragon_egg_trails", envMatches=Env.CLIENT)
 public class MixinClientPlayNetworkHandler {
+	private static final Random fabrication$RANDOM = new Random();
 
 	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/s2c/play/CustomPayloadS2CPacket;)V", cancellable=true)
 	public void onCustomPayload(CustomPayloadS2CPacket packet, CallbackInfo ci) {
@@ -26,15 +29,16 @@ public class MixinClientPlayNetworkHandler {
 			BlockPos pos = buf.readBlockPos();
 			BlockPos newPos = buf.readBlockPos();
 			World world = MinecraftClient.getInstance().world;
+			Random random = fabrication$RANDOM;
 			if (world != null && world.isClient) {
 				for(int j = 0; j < 128; ++j) {
-					double d = world.random.nextDouble();
-					float f = (world.random.nextFloat() - 0.5F) * 0.2F;
-					float g = (world.random.nextFloat() - 0.5F) * 0.2F;
-					float h = (world.random.nextFloat() - 0.5F) * 0.2F;
-					double e = MathHelper.lerp(d, newPos.getX(), pos.getX()) + (world.random.nextDouble() - 0.5) + 0.5;
-					double k = MathHelper.lerp(d, newPos.getY(), pos.getY()) + world.random.nextDouble() - 0.5;
-					double l = MathHelper.lerp(d, newPos.getZ(), pos.getZ()) + (world.random.nextDouble() - 0.5) + 0.5;
+					double d = random.nextDouble();
+					float f = (random.nextFloat() - 0.5F) * 0.2F;
+					float g = (random.nextFloat() - 0.5F) * 0.2F;
+					float h = (random.nextFloat() - 0.5F) * 0.2F;
+					double e = MathHelper.lerp(d, newPos.getX(), pos.getX()) + (random.nextDouble() - 0.5) + 0.5;
+					double k = MathHelper.lerp(d, newPos.getY(), pos.getY()) + random.nextDouble() - 0.5;
+					double l = MathHelper.lerp(d, newPos.getZ(), pos.getZ()) + (random.nextDouble() - 0.5) + 0.5;
 					world.addParticle(ParticleTypes.PORTAL, e, k, l, f, g, h);
 				}
 			}
