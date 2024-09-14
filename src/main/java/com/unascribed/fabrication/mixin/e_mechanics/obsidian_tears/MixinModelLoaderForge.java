@@ -23,7 +23,7 @@ public class MixinModelLoaderForge {
 
 	@FabInject(at=@At(value="CONSTANT", args="stringValue=special"), method="processLoading", remap=false)
 	public void construct(CallbackInfo ci) {
-		addModel(new ModelIdentifier(new Identifier("fabrication", "obsidian_tears"), "inventory"));
+		addModel(new ModelIdentifier(Identifier.of("fabrication", "obsidian_tears"), "inventory"));
 	}
 
 }

@@ -18,7 +18,7 @@ import net.minecraft.util.DyeColor;
 @EligibleIf(configAvailable="*.legible_signs", envMatches=Env.CLIENT)
 public class MixinSignBlockEntityRenderer {
 
-	@FabInject(at=@At("HEAD"), method= "getColor(Lnet/minecraft/block/entity/SignText;)I", cancellable = true)
+	@FabInject(at=@At("HEAD"), method="getColor(Lnet/minecraft/block/entity/SignText;)I", cancellable = true)
 	private static void modifySignTextColor(SignText sign, CallbackInfoReturnable<Integer> cir) {
 		if (FabConf.isEnabled("*.legible_signs") && !sign.isGlowing()){
 			DyeColor dc = sign.getColor();

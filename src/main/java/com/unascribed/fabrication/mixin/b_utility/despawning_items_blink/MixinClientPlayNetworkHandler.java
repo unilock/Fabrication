@@ -35,7 +35,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 
 	@FabInject(at=@At("TAIL"), method="onGameJoin(Lnet/minecraft/network/packet/s2c/play/GameJoinS2CPacket;)V")
 	public void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
-		connection.send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(new Identifier("fabrication", "item_despawn"), new PacketByteBuf(Unpooled.buffer()))));
+		connection.send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(Identifier.of("fabrication", "item_despawn"), new PacketByteBuf(Unpooled.buffer()))));
 	}
 
 	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)

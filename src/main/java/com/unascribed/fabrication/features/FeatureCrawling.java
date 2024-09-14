@@ -51,7 +51,7 @@ public class FeatureCrawling implements Feature {
 		FeatureCrawling.forced = forced;
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		data.writeBoolean(state);
-		MinecraftClient.getInstance().getNetworkHandler().getConnection().send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(new Identifier("fabrication", "crawling"), data)));
+		MinecraftClient.getInstance().getNetworkHandler().getConnection().send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(Identifier.of("fabrication", "crawling"), data)));
 		((SetCrawling)MinecraftClient.getInstance().player).fabrication$setCrawling(state);
 	}
 

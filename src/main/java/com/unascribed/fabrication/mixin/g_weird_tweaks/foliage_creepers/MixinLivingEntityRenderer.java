@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @EligibleIf(configAvailable="*.foliage_creepers", envMatches=Env.CLIENT)
 public abstract class MixinLivingEntityRenderer extends EntityRenderer<LivingEntity> {
 
-	private static final Identifier fabrication$creeperTexture = new Identifier("textures/entity/creeper/creeper.png");
+	private static final Identifier fabrication$creeperTexture = Identifier.of("textures/entity/creeper/creeper.png");
 	int fabrication$colorFoliageCreeper = -1;
 
 	protected MixinLivingEntityRenderer(EntityRendererFactory.Context ctx) {
@@ -61,7 +61,7 @@ public abstract class MixinLivingEntityRenderer extends EntityRenderer<LivingEnt
 	@FabModifyVariable(at=@At("STORE"), method="getRenderLayer(Lnet/minecraft/entity/LivingEntity;ZZZ)Lnet/minecraft/client/render/RenderLayer;")
 	public Identifier transformCreeperIdentifier(Identifier id){
 		if (FabConf.isEnabled("*.foliage_creepers") && fabrication$creeperTexture.equals(id)) {
-			return new Identifier("fabrication_grayscale", id.getPath());
+			return Identifier.of("fabrication_grayscale", id.getPath());
 		}
 		return id;
 	}

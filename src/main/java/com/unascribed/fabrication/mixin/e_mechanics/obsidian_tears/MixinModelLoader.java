@@ -25,7 +25,7 @@ public class MixinModelLoader {
 
 	@FabInject(at=@At(value="CONSTANT", args="stringValue=special"), method="<init>", require=0)
 	public void construct(CallbackInfo ci) {
-		addModel(new ModelIdentifier(new Identifier("fabrication", "obsidian_tears"), "inventory"));
+		addModel(new ModelIdentifier(Identifier.of("fabrication", "obsidian_tears"), "inventory"));
 	}
 
 }

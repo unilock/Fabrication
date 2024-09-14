@@ -23,6 +23,7 @@ import net.minecraft.entity.vehicle.FurnaceMinecartEntity;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.command.GameModeCommand;
 import net.minecraft.server.network.PlayerAssociatedNetworkHandler;
+import net.minecraft.server.world.ServerChunkLoadingManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.biome.GenerationSettings;
@@ -70,8 +71,6 @@ import net.minecraft.resource.ResourcePackProvider;
 import net.minecraft.server.command.GiveCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ThreadedAnvilChunkStorage;
-import net.minecraft.server.world.ThreadedAnvilChunkStorage.EntityTracker;
 import net.minecraft.util.Identifier;
 
 public class FabRefl {
@@ -142,22 +141,22 @@ public class FabRefl {
 	}
 
 	@FabReflField
-	private static final String tacs_entityTrackers_field = "net/minecraft/server/world/ThreadedAnvilChunkStorage;entityTrackers";
-	private static final MethodHandle tacs_entityTrackers = unreflectGetter("ThreadedAnvilChunkStorage", () -> ThreadedAnvilChunkStorage.class, tacs_entityTrackers_field)
+	private static final String tacs_entityTrackers_field = "net/minecraft/server/world/ServerChunkLoadingManager;entityTrackers";
+	private static final MethodHandle tacs_entityTrackers = unreflectGetter("ServerChunkLoadingManager", () -> ServerChunkLoadingManager.class, tacs_entityTrackers_field)
 			.requiredBy("*.sync_attacker_yaw", "*.despawning_items_blink").get();
-	public static Int2ObjectMap<EntityTracker> getEntityTrackers(ThreadedAnvilChunkStorage subject) {
+	public static Int2ObjectMap<ServerChunkLoadingManager.EntityTracker> getEntityTrackers(ServerChunkLoadingManager subject) {
 		try {
-			return (Int2ObjectMap<EntityTracker>)checkHandle(tacs_entityTrackers).invokeExact(subject);
+			return (Int2ObjectMap<ServerChunkLoadingManager.EntityTracker>)checkHandle(tacs_entityTrackers).invokeExact(subject);
 		} catch (Throwable t) {
 			throw rethrow(t);
 		}
 	}
 
 	@FabReflField
-	private static final String et_playersTracking_field = "net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker;listeners";
-	private static final MethodHandle et_playersTracking = unreflectGetter("EntityTracker", () -> EntityTracker.class, et_playersTracking_field)
+	private static final String et_playersTracking_field = "net/minecraft/server/world/ServerChunkLoadingManager$EntityTracker;listeners";
+	private static final MethodHandle et_playersTracking = unreflectGetter("ServerChunkLoadingManager$EntityTracker", () -> ServerChunkLoadingManager.EntityTracker.class, et_playersTracking_field)
 			.requiredBy("*.sync_attacker_yaw", "*.despawning_items_blink").get();
-	public static Set<PlayerAssociatedNetworkHandler> getPlayersTracking(EntityTracker subject) {
+	public static Set<PlayerAssociatedNetworkHandler> getPlayersTracking(ServerChunkLoadingManager.EntityTracker subject) {
 		try {
 			return (Set<PlayerAssociatedNetworkHandler>)checkHandle(et_playersTracking).invokeExact(subject);
 		} catch (Throwable t) {

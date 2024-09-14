@@ -167,7 +167,7 @@ public class BlockLogoRenderer {
 						RenderSystem.setShaderColor(1, 1, 1, 1);
 						if (state == null) {
 							bb.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_NORMAL);
-							Sprite missing = mc.getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(new Identifier("missingno", "missingno"));
+							Sprite missing = mc.getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(Identifier.of("missingno", "missingno"));
 
 							float minU = missing.getMinU();
 							float minV = missing.getMinV();

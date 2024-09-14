@@ -44,7 +44,7 @@ public class ObsidianTears {
 
 	public static void setSpawnPoint(ServerPlayerEntity p, ItemStack stack) {
 		World world = p.getWorld();
-		RegistryKey<World> key = RegistryKey.of(RegistryKeys.WORLD, new Identifier(stack.getNbt().getString("fabrication:ObsidianTearsOriginDim")));
+		RegistryKey<World> key = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(stack.getNbt().getString("fabrication:ObsidianTearsOriginDim")));
 		BlockPos pos = BlockPos.fromLong(stack.getNbt().getLong("fabrication:ObsidianTearsOrigin"));
 		if (world instanceof ServerWorld) {
 			((ServerWorld)world).spawnParticles(ParticleTypes.FALLING_OBSIDIAN_TEAR, p.getPos().x, p.getPos().y+p.getBoundingBox().getLengthY()/2, p.getPos().z, 16,

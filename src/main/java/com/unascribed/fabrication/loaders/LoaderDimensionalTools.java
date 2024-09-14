@@ -61,7 +61,7 @@ public class LoaderDimensionalTools implements ConfigLoader {
 		public static MohsIdentifier parse(String s) {
 			boolean hard = s.endsWith("!");
 			if (hard) s = s.substring(0, s.length()-1);
-			return new MohsIdentifier(hard, new Identifier(s));
+			return new MohsIdentifier(hard, Identifier.of(s));
 		}
 
 		public MohsIdentifier asSoft() {

@@ -3,10 +3,14 @@ package com.unascribed.fabrication;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
+import com.unascribed.fabrication.interfaces.ByteBufCustomPayloadReceiver;
 import com.unascribed.fabrication.interfaces.GetServerConfig;
 import com.unascribed.fabrication.logic.WoinaDrops;
+import com.unascribed.fabrication.util.ByteBufCustomPayload;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.resource.ReloadableResourceManagerImpl;
@@ -32,6 +36,12 @@ public class FabricationModClient implements ClientModInitializer {
 				});
 			});
 		}
+		PayloadTypeRegistry.playC2S().register(ByteBufCustomPayload.ID, ByteBufCustomPayload.CODEC);
+		ClientPlayNetworking.registerGlobalReceiver(ByteBufCustomPayload.ID, (payload, context) -> {
+			context.client().execute(() -> {
+				((ByteBufCustomPayloadReceiver) context.client().getNetworkHandler()).fabrication$onCustomPayload(payload);
+			});
+		});
 	}
 
 	public static boolean isBannedByServer(String configKey) {

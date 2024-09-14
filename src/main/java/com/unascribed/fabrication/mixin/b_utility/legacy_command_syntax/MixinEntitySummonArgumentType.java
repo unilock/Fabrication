@@ -43,7 +43,7 @@ public class MixinEntitySummonArgumentType {
 			}
 			if (!sr.canRead()) {
 				return new HijackReturn(
-						new Identifier("minecraft", sr.getString().substring(start, sr.getCursor())
+						Identifier.of("minecraft", sr.getString().substring(start, sr.getCursor())
 						.replaceAll("([a-z])([A-Z])", "$1_$2")
 						.toLowerCase(Locale.ROOT)));
 			}

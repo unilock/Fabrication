@@ -44,7 +44,7 @@ public abstract class MixinItemModels {
 
 	@FabInject(at=@At("TAIL"), method="reloadModels()V", require=0)
 	public void reloadModels(CallbackInfo ci) {
-		fabrication$obsidianTearsModel = getModelManager().getModel(new ModelIdentifier(new Identifier("fabrication", "obsidian_tears"), "inventory"));
+		fabrication$obsidianTearsModel = getModelManager().getModel(new ModelIdentifier(Identifier.of("fabrication", "obsidian_tears"), "inventory"));
 	}
 
 }

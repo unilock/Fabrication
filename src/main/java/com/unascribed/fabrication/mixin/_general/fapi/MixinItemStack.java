@@ -5,8 +5,8 @@ import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.FabricationEventsClient;
 import com.unascribed.fabrication.support.SpecialEligibility;
 import com.unascribed.fabrication.support.injection.FabInject;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,8 +18,8 @@ import java.util.List;
 @Mixin(ItemStack.class)
 @EligibleIf(specialConditions=SpecialEligibility.NOT_FORGE, envMatches=Env.CLIENT)
 public class MixinItemStack {
-	@FabInject(method="getTooltip(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/client/item/TooltipContext;)Ljava/util/List;", at=@At("RETURN"))
-	private void getTooltip(PlayerEntity entity, TooltipContext tooltipContext, CallbackInfoReturnable<List<Text>> info) {
+	@FabInject(method="getTooltip(Lnet/minecraft/item/Item$TooltipContext;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/tooltip/TooltipType;)Ljava/util/List;", at=@At("RETURN"))
+	private void getTooltip(Item.TooltipContext tooltipContext, PlayerEntity entity, CallbackInfoReturnable<List<Text>> info) {
 		FabricationEventsClient.tooltip((ItemStack)(Object) this, info.getReturnValue());
 	}
 

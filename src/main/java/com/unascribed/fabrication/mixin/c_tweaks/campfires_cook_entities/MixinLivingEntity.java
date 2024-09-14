@@ -16,7 +16,7 @@ import net.minecraft.entity.damage.DamageSource;
 @EligibleIf(configAvailable="*.campfires_cook_entities")
 public class MixinLivingEntity {
 
-	@FabInject(at=@At("HEAD"), method= "drop(Lnet/minecraft/entity/damage/DamageSource;)V")
+	@FabInject(at=@At("HEAD"), method="drop(Lnet/minecraft/entity/damage/DamageSource;)V")
 	public void dropLoot(DamageSource source, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.campfires_cook_entities") && source.isOf(DamageTypes.IN_FIRE)) ((LivingEntity)(Object)this).setFireTicks(1);
 	}

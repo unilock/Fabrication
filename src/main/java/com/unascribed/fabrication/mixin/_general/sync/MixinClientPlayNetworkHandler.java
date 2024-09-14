@@ -4,12 +4,12 @@ import java.util.Map;
 import java.util.Set;
 
 import com.mojang.brigadier.ParseResults;
+import com.unascribed.fabrication.interfaces.ByteBufCustomPayloadReceiver;
 import com.unascribed.fabrication.support.ConfigValues;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import net.minecraft.client.network.ClientCommonNetworkHandler;
 import net.minecraft.client.network.ClientConnectionState;
 import net.minecraft.command.CommandSource;
-import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,7 +35,7 @@ import net.minecraft.util.Identifier;
 
 @Mixin(ClientPlayNetworkHandler.class)
 @EligibleIf(envMatches=Env.CLIENT)
-public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkHandler implements GetServerConfig {
+public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkHandler implements ByteBufCustomPayloadReceiver, GetServerConfig {
 
 	@Shadow
 	protected abstract ParseResults<CommandSource> parse(String command);
@@ -57,18 +57,16 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		data.writeVarInt(0);
 		data.writeVarInt(1);
-		connection.send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(new Identifier("fabrication", "config"), data)));
+		connection.send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(Identifier.of("fabrication", "config"), data)));
 	}
 
-	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
-	public void onCustomPayload(CustomPayload payload, CallbackInfo ci) {
-		if (!(payload instanceof ByteBufCustomPayload)) return;
-
+	@Override
+	public void fabrication$onCustomPayload(ByteBufCustomPayload payload) {
 		if (payload.id().getNamespace().equals("fabrication")) {
 			if (payload.id().getPath().equals("config") || payload.id().getPath().equals("config2")) {
 				try {
 					fabrication$hasHandshook = true;
-					PacketByteBuf buf = ((ByteBufCustomPayload) payload).buf;
+					PacketByteBuf buf = payload.buf();
 					int reqVer = 0;
 					if (payload.id().getPath().equals("config2")) {
 						reqVer = buf.readVarInt();
@@ -115,21 +113,19 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 							fabrication$serverBanned.add(k);
 						}
 					}
-					ci.cancel();
 				} catch (RuntimeException e) {
 					e.printStackTrace();
 					throw e;
 				}
 			}else if (payload.id().getPath().equals("fscript")){
 				try{
-					PacketByteBuf buf = ((ByteBufCustomPayload) payload).buf;
+					PacketByteBuf buf = payload.buf();
 					int code = buf.readVarInt();
 					if (code == 0){
 						if (client.currentScreen instanceof FScriptScreen){
 							((FScriptScreen) client.currentScreen).fabrication$setScript(buf.readString());
 						}
 					}
-					ci.cancel();
 				}catch (RuntimeException e) {
 					e.printStackTrace();
 					throw e;

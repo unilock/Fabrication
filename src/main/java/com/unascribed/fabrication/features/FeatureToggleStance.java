@@ -83,7 +83,7 @@ public class FeatureToggleStance implements Feature {
 			if (toggleTime < 40) {
 				Window w = mc.getWindow();
 				float a = FabricationConfigScreen.sCurve5(1-(toggleTime/40f));
-				Identifier tex = new Identifier("fabrication", "textures/stance/"+currentStance.name().toLowerCase(Locale.ROOT)+".png");
+				Identifier tex = Identifier.of("fabrication", "textures/stance/"+currentStance.name().toLowerCase(Locale.ROOT)+".png");
 				RenderSystem.defaultBlendFunc();
 				//GlStateManager.disableAlphaTest();
 				RenderSystem.setShaderTexture(0, tex);

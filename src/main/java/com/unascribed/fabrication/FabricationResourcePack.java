@@ -102,7 +102,7 @@ public class FabricationResourcePack implements ResourcePack {
 					String name = en.nextElement().getName();
 					int i = name.indexOf(dirPathStr);
 					if (i != -1) {
-						Identifier id = new Identifier("fabrication", name.substring(i+prePath.length()));
+						Identifier id = Identifier.of("fabrication", name.substring(i+prePath.length()));
 						consumer.accept(id, open(type, id));
 					}
 				}
@@ -120,7 +120,7 @@ public class FabricationResourcePack implements ResourcePack {
 							String name = file.getPath();
 							int ix = name.indexOf(dirPathStr);
 							if (ix != -1) {
-								Identifier id = new Identifier("fabrication", name.substring(ix + prePath.length()));
+								Identifier id = Identifier.of("fabrication", name.substring(ix + prePath.length()));
 								consumer.accept(id, open(type, id));
 							}
 						}

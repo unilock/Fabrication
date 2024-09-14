@@ -30,8 +30,8 @@ public class FeatureOldLava implements Feature {
 	public static void onLoaded(SpriteAtlasTexture atlas, SpriteLoader.StitchResult data) {
 		try {
 			if (FabConf.isAnyEnabled("*.old_lava") && atlas.getId().toString().equals("minecraft:textures/atlas/blocks.png")) {
-				Identifier still = new Identifier("block/lava_still");
-				Identifier flow = new Identifier("block/lava_flow");
+				Identifier still = Identifier.of("block/lava_still");
+				Identifier flow = Identifier.of("block/lava_flow");
 				Sprite originalLava = atlas.getSprite(still);
 				Sprite originalLavaFlow = atlas.getSprite(flow);
 				int lavaWidth, lavaHeight, lavaFlowWidth,  lavaFlowHeight;
