@@ -16,7 +16,7 @@ public class FeatureShowBeeCountTooltip implements Feature {
 	private boolean active = false;
 
 	@Override
-	public void apply() {
+	public void apply(World world) {
 		active = true;
 		if (!applied) {
 			applied = true;
@@ -32,7 +32,7 @@ public class FeatureShowBeeCountTooltip implements Feature {
 	}
 
 	@Override
-	public boolean undo() {
+	public boolean undo(World world) {
 		active = false;
 		return true;
 	}

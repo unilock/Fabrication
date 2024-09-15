@@ -55,7 +55,7 @@ public class FeatureToggleStance implements Feature {
 	public static int lastAge = 0;
 
 	@Override
-	public void apply() {
+	public void apply(World world) {
 		keybind = new KeyBinding("["+ MixinConfigPlugin.MOD_NAME+"] Toggle Stance", InputUtil.UNKNOWN_KEY.getCode(), "key.categories.movement") {
 			@Override
 			public void setPressed(boolean pressed) {
@@ -100,7 +100,7 @@ public class FeatureToggleStance implements Feature {
 	}
 
 	@Override
-	public boolean undo() {
+	public boolean undo(World world) {
 		return false;
 	}
 

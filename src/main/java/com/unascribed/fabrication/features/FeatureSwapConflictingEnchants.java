@@ -27,7 +27,7 @@ public class FeatureSwapConflictingEnchants implements Feature {
 	private boolean applied = false;
 
 	@Override
-	public void apply() {
+	public void apply(World world) {
 		if (!applied) {
 			applied = true;
 			if (EarlyAgnos.getCurrentEnv() == Env.CLIENT) {
@@ -71,7 +71,7 @@ public class FeatureSwapConflictingEnchants implements Feature {
 	}
 
 	@Override
-	public boolean undo() {
+	public boolean undo(World world) {
 		return true;
 	}
 

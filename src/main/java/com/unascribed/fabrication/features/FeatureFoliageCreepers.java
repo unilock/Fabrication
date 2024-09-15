@@ -35,10 +35,10 @@ public class FeatureFoliageCreepers extends ResourcePackFeature {
 			ResourcePackProfile.InsertionPosition.TOP, false, ResourcePackSource.BUILTIN));
 	}
 	@Override
-	public void apply() {
+	public void apply(World world) {
 	}
 	@Override
-	public boolean undo() {
+	public boolean undo(World world) {
 		return true;
 	}
 }
