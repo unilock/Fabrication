@@ -12,7 +12,6 @@ import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -26,13 +25,13 @@ import net.minecraft.world.World;
 @EligibleIf(configAvailable="*.anvil_repair")
 public class MixinAnvilBlock {
 
-	@FabInject(at=@At("HEAD"), method="onUse(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;",
+	@FabInject(at=@At("HEAD"), method="onUseWithItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ItemActionResult;",
 			cancellable=true)
-	public void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> ci) {
+	public void onUse(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
 		if (!FabConf.isEnabled("*.anvil_repair")) return;
 		if (!world.isClient) {
 			ItemStack held = player.getStackInHand(hand);
-			if (held.getItem() == Item.fromBlock(Blocks.IRON_BLOCK)) {
+			if (held.isOf(Blocks.IRON_BLOCK.asItem())) {
 				BlockState bs = world.getBlockState(pos);
 				boolean consume = false;
 				if (bs.getBlock() == Blocks.DAMAGED_ANVIL) {
@@ -47,7 +46,7 @@ public class MixinAnvilBlock {
 					if (!player.getAbilities().creativeMode) {
 						held.decrement(1);
 					}
-					ci.setReturnValue(ActionResult.SUCCESS);
+					cir.setReturnValue(ActionResult.SUCCESS);
 				}
 			}
 		}

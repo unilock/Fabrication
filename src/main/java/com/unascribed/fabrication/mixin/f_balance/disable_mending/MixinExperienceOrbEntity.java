@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 public class MixinExperienceOrbEntity {
 
 	private static final Predicate<PlayerEntity> fabrication$disableMendingPredicate = ConfigPredicates.getFinalPredicate("*.disable_mending");
-	@FabInject(method = "repairPlayerGears(Lnet/minecraft/entity/player/PlayerEntity;I)I", at=@At("HEAD"), cancellable = true)
+	@FabInject(method="repairPlayerGears(Lnet/minecraft/server/network/ServerPlayerEntity;I)I", at=@At("HEAD"), cancellable=true)
 	public void no_repair(PlayerEntity player, int amount, CallbackInfoReturnable<Integer> cir) {
 		if (FabConf.isEnabled("*.disable_mending") && fabrication$disableMendingPredicate.test(player)) cir.setReturnValue(amount);
 	}
