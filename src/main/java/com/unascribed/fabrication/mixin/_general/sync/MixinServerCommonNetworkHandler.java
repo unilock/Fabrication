@@ -2,10 +2,16 @@ package com.unascribed.fabrication.mixin._general.sync;
 
 import com.unascribed.fabrication.EarlyAgnos;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.interfaces.ByteBufCustomPayloadReceiver;
+import com.unascribed.fabrication.interfaces.SetCrawling;
+import com.unascribed.fabrication.interfaces.SetItemDespawnAware;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
+import com.unascribed.fabrication.util.SwappingEnchants;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.network.ServerCommonNetworkHandler;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
 import com.unascribed.fabrication.FabricationMod;
@@ -115,6 +121,26 @@ public class MixinServerCommonNetworkHandler implements ByteBufCustomPayloadRece
 					}
 				}
 				// TODO id 4 world local SET
+			} else if (channel.getPath().equals("crawling") && FabConf.isEnabled("*.crawling")) {
+				PacketByteBuf recvdData = payload.buf();
+				boolean crawling = recvdData.readBoolean();
+				if (player instanceof SetCrawling) {
+					((SetCrawling)player).fabrication$setCrawling(crawling);
+				}
+			} else if (channel.getPath().equals("item_despawn") && FabConf.isEnabled("*.despawning_items_blink")) {
+				if (player instanceof SetItemDespawnAware) {
+					FabLog.debug("Enabling item despawn syncing for "+player.getName());
+					((SetItemDespawnAware)player).fabrication$setItemDespawnAware(true);
+				}
+			} else if (channel.getPath().equals("swap_conflicting_enchants") && FabConf.isEnabled("*.swap_conflicting_enchants")) {
+				PacketByteBuf recvdData = payload.buf();
+				if (recvdData.readBoolean()) {
+					ItemStack stack = player.getMainHandStack();
+					World world = player.getWorld();
+					if (stack != null && !stack.isEmpty() && world != null) {
+						SwappingEnchants.swapEnchants(stack, world, player);
+					}
+				}
 			}
 		}
 	}
