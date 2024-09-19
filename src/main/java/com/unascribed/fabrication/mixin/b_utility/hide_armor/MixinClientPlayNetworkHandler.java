@@ -39,7 +39,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 			if (p instanceof GetSuppressedSlots) {
 				((GetSuppressedSlots)p).fabrication$getSuppressedSlots().clear();
 				for (EquipmentSlot es : EquipmentSlot.values()) {
-					if (es.getType() == Type.ARMOR) {
+					if (es.getType() == Type.HUMANOID_ARMOR) {
 						if ((bits & (1 << es.getEntitySlotId())) != 0) {
 							((GetSuppressedSlots)p).fabrication$getSuppressedSlots().add(es);
 						}

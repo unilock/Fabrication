@@ -2,6 +2,7 @@ package com.unascribed.fabrication.mixin.c_tweaks.legible_signs;
 
 import com.unascribed.fabrication.FabConf;
 import net.minecraft.block.entity.SignText;
+import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import com.unascribed.fabrication.support.injection.FabInject;
@@ -35,8 +36,9 @@ public class MixinSignBlockEntityRenderer {
 					res = dc.getSignColor();
 					break;
 				default: {
-					float[] bgr = dc.getColorComponents();
-					res = Math.round(bgr[0]*255.0F) << 16 | Math.round(bgr[1]*255.0F) << 8 | Math.round(bgr[2]*255);
+					// TODO?
+					int rgb = dc.getSignColor();
+					res = Math.round(ColorHelper.Argb.getGreen(rgb)*255.0F) << 16 | Math.round(ColorHelper.Argb.getBlue(rgb)*255.0F) << 8 | Math.round(ColorHelper.Argb.getRed(rgb)*255);
 				}
 			}
 			cir.setReturnValue(res);

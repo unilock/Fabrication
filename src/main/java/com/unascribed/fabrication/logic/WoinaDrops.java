@@ -10,6 +10,7 @@ import com.unascribed.fabrication.FabConf;
 import net.minecraft.block.MapColor;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.random.Random;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -227,7 +228,7 @@ public class WoinaDrops {
 						}
 
 						vertices.vertex(pos.x, pos.y, pos.z,
-								r, g, b, 1, // TODO: replace with single int for color
+								ColorHelper.Argb.fromFloats(r, g, b, 1),
 								u, v,
 								overlay, light,
 								normal.x, normal.y, normal.z);

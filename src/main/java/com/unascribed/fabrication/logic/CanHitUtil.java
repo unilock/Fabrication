@@ -8,13 +8,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.FabRefl;
 
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.EntitySelectorReader;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 
 public class CanHitUtil {
@@ -56,8 +57,8 @@ public class CanHitUtil {
 	}
 
 	public static boolean canHit(ItemStack stack, Entity entity) {
-		if (stack.hasNbt() && stack.getNbt().contains("CanHit", NbtType.LIST)) {
-			NbtList canhit = stack.getNbt().getList("CanHit", NbtType.STRING);
+		if (stack.contains(DataComponentTypes.CUSTOM_DATA) && stack.get(DataComponentTypes.CUSTOM_DATA).getNbt().contains("CanHit", NbtElement.LIST_TYPE)) {
+			NbtList canhit = stack.get(DataComponentTypes.CUSTOM_DATA).getNbt().getList("CanHit", NbtElement.STRING_TYPE);
 			return canHit(canhit, entity);
 		}
 		return true;

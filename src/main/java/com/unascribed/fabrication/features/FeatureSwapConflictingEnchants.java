@@ -8,16 +8,19 @@ import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextContent;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 import java.util.Optional;
 
@@ -31,15 +34,15 @@ public class FeatureSwapConflictingEnchants implements Feature {
 		if (!applied) {
 			applied = true;
 			if (EarlyAgnos.getCurrentEnv() == Env.CLIENT) {
-				applyClient();
+				applyClient(world);
 			}
 		}
 	}
 
 	@Environment(EnvType.CLIENT)
-	private void applyClient() {
+	private void applyClient(World world) {
 		Agnos.runForTooltipRender((stack, lines) -> {
-			if (!stack.isEmpty() && stack.hasNbt() && stack.getNbt().contains("fabrication#conflictingEnchants")) {
+			if (!stack.isEmpty() && stack.contains(DataComponentTypes.CUSTOM_DATA) && stack.get(DataComponentTypes.CUSTOM_DATA).getNbt().contains("fabrication#conflictingEnchants")) {
 				if ((FabRefl.ItemStack_getHideFlags(stack) & ItemStack.TooltipSection.ENCHANTMENTS.getFlag()) != 0) return;
 				NbtCompound lTag = stack.getNbt().getCompound("fabrication#conflictingEnchants");
 				if (lTag == null || lTag.isEmpty()) return;
@@ -57,9 +60,9 @@ public class FeatureSwapConflictingEnchants implements Feature {
 				}
 				ii++;
 				for (String key : lTag.getKeys()) {
-					Optional<Enchantment> e = Registries.ENCHANTMENT.getOrEmpty(Identifier.tryParse(key));
+					Optional<RegistryEntry.Reference<Enchantment>> e = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Identifier.tryParse(key));
 					if (e.isPresent()) {
-						Text o = e.get().getName(lTag.getInt(key));
+						Text o = Enchantment.getName(e.get(), lTag.getInt(key));
 						if (o instanceof MutableText) {
 							((MutableText) o).formatted(Formatting.DARK_GRAY);
 						}

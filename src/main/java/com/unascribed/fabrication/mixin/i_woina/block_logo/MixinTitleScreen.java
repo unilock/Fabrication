@@ -31,15 +31,15 @@ public class MixinTitleScreen extends Screen {
 	private SplashTextRenderer splashText;
 	private SplashTextRenderer fabrication$splashText;
 
-	@Shadow @Final
+	@Shadow
 	private boolean doBackgroundFade;
 	@Shadow
 	private long backgroundFadeStart;
 
 	@Hijack(method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V", target="Lnet/minecraft/client/gui/LogoDrawer;draw(Lnet/minecraft/client/gui/DrawContext;IF)V")
-	public boolean fabrication$drawBlockLogo() {
+	public boolean fabrication$drawBlockLogo(DrawContext context, int i, float f) {
 		if (FabConf.isEnabled("*.block_logo")) {
-			fabrication$blockLogo.drawLogo(doBackgroundFade, backgroundFadeStart, MinecraftClient.getInstance().getTickDelta());
+			fabrication$blockLogo.drawLogo(context, doBackgroundFade, backgroundFadeStart, MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true));
 			return true;
 		}
 		return false;

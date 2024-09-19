@@ -24,6 +24,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.joml.Matrix4f;
 
 @EligibleIf(configAvailable="*.toggle_stance", envMatches=Env.CLIENT)

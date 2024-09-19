@@ -185,7 +185,7 @@ public class FeatureFabricationCommand implements Feature {
 				analyze.requires(scs -> scs.hasPermissionLevel(4));
 				{
 					LiteralArgumentBuilder<ServerCommandSource> biome = CommandManager.literal("biome");
-					registryAccess.createWrapper(RegistryKeys.BIOME).streamEntries().forEach(optBiome -> {
+					registryAccess.getWrapperOrThrow(RegistryKeys.BIOME).streamEntries().forEach(optBiome -> {
 						Optional<RegistryKey<Biome>> optKey = optBiome.getKey();
 						if (optKey.isEmpty()) return;
 						Identifier id = optKey.get().getValue();

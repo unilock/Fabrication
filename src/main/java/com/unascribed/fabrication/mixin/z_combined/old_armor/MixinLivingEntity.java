@@ -3,7 +3,6 @@ package com.unascribed.fabrication.mixin.z_combined.old_armor;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.ModifyReturn;
@@ -42,15 +41,14 @@ public abstract class MixinLivingEntity extends Entity {
 		if (!(((scale && stack.isDamageable()) || old) && stack.getItem() instanceof ArmorItem && ((ArmorItem)stack.getItem()).getSlotType() == slot)) return map;
 		return map.entries().stream().map(
 				entry ->
-					(entry.getKey() == EntityAttributes.GENERIC_ARMOR && entry.getValue().getOperation() == EntityAttributeModifier.Operation.ADDITION ?
+					(entry.getKey() == EntityAttributes.GENERIC_ARMOR && entry.getValue().operation() == EntityAttributeModifier.Operation.ADD_VALUE ?
 							new AbstractMap.SimpleEntry<>(
 									entry.getKey(),
 									new EntityAttributeModifier(
-											entry.getValue().getId(),
-											FabRefl.EntityAttributeModifier_name(entry.getValue()),
-											(old ? ArmorMaterials.DIAMOND.getProtection(((ArmorItem)stack.getItem()).getType()) : entry.getValue().getValue())
+											entry.getValue().id(),
+											(old ? ArmorMaterials.DIAMOND.value().getProtection(((ArmorItem)stack.getItem()).getType()) : entry.getValue().value())
 													* (scale ? ((stack.getMaxDamage() - stack.getDamage()) / (double) stack.getMaxDamage()) : 1),
-											EntityAttributeModifier.Operation.ADDITION))
+											EntityAttributeModifier.Operation.ADD_VALUE))
 							: new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()))
 				).collect(Collector.of(ArrayListMultimap::create, (m, entry) ->m.put(entry.getKey(), entry.getValue()), (m1, m2) -> {m1.putAll(m2); return m1;}));
 
