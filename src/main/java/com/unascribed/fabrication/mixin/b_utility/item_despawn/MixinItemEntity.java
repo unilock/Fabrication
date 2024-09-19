@@ -146,7 +146,7 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 						}
 					}
 				}
-				ParsedTime enchTime = LoaderItemDespawn.enchDespawns.get(Resolvable.mapKey(e, getRegistryManager().get(RegistryKeys.ENCHANTMENT)));
+				ParsedTime enchTime = LoaderItemDespawn.enchDespawns.get(Resolvable.mapKey(e.getIdAsString(), getRegistryManager().get(RegistryKeys.ENCHANTMENT)));
 				if (enchTime != null && enchTime.overshadows(time)) {
 					if (debug) System.out.println("Found a specific enchantment; it overshadows: "+enchTime);
 					time = enchTime;

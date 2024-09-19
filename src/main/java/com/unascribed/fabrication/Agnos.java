@@ -10,6 +10,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
@@ -30,6 +31,10 @@ public final class Agnos {
 		void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, boolean isDedi);
 	}
 
+	public interface DynamicRegistryReloadCallback {
+		void reload(DynamicRegistryManager.Immutable registries);
+	}
+
 	public interface TooltipRenderCallback {
 		void render(ItemStack stack, List<Text> lines);
 	}
@@ -40,6 +45,10 @@ public final class Agnos {
 
 	public static void runForCommandRegistration(CommandRegistrationCallback r) {
 		FabricationEvents.addCommand(r);
+	}
+
+	public static void runForDynamicRegistryReload(DynamicRegistryReloadCallback r) {
+		FabricationEvents.addReloader(r);
 	}
 
 	@Environment(EnvType.CLIENT)
