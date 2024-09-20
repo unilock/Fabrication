@@ -7,6 +7,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.injection.FabInject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtElement;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,10 +28,10 @@ import net.minecraft.util.Formatting;
 @EligibleIf(configAvailable="*.canhit", envMatches=Env.CLIENT)
 public class MixinItemStackClient {
 
-	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/tooltip/TooltipType;isAdvanced()Z", ordinal=1),
+	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/tooltip/TooltipType;isAdvanced()Z", ordinal=1, shift=At.Shift.BEFORE),
 			method="getTooltip(Lnet/minecraft/item/Item$TooltipContext;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/tooltip/TooltipType;)Ljava/util/List;",
 			locals=LocalCapture.CAPTURE_FAILHARD)
-	public void getTooltip(Item.TooltipContext ctx, PlayerEntity player, CallbackInfoReturnable<List<Text>> ci, List<Text> list) {
+	public void getTooltip(Item.TooltipContext context, PlayerEntity player, TooltipType tooltipType, CallbackInfoReturnable<List<Text>> ci, List<Text> list) {
 		if (!FabConf.isEnabled("*.canhit")) return;
 		ItemStack self = (ItemStack)(Object)this;
 		if (self.contains(DataComponentTypes.CUSTOM_DATA) && self.get(DataComponentTypes.CUSTOM_DATA).getNbt().contains("CanHit", NbtElement.LIST_TYPE) && !self.get(DataComponentTypes.CUSTOM_DATA).getNbt().getBoolean("HideCanHit")) {

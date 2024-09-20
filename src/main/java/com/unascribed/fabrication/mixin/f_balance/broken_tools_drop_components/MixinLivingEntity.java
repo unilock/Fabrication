@@ -3,7 +3,6 @@ package com.unascribed.fabrication.mixin.f_balance.broken_tools_drop_components;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import com.unascribed.fabrication.FabConf;
@@ -40,7 +39,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -52,14 +50,9 @@ public abstract class MixinLivingEntity extends Entity {
 		super(type, world);
 	}
 
-	@FabInject(at=@At("HEAD"), method="sendEquipmentBreakStatus(Lnet/minecraft/entity/EquipmentSlot;)V")
-	public void sendEquipmentBreakStatus(EquipmentSlot slot, CallbackInfo ci) {
+	@FabInject(at=@At("HEAD"), method= "sendEquipmentBreakStatus(Lnet/minecraft/item/Item;Lnet/minecraft/entity/EquipmentSlot;)V")
+	public void sendEquipmentBreakStatus(Item item, EquipmentSlot slot, CallbackInfo ci) {
 		shatter(slot, ((LivingEntity)(Object)this).getEquippedStack(slot));
-	}
-
-	@FabInject(at=@At("HEAD"), method="sendToolBreakStatus(Lnet/minecraft/util/Hand;)V")
-	public void sendToolBreakStatus(Hand hand, CallbackInfo ci) {
-		shatter(hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND, ((LivingEntity)(Object)this).getStackInHand(hand));
 	}
 
 	@Unique

@@ -95,7 +95,7 @@ dependencies {
 	modImplementation(include('com.unascribed:lib39-deferral:1.5.0-experimental6.1+1.20.1'))
 	modRuntimeOnly fabricApi.module('fabric-screen-api-v1', project.fabric_version)
 
-	annotationProcessor project(':ap')
+//	annotationProcessor project(':ap')
 	implementation 'com.google.code.gson:gson:2.11.0'
 }
 

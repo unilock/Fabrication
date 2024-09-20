@@ -8,11 +8,11 @@ import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.util.BlockLogoRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.LogoDrawer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashTextRenderer;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.text.Text;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,7 +37,7 @@ public class MixinTitleScreen extends Screen {
 	private long backgroundFadeStart;
 
 	@Hijack(method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V", target="Lnet/minecraft/client/gui/LogoDrawer;draw(Lnet/minecraft/client/gui/DrawContext;IF)V")
-	public boolean fabrication$drawBlockLogo(DrawContext context, int i, float f) {
+	public boolean fabrication$drawBlockLogo(LogoDrawer logo, DrawContext context, int i, float f) {
 		if (FabConf.isEnabled("*.block_logo")) {
 			fabrication$blockLogo.drawLogo(context, doBackgroundFade, backgroundFadeStart, MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true));
 			return true;
