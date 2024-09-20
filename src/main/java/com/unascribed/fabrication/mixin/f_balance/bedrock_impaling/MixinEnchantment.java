@@ -45,7 +45,7 @@ public class MixinEnchantment {
 
 	@FabInject(at=@At("RETURN"), method="<init>")
 	private void modify(Text description, Enchantment.Definition definition, RegistryEntryList<Enchantment> exclusiveSet, ComponentMap effects, CallbackInfo ci) {
-		if (FabConf.isAnyEnabled("*.bedrock_impaling") && EnchantmentHelperHelper.matches(this, Enchantments.IMPALING)) {
+		if (FabConf.isEnabled("*.bedrock_impaling") && EnchantmentHelperHelper.matches(this, Enchantments.IMPALING)) {
 			if (this.effects.contains(EnchantmentEffectComponentTypes.DAMAGE)) {
 				List<EnchantmentEffectEntry<EnchantmentValueEffect>> mutableEffects = this.effects.get(EnchantmentEffectComponentTypes.DAMAGE).stream().toList();
 

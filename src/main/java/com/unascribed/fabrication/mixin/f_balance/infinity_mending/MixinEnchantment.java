@@ -31,7 +31,7 @@ public abstract class MixinEnchantment {
 
 	@FabInject(at=@At("RETURN"), method="<init>")
 	private void modify(Text description, Enchantment.Definition definition, RegistryEntryList<Enchantment> exclusiveSet, ComponentMap effects, CallbackInfo ci) {
-		if (FabConf.isAnyEnabled("*.infinity_mending") && EnchantmentHelperHelper.matches(this, Enchantments.INFINITY)) {
+		if (FabConf.isEnabled("*.infinity_mending") && EnchantmentHelperHelper.matches(this, Enchantments.INFINITY)) {
 			List<RegistryEntry<Enchantment>> mutableExlusiveSet = new ArrayList<>(this.exclusiveSet.stream().toList());
 			mutableExlusiveSet.removeIf(entry -> entry.matches(Enchantments.INFINITY::equals));
 			mutableExlusiveSet.removeIf(entry -> entry.matches(Enchantments.MENDING::equals));

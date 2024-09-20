@@ -28,7 +28,7 @@ public class MixinEnchantment {
 
 	@FabInject(at=@At("RETURN"), method="<init>")
 	private void modify(Text description, Enchantment.Definition definition, RegistryEntryList<Enchantment> exclusiveSet, ComponentMap effects, CallbackInfo ci) {
-		if (FabConf.isAnyEnabled("*.soul_speed_doesnt_damage_boots") && EnchantmentHelperHelper.matches(this, Enchantments.SOUL_SPEED)) {
+		if (FabConf.isEnabled("*.soul_speed_doesnt_damage_boots") && EnchantmentHelperHelper.matches(this, Enchantments.SOUL_SPEED)) {
 			if (this.effects.contains(EnchantmentEffectComponentTypes.ITEM_DAMAGE)) {
 				this.effects = this.effects.filtered(type -> !EnchantmentEffectComponentTypes.ITEM_DAMAGE.equals(type));
 			}
