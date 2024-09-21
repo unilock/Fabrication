@@ -11,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.World;
 
 @EligibleIf(configAvailable="*.toggle_sprint", envMatches=Env.CLIENT)
 public class FeatureToggleSprint implements Feature {
@@ -19,7 +20,7 @@ public class FeatureToggleSprint implements Feature {
 	public static boolean sprinting = false;
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		keybind = new KeyBinding("["+ MixinConfigPlugin.MOD_NAME+"] Toggle/Hold Sprint", InputUtil.UNKNOWN_KEY.getCode(), "key.categories.movement") {
 			@Override
 			public void setPressed(boolean pressed) {
@@ -40,7 +41,7 @@ public class FeatureToggleSprint implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		return false;
 	}
 

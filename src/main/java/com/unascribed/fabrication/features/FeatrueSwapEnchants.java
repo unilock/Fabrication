@@ -15,13 +15,14 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 @EligibleIf(configAvailable="*.swap_conflicting_enchants", envMatches=Env.CLIENT)
 public class FeatrueSwapEnchants implements Feature {
 	public static KeyBinding keybind;
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		keybind = new KeyBinding("["+ MixinConfigPlugin.MOD_NAME+"] Swap Enchant", InputUtil.UNKNOWN_KEY.getCode(), "key.categories.gameplay") {
 			@Override
 			public void setPressed(boolean pressed) {
@@ -39,7 +40,7 @@ public class FeatrueSwapEnchants implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		return false;
 	}
 

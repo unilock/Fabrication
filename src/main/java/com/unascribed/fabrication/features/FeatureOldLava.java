@@ -7,7 +7,6 @@ import com.unascribed.fabrication.client.SpriteLavaFlow;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.MipmapHelper;
 import net.minecraft.client.texture.NativeImage;
@@ -19,6 +18,7 @@ import net.minecraft.client.texture.SpriteLoader;
 import net.minecraft.resource.metadata.ResourceMetadata;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,15 +78,15 @@ public class FeatureOldLava implements Feature {
 	}
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		if (MinecraftClient.getInstance().getResourceManager() != null) {
 			MinecraftClient.getInstance().reloadResources();
 		}
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
-		apply(server);
+	public boolean undo(MinecraftServer minecraftServer, World world) {
+		apply(minecraftServer, world);
 		return true;
 	}
 

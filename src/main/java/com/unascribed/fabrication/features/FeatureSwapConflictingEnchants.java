@@ -7,7 +7,6 @@ import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NbtCompound;
@@ -20,6 +19,7 @@ import net.minecraft.text.TextContent;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 import java.util.Optional;
 
@@ -29,17 +29,17 @@ public class FeatureSwapConflictingEnchants implements Feature {
 	private boolean applied = false;
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		if (!applied) {
 			applied = true;
 			if (EarlyAgnos.getCurrentEnv() == Env.CLIENT) {
-				applyClient();
+				applyClient(world);
 			}
 		}
 	}
 
 	@Environment(EnvType.CLIENT)
-	private void applyClient() {
+	private void applyClient(World world) {
 		Agnos.runForTooltipRender((stack, lines) -> {
 			if (!stack.isEmpty() && stack.contains(DataComponentTypes.CUSTOM_DATA)) {
 				//TODO?
@@ -60,7 +60,7 @@ public class FeatureSwapConflictingEnchants implements Feature {
 				}
 				ii++;
 				for (String key : lTag.getKeys()) {
-					Optional<RegistryEntry.Reference<Enchantment>> e = MinecraftClient.getInstance().world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Identifier.tryParse(key));
+					Optional<RegistryEntry.Reference<Enchantment>> e = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Identifier.tryParse(key));
 					if (e.isPresent()) {
 						Text o = Enchantment.getName(e.get(), lTag.getInt(key));
 						if (o instanceof MutableText) {
@@ -74,7 +74,7 @@ public class FeatureSwapConflictingEnchants implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		return true;
 	}
 

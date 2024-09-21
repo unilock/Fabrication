@@ -36,6 +36,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 @EligibleIf(configAvailable="*.hide_armor")
 public class FeatureHideArmor implements Feature {
@@ -46,7 +47,7 @@ public class FeatureHideArmor implements Feature {
 	private boolean registered = false;
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		applied = true;
 		if (!registered) {
 			registered = true;
@@ -140,7 +141,7 @@ public class FeatureHideArmor implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		applied = false;
 		return true;
 	}

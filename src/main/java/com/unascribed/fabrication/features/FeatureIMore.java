@@ -1,9 +1,5 @@
 package com.unascribed.fabrication.features;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.function.Predicate;
-
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -11,7 +7,6 @@ import com.unascribed.fabrication.Agnos;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
-
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
@@ -29,6 +24,11 @@ import net.minecraft.server.command.GiveCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.world.World;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.function.Predicate;
 
 @EligibleIf(configAvailable="*.i_and_more")
 public class FeatureIMore implements Feature {
@@ -37,7 +37,7 @@ public class FeatureIMore implements Feature {
 	private boolean registered = false;
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		applied = true;
 		if (!registered) {
 			registered = true;
@@ -146,7 +146,7 @@ public class FeatureIMore implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		applied = false;
 		return true;
 	}

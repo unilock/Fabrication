@@ -21,6 +21,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.world.World;
 
 @EligibleIf(configAvailable="*.mods_command", specialConditions=SpecialEligibility.NOT_FORGE)
 public class FeatureModsCommandFabric implements Feature {
@@ -28,7 +29,7 @@ public class FeatureModsCommandFabric implements Feature {
 	private boolean applied = false;
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		if (applied) return;
 		applied = true;
 		Agnos.runForCommandRegistration((dispatcher, registryAccess, dedi) -> {
@@ -61,7 +62,7 @@ public class FeatureModsCommandFabric implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		return true;
 	}
 

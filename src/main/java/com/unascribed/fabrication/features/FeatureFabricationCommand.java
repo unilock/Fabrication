@@ -7,14 +7,12 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.Message;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.tree.CommandNode;
 import com.unascribed.fabrication.Agnos;
-import com.unascribed.fabrication.EarlyAgnos;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.FabricationClientCommands;
@@ -28,6 +26,8 @@ import com.unascribed.fabrication.support.MixinConfigPlugin;
 import com.unascribed.fabrication.util.Cardinal;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.DimensionArgumentType;
@@ -73,7 +73,7 @@ import java.util.function.Predicate;
 public class FeatureFabricationCommand implements Feature {
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		Agnos.runForCommandRegistration((dispatcher, registryAccess, dedi) -> {
 			try {
 				LiteralArgumentBuilder<ServerCommandSource> root = LiteralArgumentBuilder.<ServerCommandSource>literal(MixinConfigPlugin.MOD_NAME_LOWER);
@@ -615,7 +615,16 @@ public class FeatureFabricationCommand implements Feature {
 			sendFeedback(c, Text.literal(key+" is now set to "+value+(" (default "+def+")")+(local ? " for this world" : "")), true);
 			if (FabricationMod.isAvailableFeature(key)) {
 				CommandSource commandSource = c.getSource();
-				if (FabricationMod.updateFeature(key, commandSource instanceof ServerCommandSource ? ((ServerCommandSource) commandSource).getServer() : null)) {
+				MinecraftServer server = null;
+				World world = null;
+				if (commandSource instanceof ServerCommandSource) {
+					server = ((ServerCommandSource) commandSource).getServer();
+					world = ((ServerCommandSource) commandSource).getWorld();
+				} else if (commandSource instanceof ClientCommandSource) {
+					server = MinecraftClient.getInstance().getServer();
+					world = MinecraftClient.getInstance().world;
+				}
+				if (FabricationMod.updateFeature(key, server, world)) {
 					return;
 				}
 			}
@@ -631,7 +640,7 @@ public class FeatureFabricationCommand implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		return false;
 	}
 

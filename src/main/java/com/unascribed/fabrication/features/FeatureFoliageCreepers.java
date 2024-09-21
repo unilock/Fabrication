@@ -3,7 +3,6 @@ package com.unascribed.fabrication.features;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.MixinConfigPlugin;
-import com.unascribed.fabrication.support.feature.ResourcePackFeature;
 import com.unascribed.fabrication.util.GrayscaleResourcePack;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourcePackCompatibility;
@@ -14,6 +13,7 @@ import net.minecraft.resource.ResourcePackSource;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
+import net.minecraft.world.World;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -48,10 +48,10 @@ public class FeatureFoliageCreepers extends ResourcePackFeature {
 		));
 	}
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 	}
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		return true;
 	}
 }

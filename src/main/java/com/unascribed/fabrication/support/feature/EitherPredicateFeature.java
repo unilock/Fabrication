@@ -3,6 +3,7 @@ package com.unascribed.fabrication.support.feature;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.Feature;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public abstract class EitherPredicateFeature<T> implements Feature {
 	}
 
 	@Override
-	public void apply(MinecraftServer server) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		builder.get(key).put(getConfigKey(), predicate);
 		rebuild();
 	}
@@ -33,7 +34,7 @@ public abstract class EitherPredicateFeature<T> implements Feature {
 	}
 
 	@Override
-	public boolean undo(MinecraftServer server) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		builder.get(key).remove(getConfigKey());
 		rebuild();
 		return true;
