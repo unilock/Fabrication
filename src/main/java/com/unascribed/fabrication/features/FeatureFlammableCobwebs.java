@@ -5,18 +5,18 @@ import com.unascribed.fabrication.support.Feature;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
-import net.minecraft.world.World;
+import net.minecraft.server.MinecraftServer;
 
 @EligibleIf(configAvailable="*.flammable_cobwebs")
 public class FeatureFlammableCobwebs implements Feature {
 
 	@Override
-	public void apply(World world) {
+	public void apply(MinecraftServer server) {
 		((FireBlock)Blocks.FIRE).registerFlammableBlock(Blocks.COBWEB, 60, 100);
 	}
 
 	@Override
-	public boolean undo(World world) {
+	public boolean undo(MinecraftServer server) {
 		((FireBlock)Blocks.FIRE).burnChances.remove(Blocks.COBWEB);
 		((FireBlock)Blocks.FIRE).spreadChances.remove(Blocks.COBWEB);
 		return true;

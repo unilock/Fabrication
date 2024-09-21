@@ -3,13 +3,12 @@ package com.unascribed.fabrication.features;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FeaturesFile;
 import com.unascribed.fabrication.interfaces.TaggablePlayer;
 import com.unascribed.fabrication.loaders.LoaderTaggablePlayers;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
-import net.minecraft.world.World;
+import net.minecraft.server.MinecraftServer;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -95,12 +94,12 @@ public class FeatureTaggablePlayers implements Feature {
 	}
 
 	@Override
-	public void apply(World world) {
+	public void apply(MinecraftServer server) {
 		activeTags.forEach(FeatureTaggablePlayers::set);
 	}
 
 	@Override
-	public boolean undo(World world) {
+	public boolean undo(MinecraftServer server) {
 		activeTags.keySet().forEach(k->ConfigPredicates.remove(k, 1));
 		return true;
 	}

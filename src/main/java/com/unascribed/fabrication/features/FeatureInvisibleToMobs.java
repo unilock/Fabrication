@@ -6,7 +6,7 @@ import com.unascribed.fabrication.support.Feature;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.world.World;
+import net.minecraft.server.MinecraftServer;
 
 import java.util.function.Predicate;
 
@@ -16,7 +16,7 @@ public class FeatureInvisibleToMobs implements Feature {
 	private Predicate<Entity> originalUntargetablePredicate;
 
 	@Override
-	public void apply(World world) {
+	public void apply(MinecraftServer server) {
 		originalUntargetablePredicate = EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR;
 		Predicate<PlayerEntity> predicate = ConfigPredicates.getFinalPredicate("*.invisible_to_mobs");
 		amendUntargetablePredicate(e -> {
@@ -30,7 +30,7 @@ public class FeatureInvisibleToMobs implements Feature {
 	}
 
 	@Override
-	public boolean undo(World world) {
+	public boolean undo(MinecraftServer server) {
 		if (originalUntargetablePredicate != null) {
 			amendUntargetablePredicate(originalUntargetablePredicate);
 		}

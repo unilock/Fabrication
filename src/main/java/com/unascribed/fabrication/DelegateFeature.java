@@ -1,7 +1,7 @@
 package com.unascribed.fabrication;
 
 import com.unascribed.fabrication.support.Feature;
-import net.minecraft.world.World;
+import net.minecraft.server.MinecraftServer;
 
 public class DelegateFeature implements Feature {
 
@@ -16,13 +16,13 @@ public class DelegateFeature implements Feature {
 	}
 
 	@Override
-	public void apply(World world) {
-		delegate.apply(world);
+	public void apply(MinecraftServer server) {
+		delegate.apply(server);
 	}
 
 	@Override
-	public boolean undo(World world) {
-		return delegate.undo(world);
+	public boolean undo(MinecraftServer server) {
+		return delegate.undo(server);
 	}
 
 	@Override

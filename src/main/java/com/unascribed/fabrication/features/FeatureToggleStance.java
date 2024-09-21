@@ -14,18 +14,11 @@ import com.unascribed.fabrication.support.Feature;
 import com.unascribed.fabrication.support.MixinConfigPlugin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import org.joml.Matrix4f;
 
 @EligibleIf(configAvailable="*.toggle_stance", envMatches=Env.CLIENT)
 public class FeatureToggleStance implements Feature {
@@ -56,7 +49,7 @@ public class FeatureToggleStance implements Feature {
 	public static int lastAge = 0;
 
 	@Override
-	public void apply(World world) {
+	public void apply(MinecraftServer server) {
 		keybind = new KeyBinding("["+ MixinConfigPlugin.MOD_NAME+"] Toggle Stance", InputUtil.UNKNOWN_KEY.getCode(), "key.categories.movement") {
 			@Override
 			public void setPressed(boolean pressed) {
@@ -101,7 +94,7 @@ public class FeatureToggleStance implements Feature {
 	}
 
 	@Override
-	public boolean undo(World world) {
+	public boolean undo(MinecraftServer server) {
 		return false;
 	}
 

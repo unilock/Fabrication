@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin._general.fapi;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.unascribed.fabrication.support.FabricationEvents;
-import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.registry.CombinedDynamicRegistries;
 import net.minecraft.registry.ServerDynamicRegistryType;
 import net.minecraft.resource.ResourceManager;
@@ -10,19 +10,18 @@ import net.minecraft.server.DataPackContents;
 import net.minecraft.server.command.CommandManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 @Mixin(DataPackContents.class)
 public class MixinDataPackContents {
-	@Inject(at=@At("RETURN"), method="reload")
-	private static void reload(ResourceManager manager, CombinedDynamicRegistries<ServerDynamicRegistryType> dynamicRegistries, FeatureSet enabledFeatures, CommandManager.RegistrationEnvironment environment, int functionPermissionLevel, Executor prepareExecutor, Executor applyExecutor, CallbackInfoReturnable<CompletableFuture<DataPackContents>> cir) {
-		cir.setReturnValue(cir.getReturnValue().whenComplete((dataPackContents, throwable) -> {
+	@ModifyReturnValue(at=@At("RETURN"), method="reload")
+	private static CompletableFuture<DataPackContents> reload(CompletableFuture<DataPackContents> original, ResourceManager manager, CombinedDynamicRegistries<ServerDynamicRegistryType> dynamicRegistries, FeatureSet enabledFeatures, CommandManager.RegistrationEnvironment environment, int functionPermissionLevel, Executor prepareExecutor, Executor applyExecutor) {
+		return original.whenComplete((dataPackContents, throwable) -> {
 			if (dataPackContents != null && throwable == null) {
 				FabricationEvents.reload(dataPackContents.getReloadableRegistries().getRegistryManager());
 			}
-		}));
+		});
 	}
 }

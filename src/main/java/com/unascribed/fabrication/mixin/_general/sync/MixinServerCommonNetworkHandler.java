@@ -62,7 +62,7 @@ public class MixinServerCommonNetworkHandler implements ByteBufCustomPayloadRece
 							if (id == 1) FabConf.set(key, value);
 							else FabConf.worldSet(key, value);
 							if (FabricationMod.isAvailableFeature(key)) {
-								FabricationMod.updateFeature(key, player.getWorld());
+								FabricationMod.updateFeature(key, player.getServer());
 							}
 							FabricationMod.sendConfigUpdate(player.server, key);
 							fabrication$sendCommandFeedback(

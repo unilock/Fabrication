@@ -20,17 +20,16 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Language;
-import net.minecraft.world.World;
 
 @EligibleIf(configAvailable="*.dimensional_tools")
 public class FeatureDimensionalTools implements Feature {
@@ -45,7 +44,7 @@ public class FeatureDimensionalTools implements Feature {
 	private boolean active = false;
 
 	@Override
-	public void apply(World world) {
+	public void apply(MinecraftServer server) {
 		active = true;
 		if (!applied) {
 			applied = true;
@@ -74,7 +73,7 @@ public class FeatureDimensionalTools implements Feature {
 	}
 
 	@Override
-	public boolean undo(World world) {
+	public boolean undo(MinecraftServer server) {
 		active = false;
 		return true;
 	}

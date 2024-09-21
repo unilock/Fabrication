@@ -6,7 +6,6 @@ import com.unascribed.fabrication.support.Feature;
 import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.SaveProperties;
-import net.minecraft.world.World;
 
 import java.util.Collection;
 
@@ -20,15 +19,15 @@ public class DataPackFeature implements Feature {
 	}
 
 	@Override
-	public void apply(World world) {
-		if (!active && (world == null || reload(world))) {
+	public void apply(MinecraftServer server) {
+		if (!active && (server == null || reload(server))) {
 			active = true;
 		}
 	}
 
 	@Override
-	public boolean undo(World world) {
-		if (active && (world == null || reload(world))) {
+	public boolean undo(MinecraftServer server) {
+		if (active && (server == null || reload(server))) {
 			active = false;
 			return true;
 		}
@@ -40,13 +39,12 @@ public class DataPackFeature implements Feature {
 		return configKey;
 	}
 
-	private boolean reload(World world) {
-		MinecraftServer minecraftServer = world.getServer();
-		ResourcePackManager resourcePackManager = minecraftServer.getDataPackManager();
-		SaveProperties saveProperties = minecraftServer.getSaveProperties();
+	private boolean reload(MinecraftServer server) {
+		ResourcePackManager resourcePackManager = server.getDataPackManager();
+		SaveProperties saveProperties = server.getSaveProperties();
 		Collection<String> collection = resourcePackManager.getEnabledIds();
 		Collection<String> collection2 = findNewDataPacks(resourcePackManager, saveProperties, collection);
-		tryReloadDataPacks(collection2, minecraftServer);
+		tryReloadDataPacks(collection2, server);
 		return true;
 	}
 

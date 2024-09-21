@@ -83,7 +83,9 @@ public abstract class MixinAnvilScreenHandler extends ForgingScreenHandler {
 			}
 			if (!conflictingEnchants.isEmpty()) {
 				EnchantmentHelper.set(stack, builder.build());
-				stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).getNbt().put("fabrication#conflictingEnchants", conflictingEnchants);
+				NbtCompound nbt = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
+				nbt.put("fabrication#conflictingEnchants", conflictingEnchants);
+				stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
 			}
 		}
 	}

@@ -131,16 +131,16 @@ public class FabricationMod implements ModInitializer {
 		return features.containsKey(FabConf.remap(configKey));
 	}
 
-	public static boolean updateFeature(String configKey, World world) {
+	public static boolean updateFeature(String configKey, MinecraftServer server) {
 		configKey = FabConf.remap(configKey);
 		boolean enabled = FabConf.isEnabled(configKey);
 		if (enabledFeatures.contains(configKey) == enabled) return true;
 		if (enabled) {
-			features.get(configKey).apply(world);
+			features.get(configKey).apply(server);
 			enabledFeatures.add(configKey);
 			return true;
 		} else {
-			boolean b = features.get(configKey).undo(world);
+			boolean b = features.get(configKey).undo(server);
 			if (b) {
 				enabledFeatures.remove(configKey);
 			}

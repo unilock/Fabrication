@@ -1,6 +1,7 @@
 package com.unascribed.fabrication.mixin.b_utility.enter_selects_highlighted_suggestion;
 
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
@@ -20,14 +21,13 @@ import org.spongepowered.asm.mixin.injection.At;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public abstract class MixinSuggestionWindow {
 
-	@WrapWithCondition(method="keyPressed(III)Z", at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/screen/ChatInputSuggestor$SuggestionWindow;keyPressed(III)Z"))
-	private boolean fabrication$enterAcceptsSuggestion(ChatInputSuggestor.SuggestionWindow window, int keyCode, int scanCode, int modifiers) {
-		if (!FabConf.isEnabled("*.enter_selects_highlighted_suggestion")) return true;
-		if ((keyCode == GLFW_KEY_ENTER || keyCode == GLFW_KEY_KP_ENTER) && window instanceof AccessorSuggestionWindow && !((AccessorSuggestionWindow) window).fabrication$getCompleated()){
+	@WrapOperation(method="keyPressed(III)Z", at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/screen/ChatInputSuggestor$SuggestionWindow;keyPressed(III)Z"))
+	private boolean fabrication$enterAcceptsSuggestion(ChatInputSuggestor.SuggestionWindow window, int keyCode, int scanCode, int modifiers, Operation<Boolean> original) {
+		if (FabConf.isEnabled("*.enter_selects_highlighted_suggestion") && (keyCode == GLFW_KEY_ENTER || keyCode == GLFW_KEY_KP_ENTER) && window instanceof AccessorSuggestionWindow && !((AccessorSuggestionWindow) window).fabrication$getCompleated()){
 			window.complete();
 			return false;
 		}
-		return true;
+		return original.call(window, keyCode, scanCode, modifiers);
 	}
 
 

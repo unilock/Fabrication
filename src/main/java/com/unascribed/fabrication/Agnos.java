@@ -47,8 +47,12 @@ public final class Agnos {
 		FabricationEvents.addCommand(r);
 	}
 
-	public static void runForDynamicRegistryReload(DynamicRegistryReloadCallback r) {
-		FabricationEvents.addReloader(r);
+	public static void runForDynamicRegistryReload(String id, DynamicRegistryReloadCallback r) {
+		FabricationEvents.addReloader(id, r);
+	}
+
+	public static void undoRunForDynamicRegistryReload(String id) {
+		FabricationEvents.removeReloader(id);
 	}
 
 	@Environment(EnvType.CLIENT)
