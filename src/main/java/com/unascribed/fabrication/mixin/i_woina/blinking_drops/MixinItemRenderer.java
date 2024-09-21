@@ -1,6 +1,7 @@
 package com.unascribed.fabrication.mixin.i_woina.blinking_drops;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.logic.BlinkingDropsOverlay;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -18,10 +19,10 @@ import org.spongepowered.asm.mixin.injection.At;
 @FailOn(modLoaded="forge:obfuscate")
 public class MixinItemRenderer {
 
-	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/RenderLayers;getItemLayer(Lnet/minecraft/item/ItemStack;Z)Lnet/minecraft/client/render/RenderLayer;"),
+	@WrapOperation(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/RenderLayers;getItemLayer(Lnet/minecraft/item/ItemStack;Z)Lnet/minecraft/client/render/RenderLayer;"),
 			method="renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V")
-	private RenderLayer fabrication$blink(RenderLayer original, ItemStack stack, boolean direct){
-		if (!FabConf.isEnabled("*.blinking_drops") || stack.getItem() instanceof BlockItem || !BlinkingDropsOverlay.isDropped) return original;
+	private RenderLayer fabrication$blink(ItemStack stack, boolean direct, Operation<RenderLayer> original){
+		if (!FabConf.isEnabled("*.blinking_drops") || stack.getItem() instanceof BlockItem || !BlinkingDropsOverlay.isDropped) return original.call(stack, direct);
 		return BlinkingDropsOverlay.renderLayer;
 	}
 

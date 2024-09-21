@@ -1,6 +1,7 @@
 package com.unascribed.fabrication.mixin.e_mechanics.bottled_air;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.component.type.PotionContentsComponent;
@@ -27,13 +28,13 @@ public class MixinPotionItem {
 		}
 	}
 
-	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/entity/player/PlayerInventory;insertStack(Lnet/minecraft/item/ItemStack;)Z"),
+	@WrapOperation(at=@At(value="INVOKE", target="Lnet/minecraft/entity/player/PlayerInventory;insertStack(Lnet/minecraft/item/ItemStack;)Z"),
 			method="finishUsing(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;)Lnet/minecraft/item/ItemStack;")
-	private boolean fabrication$bottledAir(boolean original, PlayerInventory inv, ItemStack stack) {
+	private boolean fabrication$bottledAir(PlayerInventory inv, ItemStack stack, Operation<Boolean> original) {
 		if (FabConf.isEnabled("*.bottled_air") && stack.getItem() == Items.GLASS_BOTTLE && inv.player.isSubmergedInWater()) {
-			return inv.insertStack(PotionContentsComponent.createStack(Items.POTION, Potions.WATER));
+			return original.call(inv, PotionContentsComponent.createStack(Items.POTION, Potions.WATER));
 		}
-		return original;
+		return original.call(inv, stack);
 	}
 
 }

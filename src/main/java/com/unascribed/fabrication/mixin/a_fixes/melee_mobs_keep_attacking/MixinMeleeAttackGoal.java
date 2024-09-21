@@ -1,6 +1,6 @@
 package com.unascribed.fabrication.mixin.a_fixes.melee_mobs_keep_attacking;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
@@ -24,7 +24,7 @@ public abstract class MixinMeleeAttackGoal {
 	@Shadow
 	private Path path;
 
-	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/entity/ai/pathing/EntityNavigation;isIdle()Z"), method="shouldContinue()Z")
+	@ModifyExpressionValue(at=@At(value="INVOKE", target="Lnet/minecraft/entity/ai/pathing/EntityNavigation;isIdle()Z"), method="shouldContinue()Z")
 	public boolean fabrication$keepAttacking(boolean old) {
 		if (!FabConf.isEnabled("*.melee_mobs_keep_attacking")) return old;
 		if (old && this.mob.distanceTo(this.mob.getTarget()) < 10) {

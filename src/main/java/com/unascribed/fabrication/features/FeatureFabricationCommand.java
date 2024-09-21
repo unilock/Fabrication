@@ -22,11 +22,9 @@ import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.FeaturesFile;
 import com.unascribed.fabrication.FeaturesFile.Sides;
 import com.unascribed.fabrication.interfaces.TaggablePlayer;
-import com.unascribed.fabrication.loaders.LoaderFScript;
 import com.unascribed.fabrication.support.ConfigValues;
 import com.unascribed.fabrication.support.Feature;
 import com.unascribed.fabrication.support.MixinConfigPlugin;
-import com.unascribed.fabrication.support.OptionalFScript;
 import com.unascribed.fabrication.util.Cardinal;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -79,7 +77,7 @@ public class FeatureFabricationCommand implements Feature {
 			try {
 				LiteralArgumentBuilder<ServerCommandSource> root = LiteralArgumentBuilder.<ServerCommandSource>literal(MixinConfigPlugin.MOD_NAME_LOWER);
 				addConfig(root, dedi);
-				if (EarlyAgnos.isModLoaded("fscript")) addFScript(root, dedi);
+//				if (EarlyAgnos.isModLoaded("fscript")) addFScript(root, dedi);
 
 				LiteralArgumentBuilder<ServerCommandSource> tag = LiteralArgumentBuilder.<ServerCommandSource>literal("tag");
 				tag.requires(scs -> FabConf.isEnabled("*.taggable_players") && scs.hasPermissionLevel(2));
@@ -490,62 +488,62 @@ public class FeatureFabricationCommand implements Feature {
 		root.then(config);
 	}
 
-	public static <T extends CommandSource> void addFScript(LiteralArgumentBuilder<T> root, boolean dediServer) {
-		LiteralArgumentBuilder<T> script = LiteralArgumentBuilder.<T>literal("fscript");
-		{
-			LiteralArgumentBuilder<T> get = LiteralArgumentBuilder.<T>literal("get");
-			for (String s : OptionalFScript.predicateProviders.keySet()) {
-				if (dediServer && FeaturesFile.get(s).sides == FeaturesFile.Sides.CLIENT_ONLY) continue;
-				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s).executes((c) -> {
-					sendFeedback(c, Text.literal(s+ ": "+ LoaderFScript.get(s)), false);
-					return 1;
-				});
-				get.then(key);
-				setAltKeys(s, alt -> get.then(LiteralArgumentBuilder.<T>literal(alt).executes(key.getCommand())));
-			}
-			script.then(get);
-			LiteralArgumentBuilder<T> set = LiteralArgumentBuilder.<T>literal("set");
-			for (String s : OptionalFScript.predicateProviders.keySet()) {
-				if (dediServer && FeaturesFile.get(s).sides == FeaturesFile.Sides.CLIENT_ONLY) continue;
-				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s);
-				RequiredArgumentBuilder<T, String> value =
-						RequiredArgumentBuilder.<T, String>argument("script", StringArgumentType.string())
-						.executes((c) -> {
-							OptionalFScript.set(c, s, c.getArgument("script", String.class));
-							return 1;
-						});
-				key.then(value);
-				set.then(key);
-				setAltKeys(s, alt -> set.then(LiteralArgumentBuilder.<T>literal(alt).then(value)));
-			}
-			set.requires(s -> s.hasPermissionLevel(2));
-			script.then(set);
-
-			LiteralArgumentBuilder<T> unset = LiteralArgumentBuilder.<T>literal("unset");
-			for (String s : OptionalFScript.predicateProviders.keySet()) {
-				if (dediServer && FeaturesFile.get(s).sides == FeaturesFile.Sides.CLIENT_ONLY) continue;
-				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s).executes((c) -> {
-					OptionalFScript.restoreDefault(s);
-					sendFeedback(c, Text.literal("Restored default behaviour for "+s), true);
-					return 1;
-				});
-				unset.then(key);
-				setAltKeys(s, alt -> unset.then(LiteralArgumentBuilder.<T>literal(alt).executes(key.getCommand())));
-			}
-			unset.requires(s -> s.hasPermissionLevel(2));
-			script.then(unset);
-			script.then(LiteralArgumentBuilder.<T>literal("reload")
-					.requires(s -> s.hasPermissionLevel(2))
-						.executes((c) -> {
-							LoaderFScript.reload();
-							OptionalFScript.reload();
-							sendFeedback(c, Text.literal("Fabrication fscript reloaded"), true);
-							return 1;
-						})
-					);
-		}
-		root.then(script);
-	}
+//	public static <T extends CommandSource> void addFScript(LiteralArgumentBuilder<T> root, boolean dediServer) {
+//		LiteralArgumentBuilder<T> script = LiteralArgumentBuilder.<T>literal("fscript");
+//		{
+//			LiteralArgumentBuilder<T> get = LiteralArgumentBuilder.<T>literal("get");
+//			for (String s : OptionalFScript.predicateProviders.keySet()) {
+//				if (dediServer && FeaturesFile.get(s).sides == FeaturesFile.Sides.CLIENT_ONLY) continue;
+//				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s).executes((c) -> {
+//					sendFeedback(c, Text.literal(s+ ": "+ LoaderFScript.get(s)), false);
+//					return 1;
+//				});
+//				get.then(key);
+//				setAltKeys(s, alt -> get.then(LiteralArgumentBuilder.<T>literal(alt).executes(key.getCommand())));
+//			}
+//			script.then(get);
+//			LiteralArgumentBuilder<T> set = LiteralArgumentBuilder.<T>literal("set");
+//			for (String s : OptionalFScript.predicateProviders.keySet()) {
+//				if (dediServer && FeaturesFile.get(s).sides == FeaturesFile.Sides.CLIENT_ONLY) continue;
+//				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s);
+//				RequiredArgumentBuilder<T, String> value =
+//						RequiredArgumentBuilder.<T, String>argument("script", StringArgumentType.string())
+//						.executes((c) -> {
+//							OptionalFScript.set(c, s, c.getArgument("script", String.class));
+//							return 1;
+//						});
+//				key.then(value);
+//				set.then(key);
+//				setAltKeys(s, alt -> set.then(LiteralArgumentBuilder.<T>literal(alt).then(value)));
+//			}
+//			set.requires(s -> s.hasPermissionLevel(2));
+//			script.then(set);
+//
+//			LiteralArgumentBuilder<T> unset = LiteralArgumentBuilder.<T>literal("unset");
+//			for (String s : OptionalFScript.predicateProviders.keySet()) {
+//				if (dediServer && FeaturesFile.get(s).sides == FeaturesFile.Sides.CLIENT_ONLY) continue;
+//				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s).executes((c) -> {
+//					OptionalFScript.restoreDefault(s);
+//					sendFeedback(c, Text.literal("Restored default behaviour for "+s), true);
+//					return 1;
+//				});
+//				unset.then(key);
+//				setAltKeys(s, alt -> unset.then(LiteralArgumentBuilder.<T>literal(alt).executes(key.getCommand())));
+//			}
+//			unset.requires(s -> s.hasPermissionLevel(2));
+//			script.then(unset);
+//			script.then(LiteralArgumentBuilder.<T>literal("reload")
+//					.requires(s -> s.hasPermissionLevel(2))
+//						.executes((c) -> {
+//							LoaderFScript.reload();
+//							OptionalFScript.reload();
+//							sendFeedback(c, Text.literal("Fabrication fscript reloaded"), true);
+//							return 1;
+//						})
+//					);
+//		}
+//		root.then(script);
+//	}
 
 	public static void sendFeedback(CommandContext<? extends CommandSource> c, MutableText text, boolean broadcast) {
 		if (c.getSource() instanceof ServerCommandSource) {

@@ -1,6 +1,8 @@
 package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.mojang.brigadier.StringReader;
@@ -32,11 +34,12 @@ public class MixinEntitySummonArgumentType {
 		}
 
 	}
-	@ModifyReturnValue(method="parseAsNbt(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/nbt/NbtElement;",
+	@WrapOperation(method="parseAsNbt(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/nbt/NbtElement;",
 			at=@At(value="INVOKE", target="Lnet/minecraft/util/Identifier;fromCommandInput(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/util/Identifier;"))
-	private static Identifier legacyCommandInput(Identifier original, StringReader sr, @Share("isNotEntityArgument") LocalBooleanRef isNotEntityArgument) {
-		if (isNotEntityArgument.get()) return original;
-		if (!FabConf.isEnabled("*.legacy_command_syntax")) return original;
+	private static Identifier legacyCommandInput(StringReader sr, Operation<Identifier> original, @Share("isNotEntityArgument") LocalBooleanRef isNotEntityArgument) {
+		Identifier id = original.call(sr);
+		if (isNotEntityArgument.get()) return id;
+		if (!FabConf.isEnabled("*.legacy_command_syntax")) return id;
 		char peek = sr.peek();
 		if (peek >= 'A' && peek <= 'Z') {
 			int start = sr.getCursor();
@@ -49,7 +52,7 @@ public class MixinEntitySummonArgumentType {
 					.toLowerCase(Locale.ROOT));
 			}
 		}
-		return original;
+		return id;
 	}
 
 	@Unique

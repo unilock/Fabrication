@@ -1,5 +1,6 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.furnace_minecart_any_fuel;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.unascribed.fabrication.FabConf;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -46,7 +47,7 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 		}
 	}
 
-	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/recipe/Ingredient;test(Lnet/minecraft/item/ItemStack;)Z"),
+	@ModifyExpressionValue(at=@At(value="INVOKE", target="Lnet/minecraft/recipe/Ingredient;test(Lnet/minecraft/item/ItemStack;)Z"),
 			method="interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;")
 	private boolean fabrication$disableVanillaFuel(boolean original) {
 		return !FabConf.isEnabled("*.furnace_minecart_any_fuel") && original;

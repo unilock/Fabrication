@@ -31,7 +31,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.unascribed.fabrication.client.FScriptScreen;
 import com.unascribed.fabrication.interfaces.GetServerConfig;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
@@ -132,7 +131,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 					e.printStackTrace();
 					throw e;
 				}
-			}else if (payload.id().getPath().equals("fscript")){
+			}/*else if (payload.id().getPath().equals("fscript")){
 				try{
 					PacketByteBuf buf = payload.buf();
 					int code = buf.readVarInt();
@@ -145,7 +144,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 					e.printStackTrace();
 					throw e;
 				}
-			} else if (payload.id().getPath().equals("play_absorp_sound") && FabConf.isEnabled("*.alt_absorption_sound")) {
+			}*/ else if (payload.id().getPath().equals("play_absorp_sound") && FabConf.isEnabled("*.alt_absorption_sound")) {
 				int id = payload.buf().readInt();
 				MinecraftClient.getInstance().send(() -> {
 					World world = MinecraftClient.getInstance().world;

@@ -15,7 +15,6 @@ import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.FabricationDefaultResources;
 import com.unascribed.fabrication.support.Feature;
 import com.unascribed.fabrication.support.MixinConfigPlugin;
-import com.unascribed.fabrication.support.OptionalFScript;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -65,7 +64,7 @@ public class FabricationMod implements ModInitializer {
 				throw new RuntimeException(e);
 			}
 		}
-		if (EarlyAgnos.isModLoaded("fscript")) OptionalFScript.reload();
+//		if (EarlyAgnos.isModLoaded("fscript")) OptionalFScript.reload();
 		for (String s : MixinConfigPlugin.discoverClassesInPackage("com.unascribed.fabrication.features", false)) {
 			try {
 				Feature r = (Feature)Class.forName(s).newInstance();
@@ -97,6 +96,7 @@ public class FabricationMod implements ModInitializer {
 			ABSORPTION_HURT = SoundEvent.of(Identifier.of("fabrication", "absorption_hurt"));
 			FabricationDefaultResources.apply();
 		}
+		PayloadTypeRegistry.playC2S().register(ByteBufCustomPayload.ID, ByteBufCustomPayload.CODEC);
 		PayloadTypeRegistry.playS2C().register(ByteBufCustomPayload.ID, ByteBufCustomPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(ByteBufCustomPayload.ID, (payload, context) -> {
 			context.server().execute(() -> {

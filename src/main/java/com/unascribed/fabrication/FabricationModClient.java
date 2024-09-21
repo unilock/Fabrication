@@ -36,7 +36,6 @@ public class FabricationModClient implements ClientModInitializer {
 				});
 			});
 		}
-		PayloadTypeRegistry.playC2S().register(ByteBufCustomPayload.ID, ByteBufCustomPayload.CODEC);
 		ClientPlayNetworking.registerGlobalReceiver(ByteBufCustomPayload.ID, (payload, context) -> {
 			context.client().execute(() -> {
 				((ByteBufCustomPayloadReceiver) context.client().getNetworkHandler()).fabrication$onCustomPayload(payload);

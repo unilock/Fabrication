@@ -2,6 +2,8 @@ package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 
 import com.google.common.base.CharMatcher;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.unascribed.fabrication.FabConf;
@@ -23,9 +25,9 @@ import java.util.Optional;
 @EligibleIf(configAvailable="*.legacy_command_syntax")
 public class MixinItemStringReaderReader {
 
-	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/registry/RegistryWrapper$Impl;getOptional(Lnet/minecraft/registry/RegistryKey;)Ljava/util/Optional;"),
+	@WrapOperation(at=@At(value="INVOKE", target="Lnet/minecraft/registry/RegistryWrapper$Impl;getOptional(Lnet/minecraft/registry/RegistryKey;)Ljava/util/Optional;"),
 			method="readItem()V")
-	public Optional<RegistryEntry.Reference<Item>> fabrication$legacyDamageGetOrEmpty(Optional<RegistryEntry.Reference<Item>> original, RegistryWrapper<Item> subject, RegistryKey<Item> rid, @Share("legacyDamage") LocalIntRef legacyDamage) {
+	public Optional<RegistryEntry.Reference<Item>> fabrication$legacyDamageGetOrEmpty(RegistryWrapper.Impl<Item> subject, RegistryKey<Item> rid, Operation<Optional<RegistryEntry.Reference<Item>>> original, @Share("legacyDamage") LocalIntRef legacyDamage) {
 		legacyDamage.set(-1);
 		if (FabConf.isEnabled("*.legacy_command_syntax")) {
 			String numId;
@@ -66,7 +68,7 @@ public class MixinItemStringReaderReader {
 				return subject.getOptional(RegistryKey.of(RegistryKeys.ITEM, LegacyIDs.lookup_id(numIdI, metaI)));
 			}
 		}
-		return original;
+		return original.call(subject, rid);
 	}
 
 }

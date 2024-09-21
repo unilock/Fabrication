@@ -18,8 +18,6 @@ import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.FeaturesFile;
 import com.unascribed.fabrication.features.FeatureHideArmor;
 import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
-import com.unascribed.fabrication.loaders.LoaderFScript;
-import com.unascribed.fabrication.support.OptionalFScript;
 
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketByteBuf;
@@ -73,7 +71,7 @@ public class MixinServerCommonNetworkHandler implements ByteBufCustomPayloadRece
 						}
 					}
 				}
-			} else if (channel.getPath().equals("fscript")) {
+			} /*else if (channel.getPath().equals("fscript")) {
 				PacketByteBuf recvdData = payload.buf();
 				int id = recvdData.readVarInt();
 				if(id == 0){
@@ -121,7 +119,7 @@ public class MixinServerCommonNetworkHandler implements ByteBufCustomPayloadRece
 					}
 				}
 				// TODO id 4 world local SET
-			} else if (channel.getPath().equals("crawling") && FabConf.isEnabled("*.crawling")) {
+			}*/ else if (channel.getPath().equals("crawling") && FabConf.isEnabled("*.crawling")) {
 				PacketByteBuf recvdData = payload.buf();
 				boolean crawling = recvdData.readBoolean();
 				if (player instanceof SetCrawling) {

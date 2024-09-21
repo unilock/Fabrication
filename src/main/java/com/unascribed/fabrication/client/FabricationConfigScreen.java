@@ -86,7 +86,7 @@ public class FabricationConfigScreen extends Screen {
 	}
 	private final Map<String, String> SECTION_DESCRIPTIONS = Maps.newHashMap();
 	private static final Identifier ID_LOCK = Identifier.of("fabrication", "lock.png");
-	private static final Identifier ID_FSCRIPT = Identifier.of("fabrication", "fscript.png");
+//	private static final Identifier ID_FSCRIPT = Identifier.of("fabrication", "fscript.png");
 	private static final Identifier BG = Identifier.of("fabrication", "bg.png");
 	private static final Identifier BG_DARK = Identifier.of("fabrication", "bg-dark.png");
 	private static final Identifier BG_GRAD = Identifier.of("fabrication", "bg-grad.png");
@@ -100,7 +100,7 @@ public class FabricationConfigScreen extends Screen {
 	private static final Set<String> newlyUnbannedKeysClient = Sets.newHashSet();
 	private static final Set<String> newlyUnbannedKeysServer = Sets.newHashSet();
 
-	private static boolean isFScriptLoaded = EarlyAgnos.isModLoaded("fscript");
+//	private static boolean isFScriptLoaded = EarlyAgnos.isModLoaded("fscript");
 
 	private final Screen parent;
 
@@ -176,15 +176,15 @@ public class FabricationConfigScreen extends Screen {
 			String name = key.substring(dot+1);
 			options.put(section, name);
 		}
-		if (isFScriptLoaded) {
-			for (Map.Entry<String, FeatureEntry> en : FeaturesFile.getAll().entrySet()) {
-				String key = en.getKey();
-				FeatureEntry feature = en.getValue();
-				if (feature.fscript != null || feature.extend != null && FeaturesFile.get(FabConf.remap(feature.extend)).fscript != null) {
-					defaultedSubmenu(key).put("FScript", OptionalFScriptScreen::construct);
-				}
-			}
-		}
+//		if (isFScriptLoaded) {
+//			for (Map.Entry<String, FeatureEntry> en : FeaturesFile.getAll().entrySet()) {
+//				String key = en.getKey();
+//				FeatureEntry feature = en.getValue();
+//				if (feature.fscript != null || feature.extend != null && FeaturesFile.get(FabConf.remap(feature.extend)).fscript != null) {
+//					defaultedSubmenu(key).put("FScript", OptionalFScriptScreen::construct);
+//				}
+//			}
+//		}
 		defaultedSubmenu(FabConf.remap("*.block_logo")).put("Detailed Configs", BlockLogoScreen::new);
 		defaultedSubmenu(FabConf.remap("*.yeet_recipes")).put("Detailed Configs", YeetRecipesScreen::new);
 		defaultedSubmenu(FabConf.remap("*.taggable_players")).put("Detailed Configs", TaggablePlayersScreen::new);
@@ -240,7 +240,7 @@ public class FabricationConfigScreen extends Screen {
 			}
 		}
 		searchField = new TextFieldWidget(textRenderer, 131, 1, width-252, 14, searchField, Text.literal("Search"));
-		if (isFScriptLoaded) searchField.setWidth(searchField.getWidth()-16);
+//		if (isFScriptLoaded) searchField.setWidth(searchField.getWidth()-16);
 
 		searchField.setChangedListener((s) -> {
 			s = s.trim();
@@ -629,16 +629,16 @@ public class FabricationConfigScreen extends Screen {
 				drawContext.drawTexture(ID_LOCK, width-49, 3, 0, 0, 0, 8, 8, 8, 8);
 			}
 		}
-		if (searchSelected && isFScriptLoaded) {
-			if(didClick && mouseX >= width-136 && mouseX < width-120 && mouseY <= 16) {
-				client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1f));
-				searchingScriptable = !searchingScriptable;
-			}
-			RenderSystem.setShaderTexture(0, ID_FSCRIPT);
-			RenderSystem.setShaderColor(1, 1, 1, 1);
-			drawContext.fill(width-136, 0, width-120, 16, searchingScriptable? 0xFF0AA000 : 0x55000000);
-			drawContext.drawTexture(ID_FSCRIPT, width-136, 0, 0, 0, 0, 16, 16, 16, 16);
-		}
+//		if (searchSelected && isFScriptLoaded) {
+//			if(didClick && mouseX >= width-136 && mouseX < width-120 && mouseY <= 16) {
+//				client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1f));
+//				searchingScriptable = !searchingScriptable;
+//			}
+//			RenderSystem.setShaderTexture(0, ID_FSCRIPT);
+//			RenderSystem.setShaderColor(1, 1, 1, 1);
+//			drawContext.fill(width-136, 0, width-120, 16, searchingScriptable? 0xFF0AA000 : 0x55000000);
+//			drawContext.drawTexture(ID_FSCRIPT, width-136, 0, 0, 0, 0, 16, 16, 16, 16);
+//		}
 		drawBackground(drawContext, mouseX, mouseY, delta, 130, height-20);
 
 		List<String> notes = Lists.newArrayList();
@@ -842,7 +842,7 @@ public class FabricationConfigScreen extends Screen {
 				} else {
 					pen = (en) -> emptyQuery || (queryPattern.matcher(en.name).find() || queryPattern.matcher(en.shortName).find() || queryPattern.matcher(en.desc).find());
 				}
-				if (isFScriptLoaded && searchingScriptable) pen = ((Predicate<FeatureEntry>) en -> en.fscript != null).and(pen);
+//				if (isFScriptLoaded && searchingScriptable) pen = ((Predicate<FeatureEntry>) en -> en.fscript != null).and(pen);
 				y = drawConfigValues(drawContext, y, mouseX, mouseY, pen, SHOW_SOURCE_SECTION, emptyQuery ? null : HIGHLIGHT_QUERY_MATCH);
 			} else {
 				String name = FeaturesFile.get(section).name;

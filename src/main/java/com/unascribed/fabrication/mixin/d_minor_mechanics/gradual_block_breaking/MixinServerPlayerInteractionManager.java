@@ -1,7 +1,8 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.gradual_block_breaking;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -41,9 +42,10 @@ public class MixinServerPlayerInteractionManager {
 	private BlockState fabrication$gradualBreakState = null;
 	private static final Predicate<PlayerEntity> fabrication$gradualBlockBreakingPredicate = ConfigPredicates.getFinalPredicate("*.gradual_block_breaking");
 
-	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
+	@WrapOperation(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
 			method="tryBreakBlock(Lnet/minecraft/util/math/BlockPos;)Z")
-	public BlockState fabrication$gradualBreak(BlockState state, ServerWorld world, BlockPos pos) {
+	public BlockState fabrication$gradualBreak(ServerWorld world, BlockPos pos, Operation<BlockState> original) {
+		BlockState state = original.call(world, pos);
 		if (!FabConf.isEnabled("*.gradual_block_breaking")) return state;
 		if (player == null || !fabrication$gradualBlockBreakingPredicate.test(player)) return state;
 		if (state.contains(SlabBlock.TYPE)) {
@@ -74,16 +76,15 @@ public class MixinServerPlayerInteractionManager {
 		return state;
 	}
 
-	@WrapWithCondition(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"),
+	@WrapOperation(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"),
 			method="tryBreakBlock(Lnet/minecraft/util/math/BlockPos;)Z")
-	public boolean fabrication$gradualBreak(ServerWorld instance, BlockPos pos, boolean b) {
-		if (!FabConf.isEnabled("*.gradual_block_breaking")) return true;
-		if (fabrication$gradualBreakState != null) {
+	public boolean fabrication$gradualBreak(ServerWorld instance, BlockPos pos, boolean b, Operation<Boolean> original) {
+		if (FabConf.isEnabled("*.gradual_block_breaking") && fabrication$gradualBreakState != null) {
 			world.setBlockState(pos, fabrication$gradualBreakState);
 			fabrication$gradualBreakState = null;
 			return false;
 		}
-		return true;
+		return original.call(instance, pos, b);
 	}
 
 }

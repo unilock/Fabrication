@@ -13,11 +13,9 @@ import com.unascribed.fabrication.client.AtlasTracking;
 import com.unascribed.fabrication.client.AtlasViewerScreen;
 import com.unascribed.fabrication.client.FabricationConfigScreen;
 import com.unascribed.fabrication.client.FabricationSummaryScreen;
-import com.unascribed.fabrication.client.OptionalFScriptScreen;
 import com.unascribed.fabrication.client.OptionalPrideFlag;
 import com.unascribed.fabrication.features.FeatureFabricationCommand;
 import com.unascribed.fabrication.support.MixinConfigPlugin;
-import com.unascribed.fabrication.support.OptionalFScript;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.command.CommandSource;
@@ -77,7 +75,7 @@ public class FabricationClientCommands {
 	}
 	private static<T extends CommandSource> void registerCommands(CommandDispatcher<T> dispatcher) {
 		LiteralArgumentBuilder<T> root = LiteralArgumentBuilder.<T>literal(rootCommand);
-		if (EarlyAgnos.isModLoaded("fscript")) addFScript(root);
+//		if (EarlyAgnos.isModLoaded("fscript")) addFScript(root);
 		FeatureFabricationCommand.addConfig(root, false);
 		root.then(LiteralArgumentBuilder.<T>literal("ui")
 				.executes((c) -> {
@@ -110,24 +108,24 @@ public class FabricationClientCommands {
 		}
 		dispatcher.register(root);
 	}
-	public static <T extends CommandSource> void addFScript(LiteralArgumentBuilder<T> root) {
-		LiteralArgumentBuilder<T> script = LiteralArgumentBuilder.<T>literal("fscript");
-		{
-			LiteralArgumentBuilder<T> ui = LiteralArgumentBuilder.<T>literal("ui");
-			for (String s : OptionalFScript.predicateProviders.keySet()) {
-				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s).executes((c) -> {
-					MinecraftClient.getInstance().send(() -> {
-						MinecraftClient.getInstance().setScreen(OptionalFScriptScreen.construct(null, OptionalPrideFlag.get(), FeaturesFile.get(s).name, s));
-					});
-					return 1;
-				});
-				ui.then(key);
-				FeatureFabricationCommand.setAltKeys(s, alt -> ui.then(LiteralArgumentBuilder.<T>literal(alt).executes(key.getCommand())));
-			}
-			script.then(ui);
-		}
-		root.then(script);
-	}
+//	public static <T extends CommandSource> void addFScript(LiteralArgumentBuilder<T> root) {
+//		LiteralArgumentBuilder<T> script = LiteralArgumentBuilder.<T>literal("fscript");
+//		{
+//			LiteralArgumentBuilder<T> ui = LiteralArgumentBuilder.<T>literal("ui");
+//			for (String s : OptionalFScript.predicateProviders.keySet()) {
+//				LiteralArgumentBuilder<T> key = LiteralArgumentBuilder.<T>literal(s).executes((c) -> {
+//					MinecraftClient.getInstance().send(() -> {
+//						MinecraftClient.getInstance().setScreen(OptionalFScriptScreen.construct(null, OptionalPrideFlag.get(), FeaturesFile.get(s).name, s));
+//					});
+//					return 1;
+//				});
+//				ui.then(key);
+//				FeatureFabricationCommand.setAltKeys(s, alt -> ui.then(LiteralArgumentBuilder.<T>literal(alt).executes(key.getCommand())));
+//			}
+//			script.then(ui);
+//		}
+//		root.then(script);
+//	}
 	public static void sendFeedback(Text text) {
 		MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.literal("§b[CLIENT]§r ").append(text));
 	}

@@ -50,9 +50,9 @@ public final class FeaturesFile {
 		public final String linkUrl;
 		public final String linkText;
 		public final String desc;
-		public final String fscript;
-		public final ImmutableMap<String, Map.Entry<String, String>> extraFscript;
-		public final String fscriptDefault;
+//		public final String fscript;
+//		public final ImmutableMap<String, Map.Entry<String, String>> extraFscript;
+//		public final String fscriptDefault;
 		public final String extend;
 
 		public FeatureEntry(String key, JsonObject obj) {
@@ -74,16 +74,16 @@ public final class FeaturesFile {
 			linkUrl = get(obj, "link_url", JsonElement::getAsString, null);
 			linkText = get(obj, "link_text", JsonElement::getAsString, null);
 			desc = get(obj, "desc", JsonElement::getAsString, "No description");
-			fscript = get(obj, "fscript", s -> s.getAsString().toUpperCase(Locale.ROOT), null);
-			extraFscript = get(obj, "extra_fscript", s -> {
-					Map<String, Map.Entry<String, String>> map = new HashMap<>();
-					String[] strs = s.getAsString().split("\\+");
-					for (int i=0;i<strs.length;i+=3) {
-						map.put(strs[i].toUpperCase(Locale.ROOT), new AbstractMap.SimpleEntry<>(strs[i+1], strs[i+2]));
-					}
-					return ImmutableMap.copyOf(map);
-				}, ImmutableMap.of());
-			fscriptDefault = get(obj, "fscript_default", JsonElement::getAsString, null);
+//			fscript = get(obj, "fscript", s -> s.getAsString().toUpperCase(Locale.ROOT), null);
+//			extraFscript = get(obj, "extra_fscript", s -> {
+//					Map<String, Map.Entry<String, String>> map = new HashMap<>();
+//					String[] strs = s.getAsString().split("\\+");
+//					for (int i=0;i<strs.length;i+=3) {
+//						map.put(strs[i].toUpperCase(Locale.ROOT), new AbstractMap.SimpleEntry<>(strs[i+1], strs[i+2]));
+//					}
+//					return ImmutableMap.copyOf(map);
+//				}, ImmutableMap.of());
+//			fscriptDefault = get(obj, "fscript_default", JsonElement::getAsString, null);
 			extend = get(obj, "extend", JsonElement::getAsString, null);
 		}
 
@@ -106,9 +106,9 @@ public final class FeaturesFile {
 					+ ", media=" + media + ", mediaText=" + mediaText
 					+ ", extraMedia=" + extraMedia + ", extraMediaText="
 					+ extraMediaText + ", linkUrl=" + linkUrl + ", linkText="
-					+ linkText + ", desc=" + desc + ", fscript=" + fscript
+					+ linkText + ", desc=" + desc + /*", fscript=" + fscript
 					+ ", extraFscript" + extraFscript + ", fscriptDefault="
-					+ fscriptDefault + ", extend=" + extend + "]";
+					+ fscriptDefault + */", extend=" + extend + "]";
 		}
 
 	}

@@ -177,9 +177,9 @@ public class FeaturesFileParser {
 		ret.add("desc", JsonNull.INSTANCE);
 		ret.add("desc_raw", JsonNull.INSTANCE);
 		ret.addProperty("brand_new", cur.has("since") && projectVersion.equals(cur.get("since").getAsString()));
-		ret.add("fscript", JsonNull.INSTANCE);
-		ret.add("fscript_default", JsonNull.INSTANCE);
-		ret.add("extra_fscript", JsonNull.INSTANCE);
+//		ret.add("fscript", JsonNull.INSTANCE);
+//		ret.add("fscript_default", JsonNull.INSTANCE);
+//		ret.add("extra_fscript", JsonNull.INSTANCE);
 		ret.add("extend", JsonNull.INSTANCE);
 		ret.addProperty("new", false);
 

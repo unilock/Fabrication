@@ -1,6 +1,7 @@
 package com.unascribed.fabrication.mixin.f_balance.hunger_is;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -23,13 +24,13 @@ public class MixinHungerManager {
 	private static final Predicate<PlayerEntity> fabrication$hungerNormal = ConfigPredicates.getFinalPredicate("*.hunger_is_normal");
 	private static final Predicate<PlayerEntity> fabrication$hungerHard = ConfigPredicates.getFinalPredicate("*.hunger_is_hard");
 
-	@ModifyReturnValue(method="update(Lnet/minecraft/entity/player/PlayerEntity;)V", at=@At(value="INVOKE", target="Lnet/minecraft/world/World;getDifficulty()Lnet/minecraft/world/Difficulty;"))
-	private Difficulty fabrication$pacefullHunger(Difficulty dif, World world, HungerManager hungerManager, PlayerEntity pe) {
+	@WrapOperation(method="update(Lnet/minecraft/entity/player/PlayerEntity;)V", at=@At(value="INVOKE", target="Lnet/minecraft/world/World;getDifficulty()Lnet/minecraft/world/Difficulty;"))
+	private Difficulty fabrication$peacefulHunger(World world, Operation<Difficulty> original, PlayerEntity pe) {
 		if (FabConf.isEnabled("*.hunger_is_hard") && fabrication$hungerHard.test(pe)) return Difficulty.HARD;
 		if (FabConf.isEnabled("*.hunger_is_normal") && fabrication$hungerNormal.test(pe)) return Difficulty.NORMAL;
 		if (FabConf.isEnabled("*.hunger_is_easy") && fabrication$hungerEasy.test(pe)) return Difficulty.EASY;
 		if (FabConf.isEnabled("*.hunger_is_peaceful") && fabrication$hungerPeaceful.test(pe)) return Difficulty.PEACEFUL;
-		return dif;
+		return original.call(world);
 	}
 
 }

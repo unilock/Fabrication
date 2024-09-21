@@ -33,21 +33,21 @@ public class FeatureTaggablePlayers implements Feature {
 	static {
 		Map<String, Integer> tags = new HashMap<>();
 		Set<String> list = new HashSet<>();
-		FeaturesFile.getAll().forEach((key, val)->{
-			if (val.fscript == null || INVALID_TAGS.contains(key)) return;
-			switch (val.fscript){
-				case "PLAYER_ENTITY" :
-				case "SERVER_PLAYER_ENTITY" :
-					tags.put(key, 0b01);
-					if (!val.extraFscript.isEmpty()) list.add(key);
-					break;
-				case "LIVING_ENTITY" :
-				case "ENTITY" :
-					tags.put(key, 0b11);
-					if (!val.extraFscript.isEmpty()) list.add(key);
-					break;
-			}
-		});
+//		FeaturesFile.getAll().forEach((key, val)->{
+//			if (val.fscript == null || INVALID_TAGS.contains(key)) return;
+//			switch (val.fscript){
+//				case "PLAYER_ENTITY" :
+//				case "SERVER_PLAYER_ENTITY" :
+//					tags.put(key, 0b01);
+//					if (!val.extraFscript.isEmpty()) list.add(key);
+//					break;
+//				case "LIVING_ENTITY" :
+//				case "ENTITY" :
+//					tags.put(key, 0b11);
+//					if (!val.extraFscript.isEmpty()) list.add(key);
+//					break;
+//			}
+//		});
 		validTags = ImmutableMap.copyOf(tags);
 		listTags = ImmutableSet.copyOf(list);
 	}
@@ -80,6 +80,7 @@ public class FeatureTaggablePlayers implements Feature {
 	}
 
 	public static void add(String key, int type, boolean save) {
+		if (!validTags.containsKey(key)) return;
 		type &= validTags.get(key);
 		if (FabConf.isEnabled("*.taggable_players")) {
 			set(key, type);
