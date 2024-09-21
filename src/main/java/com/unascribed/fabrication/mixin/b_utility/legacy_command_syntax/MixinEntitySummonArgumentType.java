@@ -1,6 +1,7 @@
 package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 
 import com.mojang.brigadier.StringReader;
+import com.mojang.serialization.Codec;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.FabInject;
@@ -23,14 +24,14 @@ import java.util.Locale;
 public class MixinEntitySummonArgumentType {
 	private boolean isNotEntityArgument = true;
 
-	@FabInject(at=@At("TAIL"), method="<init>(Lnet/minecraft/command/CommandRegistryAccess;Lnet/minecraft/registry/RegistryKey;)V")
-	public void legacyCommandInput(CommandRegistryAccess access, RegistryKey key, CallbackInfo ci) {
+	@FabInject(at=@At("TAIL"), method="<init>(Lnet/minecraft/command/CommandRegistryAccess;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V")
+	public void legacyCommandInput(CommandRegistryAccess access, RegistryKey key, Codec codec, CallbackInfo ci) {
 		if (key == RegistryKeys.ENTITY_TYPE) {
 			isNotEntityArgument = false;
 		}
 
 	}
-	@Hijack(method="parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/registry/entry/RegistryEntry$Reference;",
+	@Hijack(method="parseAsNbt(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/nbt/NbtElement;",
 			target="Lnet/minecraft/util/Identifier;fromCommandInput(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/util/Identifier;")
 	public HijackReturn legacyCommandInput(StringReader sr) {
 		if (isNotEntityArgument) return null;

@@ -1,7 +1,6 @@
 package com.unascribed.fabrication.mixin.b_utility.item_despawn;
 
 import java.util.Map;
-import java.util.UUID;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.injection.FabInject;

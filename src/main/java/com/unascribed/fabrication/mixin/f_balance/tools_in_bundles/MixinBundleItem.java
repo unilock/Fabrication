@@ -12,7 +12,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.ClickType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.injection.FabInject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BundleItem.class)
@@ -31,7 +31,7 @@ public class MixinBundleItem {
 		}
 	}
 
-	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/component/type/BundleContentsComponent$Builder;add(Lnet/minecraft/item/ItemStack;)I"),
+	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/component/type/BundleContentsComponent$Builder;add(Lnet/minecraft/item/ItemStack;)I"),
 		method="onClicked(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/screen/slot/Slot;Lnet/minecraft/util/ClickType;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/inventory/StackReference;)Z")
 	public void onClicked(ItemStack bundle, ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.tools_in_bundles")) {

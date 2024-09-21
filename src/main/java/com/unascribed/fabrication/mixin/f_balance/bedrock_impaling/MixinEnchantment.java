@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class MixinEnchantment {
 	private void modify(Text description, Enchantment.Definition definition, RegistryEntryList<Enchantment> exclusiveSet, ComponentMap effects, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.bedrock_impaling") && EnchantmentHelperHelper.matches(this, Enchantments.IMPALING)) {
 			if (this.effects.contains(EnchantmentEffectComponentTypes.DAMAGE)) {
-				List<EnchantmentEffectEntry<EnchantmentValueEffect>> mutableEffects = this.effects.get(EnchantmentEffectComponentTypes.DAMAGE).stream().toList();
+				List<EnchantmentEffectEntry<EnchantmentValueEffect>> mutableEffects = new ArrayList<>(this.effects.get(EnchantmentEffectComponentTypes.DAMAGE));
 
 				mutableEffects.removeIf(entry ->
 					entry.effect().getCodec() == AddEnchantmentEffect.CODEC
@@ -56,7 +57,7 @@ public class MixinEnchantment {
 					&& ((EntityPropertiesLootCondition) entry.requirements().get()).predicate().isPresent()
 					&& ((EntityPropertiesLootCondition) entry.requirements().get()).predicate().get().type().isPresent()
 					&& new HashSet<>(((EntityPropertiesLootCondition) entry.requirements().get()).predicate().get().type().get().types().stream().toList())
-						.equals(new HashSet<>(Registries.ENTITY_TYPE.getEntryList(EntityTypeTags.SENSITIVE_TO_IMPALING).get().stream().toList()))
+						.equals(new HashSet<>(Registries.ENTITY_TYPE.getEntryList(EntityTypeTags.SENSITIVE_TO_IMPALING).orElseThrow().stream().toList()))
 				);
 
 				mutableEffects.add(new EnchantmentEffectEntry<>(

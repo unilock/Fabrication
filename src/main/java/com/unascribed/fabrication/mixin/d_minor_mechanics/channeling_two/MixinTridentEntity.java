@@ -19,11 +19,11 @@ abstract public class MixinTridentEntity extends PersistentProjectileEntity {
 		super(entityType, world);
 	}
 
-
-	@ModifyReturn(method="onEntityHit(Lnet/minecraft/util/hit/EntityHitResult;)V", target="Lnet/minecraft/world/World;isThundering()Z")
-	public boolean fabrication$channellingTwo(boolean bool) {
-		if (!(FabConf.isEnabled("*.channeling_two")) && EnchantmentHelperHelper.getLevel(getRegistryManager(), Enchantments.CHANNELING, this.getItemStack()) > 1) return bool;
-		return this.getWorld().hasRain(this.getBlockPos());
-	}
+	// TODO
+//	@ModifyReturn(method="onEntityHit(Lnet/minecraft/util/hit/EntityHitResult;)V", target="Lnet/minecraft/world/World;isThundering()Z")
+//	public boolean fabrication$channellingTwo(boolean bool) {
+//		if (!(FabConf.isEnabled("*.channeling_two")) && EnchantmentHelperHelper.getLevel(getRegistryManager(), Enchantments.CHANNELING, this.getItemStack()) > 1) return bool;
+//		return this.getWorld().hasRain(this.getBlockPos());
+//	}
 
 }

@@ -124,8 +124,8 @@ public class AtlasViewerScreen extends Screen {
 		RenderSystem.defaultBlendFunc();
 		List<Sprite> sprites = Lists.newArrayList();
 		for (Sprite s : FabRefl.Client.getSprites(sat).values()) {
-			int x = FabRefl.Client.getX(s);
-			int y = FabRefl.Client.getY(s);
+			int x = s.getX();
+			int y = s.getY();
 			int w = s.getContents().getWidth();
 			int h = s.getContents().getHeight();
 			if (mouseX >= x && mouseX < x+w && mouseY >= y && mouseY < y+h) {
@@ -135,8 +135,8 @@ public class AtlasViewerScreen extends Screen {
 		RenderSystem.disableCull();
 		RenderSystem.setShader(GameRenderer::getPositionProgram);
 		for (Sprite s : sprites) {
-			int x = FabRefl.Client.getX(s);
-			int y = FabRefl.Client.getY(s);
+			int x = s.getX();
+			int y = s.getY();
 			int w = s.getContents().getWidth();
 			int h = s.getContents().getHeight();
 			RenderSystem.setShaderColor(1, 0, 0, 0.2f);
@@ -159,8 +159,8 @@ public class AtlasViewerScreen extends Screen {
 			}
 		} else if (sprites.size() == 1) {
 			Sprite s = sprites.get(0);
-			int x = FabRefl.Client.getX(s);
-			int y = FabRefl.Client.getY(s);
+			int x = s.getX();
+			int y = s.getY();
 			int w = s.getContents().getWidth();
 			int h = s.getContents().getHeight();
 			Identifier tex = Identifier.of(s.getContents().getId().getNamespace(), "textures/"+s.getContents().getId().getPath()+".png");
@@ -192,8 +192,8 @@ public class AtlasViewerScreen extends Screen {
 				Text.literal("§c\u26A0 MULTIPLE SPRITES \u26A0")
 			);
 			for (Sprite s : sprites) {
-				int x = FabRefl.Client.getX(s);
-				int y = FabRefl.Client.getY(s);
+				int x = s.getX();
+				int y = s.getY();
 				int w = s.getContents().getWidth();
 				int h = s.getContents().getHeight();
 				li.add(Text.literal(s.getContents().getId().toString()));

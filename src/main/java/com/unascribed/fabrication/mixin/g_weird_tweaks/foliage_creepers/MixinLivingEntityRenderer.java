@@ -39,23 +39,11 @@ public abstract class MixinLivingEntityRenderer extends EntityRenderer<LivingEnt
 		}
 	}
 
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"), index=4,
+	@FabModifyArg(at=@At(value="INVOKE", target="net/minecraft/client/render/entity/model/EntityModel.render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;III)V"), index=4,
 			method="render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
-	public float changeColor4(float f) {
-		if (fabrication$colorFoliageCreeper == -1) return f;
-		return (fabrication$colorFoliageCreeper >> 16 & 255) / 255f;
-	}
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"), index=5,
-			method="render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
-	public float changeColor5(float f) {
-		if (fabrication$colorFoliageCreeper == -1) return f;
-		return (fabrication$colorFoliageCreeper >> 8 & 255) / 255f;
-	}
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"), index=6,
-			method="render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
-	public float changeColor6(float f) {
-		if (fabrication$colorFoliageCreeper == -1) return f;
-		return (fabrication$colorFoliageCreeper & 255) / 255f;
+	public int changeColor(int i) {
+		if (fabrication$colorFoliageCreeper == -1) return i;
+		return fabrication$colorFoliageCreeper;
 	}
 
 	@FabModifyVariable(at=@At("STORE"), method="getRenderLayer(Lnet/minecraft/entity/LivingEntity;ZZZ)Lnet/minecraft/client/render/RenderLayer;")

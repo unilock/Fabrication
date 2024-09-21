@@ -13,23 +13,18 @@ import net.minecraft.util.Hand;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.unascribed.fabrication.interfaces.SetCanHitList;
 import com.unascribed.fabrication.logic.CanHitUtil;
 import com.unascribed.fabrication.support.EligibleIf;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission;
-import net.minecraft.item.ArrowItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -37,7 +32,7 @@ import java.util.List;
 @EligibleIf(configAvailable="*.canhit")
 public class MixinRangedWeaponItem {
 
-	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
+	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
 			method="shootAll(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;Ljava/util/List;FFZLnet/minecraft/entity/LivingEntity;)V")
 	public void shootAll$bow(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack bowStack, List<ItemStack> projectiles, float speed, float divergence, boolean critical, @Nullable LivingEntity target, CallbackInfo ci, @Local(ordinal = 1) ItemStack arrowStack, @Local ProjectileEntity arrow) {
 		if (!FabConf.isEnabled("*.canhit") || !(bowStack.getItem() instanceof BowItem) || CanHitUtil.isExempt(shooter)) return;
@@ -51,7 +46,7 @@ public class MixinRangedWeaponItem {
 		}
 	}
 
-	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
+	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
 		method="shootAll(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;Ljava/util/List;FFZLnet/minecraft/entity/LivingEntity;)V")
 	public void shootAll$crossbow(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack crossbow, List<ItemStack> projectiles, float speed, float divergence, boolean critical, @Nullable LivingEntity target, CallbackInfo ci, @Local(ordinal = 1) ItemStack projectile, @Local ProjectileEntity proj) {
 		if (!FabConf.isEnabled("*.canhit") || !(crossbow.getItem() instanceof CrossbowItem) || CanHitUtil.isExempt(shooter)) return;

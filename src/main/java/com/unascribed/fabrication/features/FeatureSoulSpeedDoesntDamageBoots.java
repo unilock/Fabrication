@@ -5,7 +5,7 @@ import com.unascribed.fabrication.support.feature.DataPackFeature;
 
 @EligibleIf(configAvailable = "*.soul_speed_doesnt_damage_boots")
 public class FeatureSoulSpeedDoesntDamageBoots extends DataPackFeature {
-	public FeatureSoulSpeedDoesntDamageBoots(String path) {
+	public FeatureSoulSpeedDoesntDamageBoots() {
 		super("soul_speed_doesnt_damage_boots");
 	}
 }

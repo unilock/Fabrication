@@ -22,7 +22,6 @@ import com.unascribed.fabrication.support.Env;
 
 import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.text.Text;
@@ -60,17 +59,18 @@ public abstract class MixinEnchantmentScreen extends HandledScreen<EnchantmentSc
 		return original;
 	}
 
-	@Hijack(target="Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V",
-			method="drawBackground(Lnet/minecraft/client/gui/DrawContext;FII)V")
-	public boolean fabrication$noXpHijackDrawTexture(DrawContext drawContext, Identifier texture, int x, int y, int u, int v) {
-		if (FabConf.isEnabled("*.no_experience") && (v == 223 || v == 239)) {
-			if (v == 223) {
-				drawContext.drawText(textRenderer, ""+((u/16)+1), x+98, y+8, 0x5577FF, true);
-			}
-			return true;
-		}
-		return false;
-	}
+	// TODO: I have no idea what this is supposed to be doing.
+//	@Hijack(target="Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V",
+//			method="drawBackground(Lnet/minecraft/client/gui/DrawContext;FII)V")
+//	public boolean fabrication$noXpHijackDrawTexture(DrawContext drawContext, Identifier texture, int x, int y, int u, int v) {
+//		if (FabConf.isEnabled("*.no_experience") && (v == 223 || v == 239)) {
+//			if (v == 223) {
+//				drawContext.drawText(textRenderer, ""+((u/16)+1), x+98, y+8, 0x5577FF, true);
+//			}
+//			return true;
+//		}
+//		return false;
+//	}
 
 	@FabModifyVariable(at=@At(value="INVOKE", target="net/minecraft/client/font/TextRenderer.getWidth(Ljava/lang/String;)I", ordinal=0),
 			method="drawBackground(Lnet/minecraft/client/gui/DrawContext;FII)V", ordinal=0)

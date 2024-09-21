@@ -20,15 +20,15 @@ public class DataPackFeature implements Feature {
 	}
 
 	@Override
-	public void apply(World world) {
-		if (!active && (world == null || reload(world))) {
+	public void apply(MinecraftServer minecraftServer, World world) {
+		if (!active && (minecraftServer == null || reload(minecraftServer))) {
 			active = true;
 		}
 	}
 
 	@Override
-	public boolean undo(World world) {
-		if (active && (world == null || reload(world))) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
+		if (active && (minecraftServer == null || reload(minecraftServer))) {
 			active = false;
 			return true;
 		}
@@ -40,8 +40,7 @@ public class DataPackFeature implements Feature {
 		return configKey;
 	}
 
-	private boolean reload(World world) {
-		MinecraftServer minecraftServer = world.getServer();
+	private boolean reload(MinecraftServer minecraftServer) {
 		ResourcePackManager resourcePackManager = minecraftServer.getDataPackManager();
 		SaveProperties saveProperties = minecraftServer.getSaveProperties();
 		Collection<String> collection = resourcePackManager.getEnabledIds();

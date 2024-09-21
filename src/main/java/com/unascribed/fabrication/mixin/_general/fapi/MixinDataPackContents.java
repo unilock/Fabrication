@@ -17,7 +17,8 @@ import java.util.concurrent.Executor;
 
 @Mixin(DataPackContents.class)
 public class MixinDataPackContents {
-	@FabInject(at=@At("RETURN"), method="reload")
+	// TODO: @ModifyReturnValue would be better
+	@FabInject(at=@At("RETURN"), method="reload", cancellable=true)
 	private static void reload(ResourceManager manager, CombinedDynamicRegistries<ServerDynamicRegistryType> dynamicRegistries, FeatureSet enabledFeatures, CommandManager.RegistrationEnvironment environment, int functionPermissionLevel, Executor prepareExecutor, Executor applyExecutor, CallbackInfoReturnable<CompletableFuture<DataPackContents>> cir) {
 		cir.setReturnValue(cir.getReturnValue().whenComplete((dataPackContents, throwable) -> {
 			if (dataPackContents != null && throwable == null) {

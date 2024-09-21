@@ -331,30 +331,6 @@ public class FabRefl {
 	@Environment(EnvType.CLIENT)
 	public static final class Client {
 		@FabReflField
-		private static final String sprite_x_field = "net/minecraft/client/texture/Sprite;x";
-		private static final MethodHandle sprite_x = unreflectGetter("Sprite", () -> Sprite.class, sprite_x_field)
-				.requiredBy("*.old_lava", "atlas_viewer").get();
-		public static int getX(Sprite subject) {
-			try {
-				return (int)checkHandle(sprite_x).invokeExact(subject);
-			} catch (Throwable t) {
-				throw rethrow(t);
-			}
-		}
-
-		@FabReflField
-		private static final String sprite_y_field = "net/minecraft/client/texture/Sprite;y";
-		private static final MethodHandle sprite_y = unreflectGetter("Sprite", () -> Sprite.class, sprite_y_field)
-				.requiredBy("*.old_lava", "atlas_viewer").get();
-		public static int getY(Sprite subject) {
-			try {
-				return (int)checkHandle(sprite_y).invokeExact(subject);
-			} catch (Throwable t) {
-				throw rethrow(t);
-			}
-		}
-
-		@FabReflField
 		private static final String sat_sprites_field = "net/minecraft/client/texture/SpriteAtlasTexture;sprites";
 		private static final MethodHandle sat_sprites = unreflectGetter("SpriteAtlasTexture", () -> SpriteAtlasTexture.class, sat_sprites_field)
 				.requiredBy("*.old_lava", "atlas_viewer").get();

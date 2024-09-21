@@ -20,15 +20,15 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Language;
 import net.minecraft.world.World;
 
@@ -84,12 +84,12 @@ public class FeatureDimensionalTools implements Feature {
 		return "*.dimensional_tools";
 	}
 
-	public static void handleCraft(RecipeInputInventory inv, ItemStack stack) {
+	public static void handleCraft(CraftingRecipeInput inv, ItemStack stack) {
 		if (LoaderDimensionalTools.isSubstitutable(stack.getItem())) {
 			int count = 0;
 			Multiset<MohsIdentifier> dimensions = null;
-			for (int i = 0; i < inv.size(); i++) {
-				ItemStack ing = inv.getStack(i);
+			for (int i = 0; i < inv.getSize(); i++) {
+				ItemStack ing = inv.getStackInSlot(i);
 				if (!ing.isEmpty()) {
 					Set<MohsIdentifier> assoc = LoaderDimensionalTools.getAssociatedDimensionsForIngredient(ing);
 					if (assoc.isEmpty()) return;

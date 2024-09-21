@@ -25,7 +25,7 @@ public class FeatureShowBeeCountTooltip implements Feature {
 			applied = true;
 			Agnos.runForTooltipRender((stack, lines) -> {
 				if (active && !stack.isEmpty() && stack.contains(DataComponentTypes.BLOCK_ENTITY_DATA)) {
-					NbtCompound tag = stack.get(DataComponentTypes.BLOCK_ENTITY_DATA).getNbt().getCompound("BlockEntityTag");
+					NbtCompound tag = stack.get(DataComponentTypes.BLOCK_ENTITY_DATA).getNbt();
 					if (tag == null || !tag.contains("Bees", NbtElement.LIST_TYPE)) return;
 
 					lines.add(Text.literal("Bees: " + ((NbtList) tag.get("Bees")).size()));

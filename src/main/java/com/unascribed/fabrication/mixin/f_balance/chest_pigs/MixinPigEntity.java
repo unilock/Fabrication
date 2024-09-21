@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.injection.FabInject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -39,7 +39,7 @@ public abstract class MixinPigEntity extends Entity {
 	public MixinPigEntity(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	@Inject(method="dropInventory()V", at=@At("HEAD"))
+	@FabInject(method="dropInventory()V", at=@At("HEAD"))
 	protected void dropInventory(CallbackInfo info) {
 		if (fabrication$chestPig != null) {
 			switch (fabrication$chestPig.size()) {
@@ -57,7 +57,7 @@ public abstract class MixinPigEntity extends Entity {
 			}
 		}
 	}
-	@Inject(method="interactMob(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at=@At("HEAD"), cancellable=true)
+	@FabInject(method="interactMob(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at=@At("HEAD"), cancellable=true)
 	private void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> info) {
 		if (!FabConf.isEnabled("*.chest_pigs")) return;
 		if (player.isSneaking()) {
@@ -116,7 +116,7 @@ public abstract class MixinPigEntity extends Entity {
 			}
 		}
 	}
-	@Inject(method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at=@At("HEAD"))
+	@FabInject(method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at=@At("HEAD"))
 	public void writeCustomDataToTag(NbtCompound tags, CallbackInfo info) {
 		if (fabrication$chestPig != null) {
 			NbtCompound tag = new NbtCompound();
@@ -129,7 +129,7 @@ public abstract class MixinPigEntity extends Entity {
 			tags.put("fabrication$chestPigs$inv",tag);
 		}
 	}
-	@Inject(method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at=@At("HEAD"))
+	@FabInject(method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at=@At("HEAD"))
 	public void readCustomDataFromTag(NbtCompound tags, CallbackInfo info) {
 		NbtCompound tag = tags.getCompound("fabrication$chestPigs$inv");
 		if (tag == null || !tags.contains("fabrication$chestPigs$size")) return;

@@ -16,6 +16,14 @@ import org.spongepowered.asm.mixin.injection.At;
 @EligibleIf(anyConfigAvailable="*.infibows")
 public class MixinCrossbowItem {
 
+	// TODO
+//	@WrapOperation(at= @At(value="INVOKE", target="Ljava/util/List;isEmpty()Z"), method="loadProjectiles(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;)Z")
+//	private static boolean fabrication$modifyCreativeModeLoadProjectile(List<ItemStack> instance, Operation<Boolean> original, LivingEntity shooter, ItemStack crossbow) {
+//		if (FabConf.isAnyEnabled("*.infibows") && EnchantmentHelperHelper.getLevel(shooter.getRegistryManager(), Enchantments.INFINITY, crossbow) > 0 && original.call(instance)) {
+//			instance.add(Items.ARROW.getDefaultStack());
+//		}
+//		return original.call(instance);
+//	}
 	@FabModifyVariable(at=@At("HEAD"), method="loadProjectile(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;ZZ)Z",
 			argsOnly=true, index=2)
 	private static ItemStack fabrication$modifyCreativeModeLoadProjectile(ItemStack projectile, LivingEntity shooter, ItemStack crossbow, ItemStack p, boolean sim, boolean creative) {

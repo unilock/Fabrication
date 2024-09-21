@@ -23,8 +23,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 
-import javax.xml.crypto.Data;
-
 @Mixin(DrawContext.class)
 @EligibleIf(configAvailable="*.show_bee_count_on_item", envMatches=Env.CLIENT)
 public abstract class MixinDrawContext {

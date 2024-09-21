@@ -51,10 +51,10 @@ public class FeatureOldLava implements Feature {
 				{
 					NativeImage image = new NativeImage(lavaWidth, lavaHeight, false);
 					newLava = new SpriteLava(atlas.getId(), new SpriteContents(still, new SpriteDimensions(lavaWidth, lavaHeight), image, ResourceMetadata.NONE),
-							data.width(), data.height(), FabRefl.Client.getX(originalLava), FabRefl.Client.getY(originalLava), image);
+							data.width(), data.height(), originalLava.getX(), originalLava.getY(), image);
 					image = new NativeImage(lavaFlowWidth, lavaFlowHeight, false);
 					newLavaFlow = new SpriteLavaFlow(atlas.getId(), new SpriteContents(flow, new SpriteDimensions(lavaFlowWidth, lavaFlowHeight), image, ResourceMetadata.NONE),
-							data.width(), data.height(), FabRefl.Client.getX(originalLavaFlow), FabRefl.Client.getY(originalLavaFlow), image);
+							data.width(), data.height(), originalLavaFlow.getX(), originalLavaFlow.getY(), image);
 				}
 				Map<Identifier, Sprite> map = new HashMap<>(FabRefl.Client.getSprites(atlas));
 				map.put(still, newLava);

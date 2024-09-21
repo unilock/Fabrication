@@ -13,6 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -26,9 +27,8 @@ public class FeatureWeaponsAcceptSilk extends DataPackFeature {
 	}
 
 	@Override
-	public void apply(World world) {
-		super.apply(world);
-		Agnos.runForDynamicRegistryReload(registries -> {
+	public void apply(MinecraftServer minecraftServer, World world) {
+		Agnos.runForDynamicRegistryReload(this.getConfigKey(), registries -> {
 			Optional<RegistryEntry.Reference<Enchantment>> optional = EnchantmentHelperHelper.getEntry(registries, Enchantments.SILK_TOUCH);
 			if (optional.isPresent()) {
 				Enchantment silkTouch = optional.get().value();
@@ -52,5 +52,12 @@ public class FeatureWeaponsAcceptSilk extends DataPackFeature {
 				accessorEnchantment.setExclusiveSet(RegistryEntryList.of(mutableExlusiveSet));
 			}
 		});
+		super.apply(minecraftServer, world);
+	}
+
+	@Override
+	public boolean undo(MinecraftServer minecraftServer, World world) {
+		Agnos.undoRunForDynamicRegistryReload(this.getConfigKey());
+		return super.undo(minecraftServer, world);
 	}
 }

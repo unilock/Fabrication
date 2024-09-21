@@ -5,7 +5,7 @@ import com.unascribed.fabrication.support.feature.DataPackFeature;
 
 @EligibleIf(configAvailable = "*.bedrock_impaling")
 public class FeatureBedrockImpaling extends DataPackFeature {
-	public FeatureBedrockImpaling(String path) {
+	public FeatureBedrockImpaling() {
 		super("bedrock_impaling");
 	}
 }
