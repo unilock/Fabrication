@@ -152,9 +152,7 @@ jar {
         def lge = net.fabricmc.loom.LoomGradleExtension.get(project)
         try (def serviceManager = new net.fabricmc.loom.util.service.ScopedSharedServiceManager()) {
             def mappings = lge.getMappingConfiguration().getMappingsService(serviceManager).getMappingTree()
-            project(":ap") {
-                task run
-            }
+            project(":ap").tasks.run.exec()
             Map<String, Mapp> toInter = new HashMap<>()
             List<String> fabRefl = Files.readAllLines(file('build/tmp/fabReflToMap').toPath())
 

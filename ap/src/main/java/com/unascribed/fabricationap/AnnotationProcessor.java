@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_21)
 @SupportedAnnotationTypes({
 		"com.unascribed.fabrication.support.injection.ModifyReturn",
 		"com.unascribed.fabrication.support.injection.Hijack",

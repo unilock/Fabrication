@@ -16,7 +16,7 @@ public class Main {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		ClassLoader classLoader = Main.class.getClassLoader();
-		File file = new File("build/tmp/fabReflToMapPre");
+		File file = new File("../build/tmp/fabToRefMapPre");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
 		StringBuilder out = new StringBuilder();
 		while (reader.ready()) {
@@ -89,14 +89,14 @@ public class Main {
 				outTargets.add(strb.toString());
 			}
 
-			out.append(source);
+			out.append(source).append('\n');
 			Main.append(outMixins, out);
-			out.append(methods);
+			out.append(methods).append('\n');
 			Main.append(outTargets, out);
 		}
 		if (!out.isEmpty()) {
 			try {
-				FileWriter fw = new FileWriter("build/tmp/fabToRefMap");
+				FileWriter fw = new FileWriter("../build/tmp/fabToRefMap");
 				fw.write(out.toString());
 				fw.close();
 			} catch (IOException ex) {
