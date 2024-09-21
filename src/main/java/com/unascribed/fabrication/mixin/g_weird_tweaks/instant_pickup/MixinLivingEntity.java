@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.logic.InstantPickup;
@@ -28,7 +28,7 @@ public abstract class MixinLivingEntity extends Entity {
 	@Shadow
 	protected PlayerEntity attackingPlayer;
 
-	@FabInject(at=@At("TAIL"), method="onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
+	@Inject(at=@At("TAIL"), method="onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	public void onDeath(DamageSource src, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.instant_pickup") && src.getSource() instanceof PlayerEntity) {
 			InstantPickup.slurp(getWorld(), getBoundingBox().expand(0.25), (PlayerEntity)src.getSource());

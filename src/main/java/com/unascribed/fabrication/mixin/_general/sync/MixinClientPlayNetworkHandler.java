@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.client.FScriptScreen;
@@ -67,7 +67,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 		super(client, connection, connectionState);
 	}
 
-	@FabInject(at=@At("TAIL"), method="onGameJoin(Lnet/minecraft/network/packet/s2c/play/GameJoinS2CPacket;)V")
+	@Inject(at=@At("TAIL"), method="onGameJoin(Lnet/minecraft/network/packet/s2c/play/GameJoinS2CPacket;)V")
 	public void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		data.writeVarInt(0);

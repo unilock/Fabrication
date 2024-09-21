@@ -5,7 +5,7 @@ import net.minecraft.block.entity.SignText;
 import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.unascribed.fabrication.support.EligibleIf;
@@ -19,7 +19,7 @@ import net.minecraft.util.DyeColor;
 @EligibleIf(configAvailable="*.legible_signs", envMatches=Env.CLIENT)
 public class MixinSignBlockEntityRenderer {
 
-	@FabInject(at=@At("HEAD"), method="getColor(Lnet/minecraft/block/entity/SignText;)I", cancellable = true)
+	@Inject(at=@At("HEAD"), method="getColor(Lnet/minecraft/block/entity/SignText;)I", cancellable = true)
 	private static void modifySignTextColor(SignText sign, CallbackInfoReturnable<Integer> cir) {
 		if (FabConf.isEnabled("*.legible_signs") && !sign.isGlowing()){
 			DyeColor dc = sign.getColor();

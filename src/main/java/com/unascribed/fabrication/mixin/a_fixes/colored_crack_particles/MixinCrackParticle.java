@@ -4,10 +4,9 @@ import com.unascribed.fabrication.FabConf;
 import net.minecraft.item.PotionItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 
@@ -25,11 +24,11 @@ public abstract class MixinCrackParticle extends SpriteBillboardParticle {
 		super(arg, d, e, f);
 	}
 
-	@FabInject(at=@At("TAIL"), method="<init>(Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/item/ItemStack;)V")
+	@Inject(at=@At("TAIL"), method="<init>(Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/item/ItemStack;)V")
 	public void construct(ClientWorld world, double x, double y, double z, ItemStack stack, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.colored_crack_particles")) return;
 		if (stack.getItem() instanceof PotionItem) return;
-		int c = FabRefl.Client.getItemColors(MinecraftClient.getInstance()).getColor(stack, 0);
+		int c = MinecraftClient.getInstance().itemColors.getColor(stack, 0);
 		setColor(((c>>16)&0xFF)/255f, ((c>>8)&0xFF)/255f, (c&0xFF)/255f);
 	}
 

@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.unascribed.fabrication.FabRefl;
 
 import com.google.common.collect.Lists;
 import org.joml.Matrix4f;
@@ -118,14 +117,14 @@ public class AtlasViewerScreen extends Screen {
 		SpriteAtlasTexture sat = getAtlas();
 		renderTooltip(drawContext, Lists.<Text>newArrayList(
 				Text.literal(atlas.toString()),
-				Text.literal("§7"+atlasWidth+"×"+atlasHeight+"×"+(atlasMaxLevel+1)+" @"+(level+1)+" §f|§7 "+FabRefl.Client.getSprites(sat).size()+" sprites")
+				Text.literal("§7"+atlasWidth+"×"+atlasHeight+"×"+(atlasMaxLevel+1)+" @"+(level+1)+" §f|§7 "+sat.sprites.size()+" sprites")
 			), -9, 15);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		List<Sprite> sprites = Lists.newArrayList();
-		for (Sprite s : FabRefl.Client.getSprites(sat).values()) {
-			int x = FabRefl.Client.getX(s);
-			int y = FabRefl.Client.getY(s);
+		for (Sprite s : sat.sprites.values()) {
+			int x = s.getX();
+			int y = s.getY();
 			int w = s.getContents().getWidth();
 			int h = s.getContents().getHeight();
 			if (mouseX >= x && mouseX < x+w && mouseY >= y && mouseY < y+h) {
@@ -135,8 +134,8 @@ public class AtlasViewerScreen extends Screen {
 		RenderSystem.disableCull();
 		RenderSystem.setShader(GameRenderer::getPositionProgram);
 		for (Sprite s : sprites) {
-			int x = FabRefl.Client.getX(s);
-			int y = FabRefl.Client.getY(s);
+			int x = s.getX();
+			int y = s.getY();
 			int w = s.getContents().getWidth();
 			int h = s.getContents().getHeight();
 			RenderSystem.setShaderColor(1, 0, 0, 0.2f);
@@ -159,8 +158,8 @@ public class AtlasViewerScreen extends Screen {
 			}
 		} else if (sprites.size() == 1) {
 			Sprite s = sprites.get(0);
-			int x = FabRefl.Client.getX(s);
-			int y = FabRefl.Client.getY(s);
+			int x = s.getX();
+			int y = s.getY();
 			int w = s.getContents().getWidth();
 			int h = s.getContents().getHeight();
 			Identifier tex = Identifier.of(s.getContents().getId().getNamespace(), "textures/"+s.getContents().getId().getPath()+".png");
@@ -192,8 +191,8 @@ public class AtlasViewerScreen extends Screen {
 				Text.literal("§c\u26A0 MULTIPLE SPRITES \u26A0")
 			);
 			for (Sprite s : sprites) {
-				int x = FabRefl.Client.getX(s);
-				int y = FabRefl.Client.getY(s);
+				int x = s.getX();
+				int y = s.getY();
 				int w = s.getContents().getWidth();
 				int h = s.getContents().getHeight();
 				li.add(Text.literal(s.getContents().getId().toString()));

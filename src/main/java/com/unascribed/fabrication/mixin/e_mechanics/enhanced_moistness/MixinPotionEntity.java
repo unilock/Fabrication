@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.enhanced_moistness;
 import com.unascribed.fabrication.FabConf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -27,7 +27,7 @@ public abstract class MixinPotionEntity extends ThrownItemEntity {
 	}
 
 
-	@FabInject(at=@At("TAIL"), method="applyWater()V", locals=LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at=@At("TAIL"), method="applyWater()V", locals=LocalCapture.CAPTURE_FAILHARD)
 	public void damageEntitiesHurtByWater(CallbackInfo ci, Box box) {
 		if (!FabConf.isEnabled("*.enhanced_moistness") || getWorld().isClient) return;
 		for (Entity e : getWorld().getEntitiesByClass(Entity.class, box, e -> true)) {

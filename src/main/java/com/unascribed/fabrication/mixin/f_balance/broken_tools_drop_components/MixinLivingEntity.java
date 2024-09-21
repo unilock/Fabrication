@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.loaders.LoaderGearComponents;
 import com.unascribed.fabrication.loaders.LoaderGearComponents.ItemMaterialValue;
 import com.unascribed.fabrication.loaders.LoaderGearComponents.MaterialData;
@@ -50,7 +49,7 @@ public abstract class MixinLivingEntity extends Entity {
 		super(type, world);
 	}
 
-	@FabInject(at=@At("HEAD"), method= "sendEquipmentBreakStatus(Lnet/minecraft/item/Item;Lnet/minecraft/entity/EquipmentSlot;)V")
+	@Inject(at=@At("HEAD"), method= "sendEquipmentBreakStatus(Lnet/minecraft/item/Item;Lnet/minecraft/entity/EquipmentSlot;)V")
 	public void sendEquipmentBreakStatus(Item item, EquipmentSlot slot, CallbackInfo ci) {
 		shatter(slot, ((LivingEntity)(Object)this).getEquippedStack(slot));
 	}
@@ -70,7 +69,7 @@ public abstract class MixinLivingEntity extends Entity {
 			double dropChance = 1;
 			Object self = this;
 			if (self instanceof MobEntity) {
-				dropChance = FabRefl.MobEntity_getDropChance((MobEntity)self, slot);
+				dropChance = ((MobEntity)self).getDropChance(slot);
 				if (dropChance > 1) dropChance = 1;
 				if (dropChance <= 0) continue;
 			}

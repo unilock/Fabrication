@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.client.FlatItems;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @EligibleIf(configAvailable="*.flat_items", envMatches=Env.CLIENT)
 public class MixinHeldItemRenderer {
 
-	@FabModifyVariable(at=@At("HEAD"), method="renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+	@ModifyVariable(at=@At("HEAD"), method="renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
 			index=3, argsOnly=true)
 	public ModelTransformationMode renderItemTransformMode(ModelTransformationMode orig, LivingEntity entity, ItemStack stack, ModelTransformationMode orig2, boolean leftHanded, MatrixStack matrices) {
 		if (FabConf.isEnabled("*.flat_items")) {

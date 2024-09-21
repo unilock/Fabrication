@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.f_balance.tools_in_bundles;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.BundleHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBundleItem {
 
 
-	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/screen/slot/Slot;getStack()Lnet/minecraft/item/ItemStack;"),
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/screen/slot/Slot;getStack()Lnet/minecraft/item/ItemStack;"),
 			method="onStackClicked(Lnet/minecraft/item/ItemStack;Lnet/minecraft/screen/slot/Slot;Lnet/minecraft/util/ClickType;Lnet/minecraft/entity/player/PlayerEntity;)Z")
 	public void onStackClicked(ItemStack bundle, Slot slot, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.tools_in_bundles")) {

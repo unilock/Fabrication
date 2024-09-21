@@ -3,8 +3,8 @@ package com.unascribed.fabrication.mixin.d_minor_mechanics.furnace_minecart_resu
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.ResupplyingFurnaceCart;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryFurnaceCartResupplying;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.Entity;
@@ -23,12 +23,12 @@ import java.util.function.Predicate;
 public class MixinHopperBlockEntity {
 
 
-	@FabModifyArg(method="getEntityInventoryAt(Lnet/minecraft/world/World;DDD)Lnet/minecraft/inventory/Inventory;", at=@At(value="INVOKE", target="Lnet/minecraft/world/World;getOtherEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;"))
+	@ModifyArg(method="getEntityInventoryAt(Lnet/minecraft/world/World;DDD)Lnet/minecraft/inventory/Inventory;", at=@At(value="INVOKE", target="Lnet/minecraft/world/World;getOtherEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;"))
 	private static Predicate addFurnaceCarts(Predicate predicate) {
 		if (!FabConf.isEnabled("*.furnace_minecart_resupplying")) return predicate;
 		return ForgeryFurnaceCartResupplying.INSTANCE.and(predicate);
 	}
-	@FabInject(method="getEntityInventoryAt(Lnet/minecraft/world/World;DDD)Lnet/minecraft/inventory/Inventory;", at=@At(value="INVOKE", target="Ljava/util/List;isEmpty()Z"), cancellable=true)
+	@Inject(method="getEntityInventoryAt(Lnet/minecraft/world/World;DDD)Lnet/minecraft/inventory/Inventory;", at=@At(value="INVOKE", target="Ljava/util/List;isEmpty()Z"), cancellable=true)
 	private static void checkFurnaceCarts(World world, double x, double y, double z, CallbackInfoReturnable<Inventory> cir) {
 		List<ResupplyingFurnaceCart> furnaceList = ForgeryFurnaceCartResupplying.fabrication$fmr$lastCart.get();
 		if (furnaceList == null) return;

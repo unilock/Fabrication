@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.e_mechanics.grindstone_disenchanting;
 
 import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +29,7 @@ public abstract class MixinGrindstoneScreenHandler extends ScreenHandler {
 	@Shadow
 	private ItemStack grind(ItemStack item) { return null; }
 
-	@FabInject(at=@At("TAIL"), method="<init>(ILnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/screen/ScreenHandlerContext;)V")
+	@Inject(at=@At("TAIL"), method="<init>(ILnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/screen/ScreenHandlerContext;)V")
 	private void construct(CallbackInfo ci) {
 		for (Slot s : slots) {
 			if (s instanceof SetOwner) {
@@ -38,7 +38,7 @@ public abstract class MixinGrindstoneScreenHandler extends ScreenHandler {
 		}
 	}
 
-	@FabInject(at=@At("HEAD"), method="updateResult()V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="updateResult()V", cancellable=true)
 	private void updateResult(CallbackInfo ci) {
 		if (getSlot(1).getStack().getItem() == Items.BOOK && getSlot(1).getStack().getCount() == 1 && getSlot(0).getStack().hasEnchantments()) {
 			getSlot(2).setStack(grind(getSlot(0).getStack()));

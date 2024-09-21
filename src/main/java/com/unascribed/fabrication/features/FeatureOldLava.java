@@ -1,7 +1,6 @@
 package com.unascribed.fabrication.features;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.client.SpriteLava;
 import com.unascribed.fabrication.client.SpriteLavaFlow;
@@ -10,6 +9,7 @@ import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.MipmapHelper;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -50,19 +50,19 @@ public class FeatureOldLava implements Feature {
 				{
 					NativeImage image = new NativeImage(lavaWidth, lavaHeight, false);
 					newLava = new SpriteLava(atlas.getId(), new SpriteContents(still, new SpriteDimensions(lavaWidth, lavaHeight), image, ResourceMetadata.NONE),
-							data.width(), data.height(), FabRefl.Client.getX(originalLava), FabRefl.Client.getY(originalLava), image);
+							data.width(), data.height(), originalLava.getX(), originalLava.getY(), image);
 					image = new NativeImage(lavaFlowWidth, lavaFlowHeight, false);
 					newLavaFlow = new SpriteLavaFlow(atlas.getId(), new SpriteContents(flow, new SpriteDimensions(lavaFlowWidth, lavaFlowHeight), image, ResourceMetadata.NONE),
-							data.width(), data.height(), FabRefl.Client.getX(originalLavaFlow), FabRefl.Client.getY(originalLavaFlow), image);
+							data.width(), data.height(), originalLavaFlow.getX(), originalLavaFlow.getY(), image);
 				}
-				Map<Identifier, Sprite> map = new HashMap<>(FabRefl.Client.getSprites(atlas));
+				Map<Identifier, Sprite> map = new HashMap<>(atlas.sprites);
 				map.put(still, newLava);
 				map.put(flow, newLavaFlow);
-				FabRefl.Client.setSprites(atlas, map);
-				List<Sprite.TickableAnimation> animatedSprites = new ArrayList<>(FabRefl.Client.getAnimatedSprites(atlas));
+				atlas.sprites = map;
+				List<Sprite.TickableAnimation> animatedSprites = new ArrayList<>(atlas.animatedSprites);
 				animatedSprites.add(newLava);
 				animatedSprites.add(newLavaFlow);
-				FabRefl.Client.setAnimatedSprites(atlas, animatedSprites);
+				atlas.animatedSprites = animatedSprites;
 				// simulate the automata for 100 ticks to prevent a "fade-in" effect
 				for (int i = 0; i < 100; i++) {
 					newLava.tickAnimation();
@@ -104,11 +104,11 @@ public class FeatureOldLava implements Feature {
 			int h = mip.getHeight();
 			for (int x = 0; x < w; ++x) {
 				for (int y = 0; y < h; ++y) {
-					mip.setColor(x, y, FabRefl.Client.MipmapHelper_blend(
-							src.getColor(x * 2 + 0, y * 2 + 0),
-							src.getColor(x * 2 + 1, y * 2 + 0),
-							src.getColor(x * 2 + 0, y * 2 + 1),
-							src.getColor(x * 2 + 1, y * 2 + 1), false));
+					mip.setColor(x, y, MipmapHelper.blend(
+						src.getColor(x * 2 + 0, y * 2 + 0),
+						src.getColor(x * 2 + 1, y * 2 + 0),
+						src.getColor(x * 2 + 0, y * 2 + 1),
+						src.getColor(x * 2 + 1, y * 2 + 1), false));
 				}
 			}
 		}

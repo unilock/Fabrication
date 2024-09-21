@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.f_balance.soul_speed_doesnt_damage_boot
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
@@ -26,7 +26,7 @@ public class MixinEnchantment {
 	@Mutable
 	private ComponentMap effects;
 
-	@FabInject(at=@At("RETURN"), method="<init>")
+	@Inject(at=@At("RETURN"), method="<init>")
 	private void modify(Text description, Enchantment.Definition definition, RegistryEntryList<Enchantment> exclusiveSet, ComponentMap effects, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.soul_speed_doesnt_damage_boots") && EnchantmentHelperHelper.matches(this, Enchantments.SOUL_SPEED)) {
 			if (this.effects.contains(EnchantmentEffectComponentTypes.ITEM_DAMAGE)) {

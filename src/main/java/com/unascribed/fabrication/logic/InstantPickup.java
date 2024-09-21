@@ -1,7 +1,5 @@
 package com.unascribed.fabrication.logic;
 
-import com.unascribed.fabrication.FabRefl;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -14,7 +12,7 @@ public class InstantPickup {
 	public static void slurp(World world, Box box, PlayerEntity breaker) {
 		for (ItemEntity ie : world.getEntitiesByType(EntityType.ITEM, box, (e) -> ((Entity)e).age == 0)) {
 			if (!ie.isAlive()) continue;
-			int oldPickupDelay = FabRefl.getPickupDelay(ie);
+			int oldPickupDelay = ie.pickupDelay;
 			ie.setPickupDelay(0);
 			ie.getCommandTags().add("interactic.ignore_auto_pickup_rule");
 			ie.onPlayerCollision(breaker);

@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.FabModifyConst;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
@@ -66,7 +66,7 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 	@Shadow
 	public abstract ItemStack getStack();
 
-	@FabInject(at=@At("HEAD"), method="tick()V")
+	@Inject(at=@At("HEAD"), method="tick()V")
 	public void tickHead(CallbackInfo ci) {
 		if (fabrication$extraTime > 0) {
 			fabrication$extraTime--;
@@ -86,24 +86,24 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 		}
 	}
 
-	@FabInject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", cancellable=true)
 	public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> ci) {
 		if (fabrication$invincible || (FabConf.isEnabled("*.item_despawn") && getWorld().isClient)) {
 			ci.setReturnValue(false);
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="setStack(Lnet/minecraft/item/ItemStack;)V")
+	@Inject(at=@At("TAIL"), method="setStack(Lnet/minecraft/item/ItemStack;)V")
 	public void setStack(ItemStack stack, CallbackInfo ci) {
 		calculateDespawn();
 	}
 
-	@FabInject(at=@At("TAIL"), method="setThrower(Lnet/minecraft/entity/Entity;)V")
+	@Inject(at=@At("TAIL"), method="setThrower(Lnet/minecraft/entity/Entity;)V")
 	public void setThrower(Entity id, CallbackInfo ci) {
 		calculateDespawn();
 	}
 
-	@FabModifyConst(constant=@Constant(intValue=-32768), method="canMerge()Z")
+	@ModifyConstant(constant=@Constant(intValue=-32768), method="canMerge()Z")
 	public int modifyIllegalAge(int orig) {
 		// age-1 will never be equal to age; short-circuits the "age != -32768" check and allows
 		// items set to "invincible" to stack together
@@ -220,7 +220,7 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void writeCustomDataToTag(NbtCompound tag, CallbackInfo ci) {
 		if (fabrication$extraTime > 0) tag.putInt("fabrication:ExtraTime", fabrication$extraTime);
 		tag.putLong("fabrication:TrueAge", fabrication$trueAge);
@@ -228,7 +228,7 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 		if (fabrication$invincible) tag.putBoolean("fabrication:Invincible", true);
 	}
 
-	@FabInject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void readCustomDataFromTag(NbtCompound tag, CallbackInfo ci) {
 		fabrication$extraTime = tag.getInt("fabrication:ExtraTime");
 		fabrication$trueAge = tag.getLong("fabrication:TrueAge");

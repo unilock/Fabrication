@@ -3,8 +3,8 @@ package com.unascribed.fabrication.mixin.c_tweaks.rainbow_experience;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryRandom;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.ExperienceOrbEntityRenderer;
@@ -26,13 +26,13 @@ public class MixinExperienceOrbEntityRenderer {
 	private int fabrication$orbColor7 = 0;
 
 
-	@FabInject(at=@At("HEAD"), method="render(Lnet/minecraft/entity/ExperienceOrbEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
+	@Inject(at=@At("HEAD"), method="render(Lnet/minecraft/entity/ExperienceOrbEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public void updateSeed(ExperienceOrbEntity experienceOrbEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.rainbow_experience")) return;
 		fabrication$colorDecider.setSeed(experienceOrbEntity.getUuid().hashCode());
 	}
 
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/ExperienceOrbEntityRenderer;vertex(Lnet/minecraft/client/render/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V"),
+	@ModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/ExperienceOrbEntityRenderer;vertex(Lnet/minecraft/client/render/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V"),
 			index=5, method="render(Lnet/minecraft/entity/ExperienceOrbEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public int addVertex5(int i) {
 		if (!FabConf.isEnabled("*.rainbow_experience")) return i;
@@ -50,13 +50,13 @@ public class MixinExperienceOrbEntityRenderer {
 		fabrication$orbColor7 = (int)((b1 + ((b2 - b1) * a)) * 255);
 		return (int)((r1 + ((r2 - r1) * a)) * 255);
 	}
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/ExperienceOrbEntityRenderer;vertex(Lnet/minecraft/client/render/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V"),
+	@ModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/ExperienceOrbEntityRenderer;vertex(Lnet/minecraft/client/render/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V"),
 			index=6, method="render(Lnet/minecraft/entity/ExperienceOrbEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public int addVertex6(int i) {
 		if (!FabConf.isEnabled("*.rainbow_experience")) return i;
 		return fabrication$orbColor6;
 	}
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/ExperienceOrbEntityRenderer;vertex(Lnet/minecraft/client/render/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V"),
+	@ModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/ExperienceOrbEntityRenderer;vertex(Lnet/minecraft/client/render/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;FFIIIFFI)V"),
 			index=7, method="render(Lnet/minecraft/entity/ExperienceOrbEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public int addVertex7(int i) {
 		if (!FabConf.isEnabled("*.rainbow_experience")) return i;

@@ -1,8 +1,8 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.furnace_minecart_any_fuel;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +31,7 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 	@Shadow
 	private int fuel;
 
-	@FabInject(at=@At("HEAD"), method="interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;")
+	@Inject(at=@At("HEAD"), method="interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;")
 	public void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> ci) {
 		if (!FabConf.isEnabled("*.furnace_minecart_any_fuel")) return;
 		ItemStack itemStack = player.getStackInHand(hand);
@@ -46,9 +46,9 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 		}
 	}
 
-	@ModifyReturn(target="Lnet/minecraft/recipe/Ingredient;test(Lnet/minecraft/item/ItemStack;)Z",
+	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/recipe/Ingredient;test(Lnet/minecraft/item/ItemStack;)Z"),
 			method="interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;")
-	private static boolean fabrication$disableVanillaFuel(boolean original) {
+	private boolean fabrication$disableVanillaFuel(boolean original) {
 		return !FabConf.isEnabled("*.furnace_minecart_any_fuel") && original;
 	}
 

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import com.unascribed.fabrication.support.EligibleIf;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +25,7 @@ public abstract class MixinWanderingTraderManager {
 	@Shadow @Final private Random random;
 	private static final Predicate<PlayerEntity> fabrication$noWanderingTraderPredicate = ConfigPredicates.getFinalPredicate("*.no_wandering_trader");
 
-	@FabModifyVariable(at=@At(value="STORE", ordinal=0), method="trySpawn(Lnet/minecraft/server/world/ServerWorld;)Z")
+	@ModifyVariable(at=@At(value="STORE", ordinal=0), method="trySpawn(Lnet/minecraft/server/world/ServerWorld;)Z")
 	protected PlayerEntity trySpawn(PlayerEntity old,ServerWorld world) {
 		if (!FabConf.isEnabled("*.no_wandering_trader")) return old;
 		List<ServerPlayerEntity> list = world.getPlayers(pe -> pe.isAlive() && !fabrication$noWanderingTraderPredicate.test(pe));

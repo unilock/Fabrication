@@ -7,7 +7,7 @@ import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,7 +33,7 @@ public abstract class MixinLivingEntity {
 	public abstract boolean blockedByShield(DamageSource source);
 
 	private static final Predicate<List<?>> fabrication$interruptingDamagePredicate = ConfigPredicates.getFinalPredicate("*.interrupting_damage");
-	@FabInject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
+	@Inject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
 	public void interruptUsage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (!FabConf.isEnabled("*.interrupting_damage")) return;
 		if (blockedByShield(source)) return;

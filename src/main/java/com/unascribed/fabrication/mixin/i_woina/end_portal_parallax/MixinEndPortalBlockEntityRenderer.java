@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.i_woina.end_portal_parallax;
 
 import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
@@ -50,7 +50,7 @@ public abstract class MixinEndPortalBlockEntityRenderer {
 	@Unique
 	private static final Random RANDOM = new Random(31100L);
 
-	@FabInject(at=@At("HEAD"), method="renderSide(Lnet/minecraft/block/entity/EndPortalBlockEntity;Lorg/joml/Matrix4f;Lnet/minecraft/client/render/VertexConsumer;FFFFFFFFLnet/minecraft/util/math/Direction;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="renderSide(Lnet/minecraft/block/entity/EndPortalBlockEntity;Lorg/joml/Matrix4f;Lnet/minecraft/client/render/VertexConsumer;FFFFFFFFLnet/minecraft/util/math/Direction;)V", cancellable=true)
 	public void fabrication$render(EndPortalBlockEntity be, Matrix4f model, VertexConsumer vertices, float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4, Direction side, CallbackInfo ci) {
 		if (canUseCompatFunctions() && FabConf.isEnabled("*.end_portal_parallax") && be.shouldDrawSide(side)) {
 			// YOU try to make it work with the gateway, I DARE YOU

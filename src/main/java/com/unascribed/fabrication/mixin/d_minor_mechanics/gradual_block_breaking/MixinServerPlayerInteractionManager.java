@@ -1,13 +1,12 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.gradual_block_breaking;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.Hijack;
-import com.unascribed.fabrication.support.injection.HijackReturn;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SnowBlock;
@@ -22,6 +21,7 @@ import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -41,7 +41,7 @@ public class MixinServerPlayerInteractionManager {
 	private BlockState fabrication$gradualBreakState = null;
 	private static final Predicate<PlayerEntity> fabrication$gradualBlockBreakingPredicate = ConfigPredicates.getFinalPredicate("*.gradual_block_breaking");
 
-	@ModifyReturn(target="Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;",
+	@ModifyReturnValue(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
 			method="tryBreakBlock(Lnet/minecraft/util/math/BlockPos;)Z")
 	public BlockState fabrication$gradualBreak(BlockState state, ServerWorld world, BlockPos pos) {
 		if (!FabConf.isEnabled("*.gradual_block_breaking")) return state;
@@ -74,16 +74,16 @@ public class MixinServerPlayerInteractionManager {
 		return state;
 	}
 
-	@Hijack(target="Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z",
+	@WrapWithCondition(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"),
 			method="tryBreakBlock(Lnet/minecraft/util/math/BlockPos;)Z")
-	public HijackReturn fabrication$gradualBreak(ServerWorld world, BlockPos pos) {
-		if (!FabConf.isEnabled("*.gradual_block_breaking")) return null;
+	public boolean fabrication$gradualBreak(ServerWorld instance, BlockPos pos, boolean b) {
+		if (!FabConf.isEnabled("*.gradual_block_breaking")) return true;
 		if (fabrication$gradualBreakState != null) {
 			world.setBlockState(pos, fabrication$gradualBreakState);
 			fabrication$gradualBreakState = null;
-			return HijackReturn.TRUE;
+			return false;
 		}
-		return null;
+		return true;
 	}
 
 }

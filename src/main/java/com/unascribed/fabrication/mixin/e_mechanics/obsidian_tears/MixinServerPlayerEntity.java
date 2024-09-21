@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.mojang.authlib.GameProfile;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,7 +35,7 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
 		super(world, pos, yaw, gameProfile);
 	}
 
-	@FabInject(at=@At("TAIL"), method="copyFrom(Lnet/minecraft/server/network/ServerPlayerEntity;Z)V")
+	@Inject(at=@At("TAIL"), method="copyFrom(Lnet/minecraft/server/network/ServerPlayerEntity;Z)V")
 	public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.obsidian_tears")) return;
 		if (!alive) {
@@ -53,7 +53,7 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
 		}
 	}
 
-	@FabInject(at=@At("HEAD"), method="findRespawnPosition(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;FZZ)Ljava/util/Optional;",
+	@Inject(at=@At("HEAD"), method="findRespawnPosition(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;FZZ)Ljava/util/Optional;",
 		cancellable=true)
 	private static void findRespawnPosition(ServerWorld world, BlockPos pos, float f, boolean b, boolean b2, CallbackInfoReturnable<Optional<Vec3d>> ci) {
 		if (!FabConf.isEnabled("*.obsidian_tears")) return;

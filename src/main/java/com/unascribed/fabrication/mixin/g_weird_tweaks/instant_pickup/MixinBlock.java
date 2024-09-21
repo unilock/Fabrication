@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.instant_pickup;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 @EligibleIf(configAvailable="*.instant_pickup")
 public class MixinBlock {
 
-	@FabInject(at=@At("TAIL"), method="dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V")
+	@Inject(at=@At("TAIL"), method="dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V")
 	private static void dropStacks(BlockState state, World world, BlockPos pos, BlockEntity blockEntity, Entity breaker, ItemStack stack, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.instant_pickup") && breaker instanceof PlayerEntity) {
 			InstantPickup.slurp(world, new Box(pos).expand(0.25), (PlayerEntity)breaker);

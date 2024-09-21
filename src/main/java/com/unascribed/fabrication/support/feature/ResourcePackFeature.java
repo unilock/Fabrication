@@ -3,7 +3,6 @@ package com.unascribed.fabrication.support.feature;
 import com.google.common.collect.Sets;
 import com.unascribed.fabrication.EarlyAgnos;
 import com.unascribed.fabrication.FabLog;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.FabricationResourcePack;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
@@ -43,14 +42,14 @@ public abstract class ResourcePackFeature implements Feature, ResourcePackProvid
 
 	@Environment(EnvType.CLIENT)
 	private void initClient() {
-		Set<ResourcePackProvider> providers = FabRefl.getProviders(MinecraftClient.getInstance().getResourcePackManager());
+		Set<ResourcePackProvider> providers = MinecraftClient.getInstance().getResourcePackManager().providers;
 		try {
 			providers.add(this);
 		} catch (UnsupportedOperationException e) {
 			FabLog.info("Injecting mutable resource pack provider set, as no-one else has yet.");
 			providers = Sets.newHashSet(providers);
 			providers.add(this);
-			FabRefl.setProviders(MinecraftClient.getInstance().getResourcePackManager(), providers);
+			MinecraftClient.getInstance().getResourcePackManager().providers = providers;
 		}
 	}
 	@Override

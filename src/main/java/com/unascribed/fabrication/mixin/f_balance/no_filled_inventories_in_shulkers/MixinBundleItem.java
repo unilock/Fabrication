@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.f_balance.no_filled_inventories_in_shul
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BundleItem;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBundleItem {
 
 
-	@FabInject(at=@At("HEAD"), cancellable=true,
+	@Inject(at=@At("HEAD"), cancellable=true,
 			method="onClicked(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/screen/slot/Slot;Lnet/minecraft/util/ClickType;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/inventory/StackReference;)Z")
 	public void onStackClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
 		if (!FabConf.isEnabled("*.no_filled_inventories_in_shulkers")) return;

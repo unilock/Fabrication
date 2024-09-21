@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.repelling_void;
 
 import java.util.List;
 
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.block.BlockState;
 import com.unascribed.fabrication.FabConf;
 import net.minecraft.entity.Entity;
@@ -44,7 +44,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 	private final List<Vec3d> fabrication$voidFallTrail = Lists.newArrayList();
 	private boolean fabrication$debted;
 
-	@FabInject(at=@At("TAIL"), method="tick()V")
+	@Inject(at=@At("TAIL"), method="tick()V")
 	public void tick(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.repelling_void")) return;
 		Entity entity = this;
@@ -67,7 +67,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 	}
 
 
-	@FabInject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", cancellable=true)
 	public void remove(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.repelling_void") && !fabrication$debted && source.isOf(DamageTypes.OUT_OF_WORLD) && fabrication$lastLandingPos != null && this.getY() < getWorld().getBottomY() -10) {
 			World world = getWorld();
@@ -116,7 +116,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 		}
 	}
 
-	@FabInject(at = @At("TAIL"), method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at = @At("TAIL"), method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void writeCustomDataToTag(NbtCompound tag, CallbackInfo ci) {
 		if (fabrication$lastGroundPos != null) {
 			Vec3d pos = fabrication$lastGroundPos;
@@ -129,7 +129,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 		}
 	}
 
-	@FabInject(at = @At("TAIL"), method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at = @At("TAIL"), method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void readCustomDataFromTag(NbtCompound tag, CallbackInfo ci) {
 		if (tag.contains("fabrication:LastGroundPosX")) {
 			fabrication$lastGroundPos = new Vec3d(

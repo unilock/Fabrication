@@ -11,7 +11,7 @@ import com.unascribed.fabrication.support.SpecialEligibility;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import com.unascribed.fabrication.support.EligibleIf;
 
@@ -30,7 +30,7 @@ public abstract class MixinLivingEntity extends Entity {
 		super(type, world);
 	}
 
-	@FabModifyArg(method="dropLoot(Lnet/minecraft/entity/damage/DamageSource;Z)V", at=@At(value="INVOKE", target="Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"))
+	@ModifyArg(method="dropLoot(Lnet/minecraft/entity/damage/DamageSource;Z)V", at=@At(value="INVOKE", target="Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"))
 	public Consumer<ItemStack> generateLoot(Consumer<ItemStack> lootConsumer) {
 		if(!FabConf.isEnabled("*.mobs_dont_drop_ingots")) return lootConsumer;
 		return (stack)-> {

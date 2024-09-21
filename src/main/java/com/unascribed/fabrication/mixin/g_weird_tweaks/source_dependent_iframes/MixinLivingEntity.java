@@ -5,7 +5,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.TickSourceIFrames;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -34,7 +34,7 @@ public abstract class MixinLivingEntity extends Entity implements TickSourceIFra
 	private int fabrication$timeUntilRegen = 0;
 	private static final Predicate<List<?>> fabrication$sourceDependentIframesPredicate = ConfigPredicates.getFinalPredicate("*.source_dependent_iframes");
 
-	@FabInject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
+	@Inject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
 	private void checkDependentIFrames(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (!(FabConf.isEnabled("*.source_dependent_iframes") && fabrication$sourceDependentIframesPredicate.test(ImmutableList.of(this, source)))) return;
 		String origin = source.getName() + (source.getAttacker() == null || source.getAttacker().getUuid() == null ? ":direct" :  source.getAttacker().getUuid().toString());
@@ -45,14 +45,14 @@ public abstract class MixinLivingEntity extends Entity implements TickSourceIFra
 			this.timeUntilRegen = 0;
 		}
 	}
-	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/entity/LivingEntity;applyDamage(Lnet/minecraft/entity/damage/DamageSource;F)V"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/entity/LivingEntity;applyDamage(Lnet/minecraft/entity/damage/DamageSource;F)V"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
 	private void setSourceDependentIFrames(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (!(FabConf.isEnabled("*.source_dependent_iframes") && fabrication$sourceDependentIframesPredicate.test(ImmutableList.of(this, source)))) return;
 		if (fabrication$timeUntilRegen == 0){
 			fabrication$timeUntilRegen = 10;
 		}
 	}
-	@FabInject(at=@At("HEAD"), method="baseTick()V")
+	@Inject(at=@At("HEAD"), method="baseTick()V")
 	private void tickSourceDependentIFrames(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.source_dependent_iframes") || ((Object)this) instanceof ServerPlayerEntity) return;
 		fabrication$tickSourceDependentIFrames();

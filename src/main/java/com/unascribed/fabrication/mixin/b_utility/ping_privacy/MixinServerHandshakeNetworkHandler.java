@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.b_utility.ping_privacy;
 
 import com.unascribed.fabrication.interfaces.SetServerAware;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import net.minecraft.network.listener.PacketListener;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerHandshakeNetworkHandler;
@@ -19,7 +19,7 @@ public class MixinServerHandshakeNetworkHandler {
 	@Shadow @Final
 	private MinecraftServer server;
 
-	@FabModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/network/ClientConnection;setPacketListener(Lnet/minecraft/network/listener/PacketListener;)V"), method="onHandshake(Lnet/minecraft/network/packet/c2s/handshake/HandshakeC2SPacket;)V")
+	@ModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/network/ClientConnection;setPacketListener(Lnet/minecraft/network/listener/PacketListener;)V"), method="onHandshake(Lnet/minecraft/network/packet/c2s/handshake/HandshakeC2SPacket;)V")
 	public PacketListener onRequest(PacketListener listener) {
 		if (listener instanceof SetServerAware) ((SetServerAware) listener).fabrication$pingSetServer(server);
 		return listener;

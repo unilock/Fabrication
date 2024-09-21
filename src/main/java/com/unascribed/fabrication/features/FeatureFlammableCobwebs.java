@@ -1,6 +1,5 @@
 package com.unascribed.fabrication.features;
 
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
 
@@ -13,13 +12,13 @@ public class FeatureFlammableCobwebs implements Feature {
 
 	@Override
 	public void apply(World world) {
-		FabRefl.FireBlock_registerFlammableBlock((FireBlock)Blocks.FIRE, Blocks.COBWEB, 60, 100);
+		((FireBlock)Blocks.FIRE).registerFlammableBlock(Blocks.COBWEB, 60, 100);
 	}
 
 	@Override
 	public boolean undo(World world) {
-		FabRefl.getBurnChances((FireBlock)Blocks.FIRE).remove(Blocks.COBWEB);
-		FabRefl.getSpreadChances((FireBlock)Blocks.FIRE).remove(Blocks.COBWEB);
+		((FireBlock)Blocks.FIRE).burnChances.remove(Blocks.COBWEB);
+		((FireBlock)Blocks.FIRE).spreadChances.remove(Blocks.COBWEB);
 		return true;
 	}
 

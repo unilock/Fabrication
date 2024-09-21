@@ -1,6 +1,6 @@
 package com.unascribed.fabrication.mixin.a_fixes.inanimates_can_be_invisible;
 
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,7 +20,7 @@ public class MixinBoatAndMinecartEntityRenderer {
 
 	// for rendering a player's own mounted vehicle
 
-	@FabInject(at=@At("HEAD"), method="render(Lnet/minecraft/entity/Entity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="render(Lnet/minecraft/entity/Entity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", cancellable=true)
 	public void render(Entity e, float f, float f2, MatrixStack matricies, VertexConsumerProvider vcp, int i, CallbackInfo ci) {
 		if (e.isInvisible()) {
 			ci.cancel();

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 
 import com.google.common.collect.Lists;
@@ -48,7 +48,7 @@ public abstract class MixinDrawContext {
 	@Shadow
 	public abstract int drawText(TextRenderer textRenderer, @Nullable String text, int x, int y, int color, boolean shadow);
 
-	@FabInject(at=@At("TAIL"), method="drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V")
+	@Inject(at=@At("TAIL"), method="drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V")
 	public void renderGuiItemOverlay(TextRenderer renderer, ItemStack stack, int x, int y, String countLabel, CallbackInfo ci) {
 		if (stack == null) return;
 		if (FabConf.isEnabled("*.books_show_enchants") && stack.getItem() == Items.ENCHANTED_BOOK && stack.contains(DataComponentTypes.STORED_ENCHANTMENTS)) {

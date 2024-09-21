@@ -5,7 +5,7 @@ import com.unascribed.fabrication.support.SpecialEligibility;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.mrcrayfish.obfuscate.client.Hooks;
@@ -25,7 +25,7 @@ import net.minecraft.item.ItemStack;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinItemEntityRendererObfuscate {
 
-	@FabModifyVariable(at=@At("HEAD"), method="fireRenderEntityItem",
+	@ModifyVariable(at=@At("HEAD"), method="fireRenderEntityItem",
 			index=7, argsOnly=true, remap=false)
 	private static int modifyOverlay(int orig, ItemRenderer subject, ItemStack stack) {
 		return WoinaDrops.modifyOverlay(stack.hashCode(), orig);

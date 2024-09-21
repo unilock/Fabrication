@@ -11,7 +11,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.unascribed.fabrication.Agnos;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
@@ -22,6 +21,7 @@ import com.google.common.primitives.Ints;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.DifficultyCommand;
+import net.minecraft.server.command.GameModeCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -46,9 +46,9 @@ public class FeatureLegacyCommandSyntax implements Feature {
 						.requires(scs -> FabConf.isEnabled("*.legacy_command_syntax") && scs.hasPermissionLevel(2));
 				for (GameMode mode : GameMode.values()) {
 					gmCmd.then(CommandManager.literal(Integer.toString(mode.getId()))
-							.executes(c -> FabRefl.gameModeExecute(c, Collections.singleton(c.getSource().getPlayerOrThrow()), mode))
+							.executes(c -> GameModeCommand.execute(c, Collections.singleton(c.getSource().getPlayerOrThrow()), mode))
 							.then(CommandManager.argument("target", EntityArgumentType.players())
-									.executes(c -> (int) FabRefl.gameModeExecute(c, EntityArgumentType.getPlayers(c, "target"), mode)))
+									.executes(c -> GameModeCommand.execute(c, EntityArgumentType.getPlayers(c, "target"), mode)))
 							);
 				}
 				dispatcher.register(gmCmd);
@@ -88,7 +88,7 @@ public class FeatureLegacyCommandSyntax implements Feature {
 						.requires(scs -> FabConf.isEnabled("*.legacy_command_syntax") && scs.hasPermissionLevel(2))
 						.executes(c -> {
 							ServerWorld world = c.getSource().getWorld();
-							ServerWorldProperties props = (ServerWorldProperties) FabRefl.getWorldProperties(world);
+							ServerWorldProperties props = world.worldProperties;
 							if (props.isRaining()) {
 								world.setWeather(12000, 0, false, props.isThundering());
 							} else {

@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FabricationEvents;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -21,7 +21,7 @@ public class MixinComamndManager {
 		@Shadow @Final
 		private CommandDispatcher<ServerCommandSource> dispatcher;
 
-		@FabInject(method="<init>(Lnet/minecraft/server/command/CommandManager$RegistrationEnvironment;Lnet/minecraft/command/CommandRegistryAccess;)V", at=@At("TAIL"))
+		@Inject(method="<init>(Lnet/minecraft/server/command/CommandManager$RegistrationEnvironment;Lnet/minecraft/command/CommandRegistryAccess;)V", at=@At("TAIL"))
 		private void addCommands(CommandManager.RegistrationEnvironment environment, CommandRegistryAccess commandRegistryAccess, CallbackInfo ci) {
 			FabricationEvents.commands(this.dispatcher, commandRegistryAccess);
 		}

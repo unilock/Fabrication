@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.c_tweaks.fireproof;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -25,7 +25,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 	}
 
 	private static final Predicate<PlayerEntity> fabrication$fireproofPredicate = ConfigPredicates.getFinalPredicate("*.fireproof");
-	@FabInject(at=@At("HEAD"), method="isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z", cancellable=true)
 	public void isInvulnerableTo(DamageSource ds, CallbackInfoReturnable<Boolean> ci) {
 		if (FabConf.isEnabled("*.fireproof")) {
 			if (fabrication$fireproofPredicate.test((PlayerEntity)(Object)this) && ds.isIn(DamageTypeTags.IS_FIRE)) {

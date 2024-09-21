@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.tooltip.TooltipType;
@@ -28,7 +28,7 @@ import net.minecraft.util.Formatting;
 @EligibleIf(configAvailable="*.canhit", envMatches=Env.CLIENT)
 public class MixinItemStackClient {
 
-	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/tooltip/TooltipType;isAdvanced()Z", ordinal=1, shift=At.Shift.BEFORE),
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/item/tooltip/TooltipType;isAdvanced()Z", ordinal=1, shift=At.Shift.BEFORE),
 			method="getTooltip(Lnet/minecraft/item/Item$TooltipContext;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/tooltip/TooltipType;)Ljava/util/List;",
 			locals=LocalCapture.CAPTURE_FAILHARD)
 	public void getTooltip(Item.TooltipContext context, PlayerEntity player, TooltipType tooltipType, CallbackInfoReturnable<List<Text>> ci, List<Text> list) {

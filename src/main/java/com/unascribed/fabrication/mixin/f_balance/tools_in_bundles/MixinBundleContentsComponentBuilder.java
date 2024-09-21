@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.f_balance.tools_in_bundles;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.BundleHelper;
 import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class MixinBundleContentsComponentBuilder {
 	@Final
 	private List<ItemStack> stacks;
 
-	@FabInject(at=@At("HEAD"), method="add(Lnet/minecraft/item/ItemStack;)I", cancellable=true)
+	@Inject(at=@At("HEAD"), method="add(Lnet/minecraft/item/ItemStack;)I", cancellable=true)
 	public void add(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
 		if (FabConf.isEnabled("*.tools_in_bundles") && !stack.isEmpty()) {
 			if (!BundleHelper.isCompatible(this.stacks, stack)) {
@@ -30,7 +30,7 @@ public class MixinBundleContentsComponentBuilder {
 		}
 	}
 
-	@FabInject(at=@At("HEAD"), method="addInternal(Lnet/minecraft/item/ItemStack;)I", cancellable=true)
+	@Inject(at=@At("HEAD"), method="addInternal(Lnet/minecraft/item/ItemStack;)I", cancellable=true)
 	public void addInternal(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
 		if (FabConf.isEnabled("*.tools_in_bundles") && stack.getMaxCount() == 1) {
 			cir.setReturnValue(-1);

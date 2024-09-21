@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.weaponized_pearls;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -41,7 +41,7 @@ public abstract class MixinEnderPearlEntity extends ThrownItemEntity {
 
 	private LivingEntity fabrication$pearljustTeleported = null;
 
-	@FabInject(method="onEntityHit(Lnet/minecraft/util/hit/EntityHitResult;)V", at=@At("TAIL"))
+	@Inject(method="onEntityHit(Lnet/minecraft/util/hit/EntityHitResult;)V", at=@At("TAIL"))
 	public void chorusEffect(EntityHitResult entityHitResult, CallbackInfo ci){
 		if (!FabConf.isEnabled("*.weaponized_pearls") || getWorld().isClient) return;
 		if (!fabrication$weaponizedPearsPredicate.test(this)) return;
@@ -71,7 +71,7 @@ public abstract class MixinEnderPearlEntity extends ThrownItemEntity {
 		}
 	}
 
-	@FabInject(method="onCollision(Lnet/minecraft/util/hit/HitResult;)V", at=@At(value="INVOKE", shift=At.Shift.AFTER, target="Lnet/minecraft/entity/projectile/thrown/ThrownItemEntity;onCollision(Lnet/minecraft/util/hit/HitResult;)V"), cancellable = true)
+	@Inject(method="onCollision(Lnet/minecraft/util/hit/HitResult;)V", at=@At(value="INVOKE", shift=At.Shift.AFTER, target="Lnet/minecraft/entity/projectile/thrown/ThrownItemEntity;onCollision(Lnet/minecraft/util/hit/HitResult;)V"), cancellable = true)
 	public void pushEffect(HitResult hitResult, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.weaponized_pearls") || getWorld().isClient || this.isRemoved()) return;
 		if (!fabrication$weaponizedPearsPredicate.test(this)) return;

@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.cactus_punching_hurts;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +27,7 @@ public class MixinServerPlayerInteractionManager {
 	@Shadow @Final protected ServerPlayerEntity player;
 
 	private static final Predicate<PlayerEntity> fabrication$cactusPunchingPredicate = ConfigPredicates.getFinalPredicate("*.cactus_punching_hurts");
-	@FabInject(at=@At("HEAD"), method="continueMining(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;I)F")
+	@Inject(at=@At("HEAD"), method="continueMining(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;I)F")
 	private void cactusHurt(BlockState state, BlockPos pos, int i, CallbackInfoReturnable<Float> cir) {
 		if (FabConf.isEnabled("*.cactus_punching_hurts") && state.isOf(Blocks.CACTUS) && fabrication$cactusPunchingPredicate.test(player))
 			player.damage(player.getWorld().getDamageSources().cactus(), 1.0F);

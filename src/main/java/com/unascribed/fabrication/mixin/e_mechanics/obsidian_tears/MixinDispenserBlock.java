@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.obsidian_tears;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +23,7 @@ import net.minecraft.item.Items;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinDispenserBlock {
 
-	@FabInject(at=@At("HEAD"), method="getBehaviorForItem(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/block/dispenser/DispenserBehavior;",
+	@Inject(at=@At("HEAD"), method="getBehaviorForItem(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/block/dispenser/DispenserBehavior;",
 			cancellable=true)
 	public void getBehaviorForItem(World world, ItemStack stack, CallbackInfoReturnable<DispenserBehavior> ci) {
 		if (!FabConf.isEnabled("*.obsidian_tears")) return;

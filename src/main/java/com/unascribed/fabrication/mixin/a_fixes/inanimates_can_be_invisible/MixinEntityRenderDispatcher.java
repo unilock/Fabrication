@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.a_fixes.inanimates_can_be_invisible;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.Entity;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @EligibleIf(configAvailable="*.inanimates_can_be_invisible", envMatches=Env.CLIENT)
 public abstract class MixinEntityRenderDispatcher {
 
-	@FabInject(at=@At("HEAD"), method="shouldRender(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/render/Frustum;DDD)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="shouldRender(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/render/Frustum;DDD)Z", cancellable=true)
 	public void shouldRender(Entity e, Frustum f, double x, double y, double z, CallbackInfoReturnable<Boolean> ci) {
 		if (e instanceof LivingEntity) return;
 		if (e.isInvisible()) {

@@ -1,10 +1,10 @@
 package com.unascribed.fabrication.mixin.e_mechanics.swap_conflicting_enchants;
 
 import com.google.common.collect.Lists;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryIdentifier;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryNbt;
 import net.minecraft.component.DataComponentTypes;
@@ -24,6 +24,7 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -38,13 +39,14 @@ public abstract class MixinAnvilScreenHandler extends ForgingScreenHandler {
 		super(type, syncId, playerInventory, context);
 	}
 
-	@ModifyReturn(method="updateResult()V", target="Lnet/minecraft/enchantment/Enchantment;canBeCombined(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)Z")
-	private static boolean fabrication$allowConflictingEnchants(boolean old, RegistryEntry<Enchantment> e1, RegistryEntry<Enchantment> e2) {
-		return old || FabConf.isEnabled("*.swap_conflicting_enchants") && e1 != e2;
+	@WrapOperation(method="updateResult()V", at=@At(value="INVOKE", target="Lnet/minecraft/enchantment/Enchantment;canBeCombined(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)Z"))
+	private boolean fabrication$allowConflictingEnchants(RegistryEntry<Enchantment> e1, RegistryEntry<Enchantment> e2, Operation<Boolean> original) {
+		return original.call(e1, e2) || FabConf.isEnabled("*.swap_conflicting_enchants") && e1 != e2;
 	}
 
-	@ModifyReturn(method="updateResult()V", target="Lnet/minecraft/enchantment/EnchantmentHelper;getEnchantments(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/component/type/ItemEnchantmentsComponent;")
-	private ItemEnchantmentsComponent fabrication$loadConflictingEnchants(ItemEnchantmentsComponent old, ItemStack stack) {
+	@WrapOperation(method="updateResult()V", at=@At(value="INVOKE", target="Lnet/minecraft/enchantment/EnchantmentHelper;getEnchantments(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/component/type/ItemEnchantmentsComponent;"))
+	private ItemEnchantmentsComponent fabrication$loadConflictingEnchants(ItemStack stack, Operation<ItemEnchantmentsComponent> original) {
+		ItemEnchantmentsComponent old = original.call(stack);
 		if (FabConf.isEnabled("*.swap_conflicting_enchants") && stack.contains(DataComponentTypes.CUSTOM_DATA)) {
 			NbtCompound tag = stack.get(DataComponentTypes.CUSTOM_DATA).getNbt().getCompound("fabrication#conflictingEnchants");
 			if (tag != null && !tag.isEmpty()) {
@@ -62,7 +64,7 @@ public abstract class MixinAnvilScreenHandler extends ForgingScreenHandler {
 		return old;
 	}
 
-	@FabInject(at=@At("TAIL"), method="updateResult()V")
+	@Inject(at=@At("TAIL"), method="updateResult()V")
 	public void allowCombiningIncompatibleEnchants(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.swap_conflicting_enchants")) return;
 		ItemStack stack = output.getStack(0);

@@ -1,7 +1,6 @@
 package com.unascribed.fabrication.mixin.a_fixes.multiline_sign_paste;
 
-import com.unascribed.fabrication.FabRefl;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractSignEditScreen;
 import org.lwjgl.glfw.GLFW;
@@ -40,7 +39,7 @@ public abstract class MixinAbstractSignEditScreen extends Screen {
 		super(title);
 	}
 
-	@FabInject(at=@At("TAIL"), method="init()V")
+	@Inject(at=@At("TAIL"), method="init()V")
 	public void init(CallbackInfo ci) {
 		Object o = this;
 		if (!(o instanceof AccessorAbstractSignEditScreen)) return;
@@ -51,7 +50,7 @@ public abstract class MixinAbstractSignEditScreen extends Screen {
 			SelectionManager.makeClipboardGetter(this.client), SelectionManager.makeClipboardSetter(this.client), (text) -> this.client.textRenderer.getWidth(text) <= 90) {
 			@Override
 			public void paste() {
-				Supplier<String> supplier = FabRefl.Client.getClipboardGetter(this);
+				Supplier<String> supplier = ((AccessorSelectionManager) MixinAbstractSignEditScreen.this.selectionManager).getClipboardGetter();
 				String text = supplier.get();
 				String[] lines = text.split("\r?\n");
 				if (lines.length <=1) {
@@ -60,19 +59,19 @@ public abstract class MixinAbstractSignEditScreen extends Screen {
 				}
 				for (int i=0; i<lines.length; i++) {
 					String line = lines[i];
-					FabRefl.Client.setClipboardGetter(this, () -> line);
+					((AccessorSelectionManager) MixinAbstractSignEditScreen.this.selectionManager).setClipboardGetter(() -> line);
 					super.paste();
 					if (i+1<lines.length) {
 						self.setCurrentRow(self.getCurrentRow() + 1 & 3);
 						this.putCursorAtEnd();
 					}
 				}
-				FabRefl.Client.setClipboardGetter(this, supplier);
+				((AccessorSelectionManager) MixinAbstractSignEditScreen.this.selectionManager).setClipboardGetter(supplier);
 			}
 		};
 	}
 
-	@FabInject(at=@At("HEAD"), method="keyPressed(III)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="keyPressed(III)Z", cancellable=true)
 	public void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> ci) {
 		if (keyCode == GLFW.GLFW_KEY_C && hasControlDown() && hasShiftDown() && !hasAltDown()) {
 			SelectionManager.setClipboard(client, Joiner.on(Platform.isWindows() ? "\r\n" : "\n").join(messages));

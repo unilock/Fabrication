@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.client.FlatItems;
@@ -20,7 +20,7 @@ import net.minecraft.entity.ItemEntity;
 @EligibleIf(configAvailable="*.billboard_drops", envMatches=Env.CLIENT)
 public class MixinItemEntityRenderer {
 
-	@FabInject(at=@At(value="INVOKE", target="net/minecraft/client/util/math/MatrixStack.push()V", shift=Shift.AFTER, ordinal=1),
+	@Inject(at=@At(value="INVOKE", target="net/minecraft/client/util/math/MatrixStack.push()V", shift=Shift.AFTER, ordinal=1),
 			method="render(Lnet/minecraft/entity/ItemEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public void render(ItemEntity entity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.billboard_drops") && FlatItems.hasGeneratedModel(entity.getStack())) {

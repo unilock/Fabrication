@@ -24,7 +24,6 @@ import org.lwjgl.system.MemoryUtil;
 
 import com.mojang.blaze3d.platform.TextureUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.loaders.LoaderClassicBlockDrops;
 
 import net.minecraft.block.Block;
@@ -118,7 +117,7 @@ public class WoinaDrops {
 										MemoryUtil.memFree(dest);
 										throw e;
 									}
-									NativeImage img = FabRefl.Client.NativeImage_new(Format.RGBA, w, h, false, MemoryUtil.memAddress(dest));
+									NativeImage img = new NativeImage(Format.RGBA, w, h, false, MemoryUtil.memAddress(dest));
 									try {
 										NativeImage mipped = MipmapHelper.getMipmapLevelsImages(new NativeImage[]{img}, 1)[1];
 										try {
@@ -149,7 +148,7 @@ public class WoinaDrops {
 							RenderLayer.getEntityCutout(Identifier.of("fabrication", "textures/atlas/blocks-mip.png")) :
 								RenderLayer.getEntityTranslucent(Identifier.of("fabrication", "textures/atlas/blocks-mip.png"));
 					VertexConsumer vertices = vertexConsumers.getBuffer(layer);
-					FabRefl.Client.ItemRenderer_renderBakedItemModel(subject, model, stack, light, overlay, matrices, vertices);
+					subject.renderBakedItemModel(model, stack, light, overlay, matrices, vertices);
 				}
 				matrices.pop();
 				return;
@@ -163,7 +162,7 @@ public class WoinaDrops {
 
 		int packedColor = -1;
 		if (quad.hasColor()) {
-			packedColor = FabRefl.Client.getItemColors(MinecraftClient.getInstance()).getColor(is, quad.getColorIndex());
+			packedColor = MinecraftClient.getInstance().itemColors.getColor(is, quad.getColorIndex());
 			Block b = ((BlockItem)is.getItem()).getBlock();
 			BlockSoundGroup sg = b.getDefaultState().getSoundGroup();
 			isProbablyGrass = sg == BlockSoundGroup.GRASS || (sg == BlockSoundGroup.GRAVEL && b.getDefaultMapColor() == MapColor.DIRT_BROWN);

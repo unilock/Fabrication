@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin._general.sync;
 
 import com.mojang.authlib.GameProfile;
 import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
 		super(world, pos, yaw, gameProfile);
 	}
 
-	@FabInject(at=@At("HEAD"), method="copyFrom(Lnet/minecraft/server/network/ServerPlayerEntity;Z)V")
+	@Inject(at=@At("HEAD"), method="copyFrom(Lnet/minecraft/server/network/ServerPlayerEntity;Z)V")
 	public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
 		if (this instanceof SetFabricationConfigAware) {
 			if (oldPlayer instanceof SetFabricationConfigAware) {

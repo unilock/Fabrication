@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.SetOwner;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,7 +31,7 @@ public class MixinGrindstoneScreenHandlerResultSlotPollen implements SetOwner<Gr
 		fabrication$owner = owner;
 	}
 
-	@FabInject(at=@At("HEAD"), method="onTakeItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onTakeItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)V", cancellable=true)
 	public void onTakeItemPre(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.grindstone_disenchanting")) return;
 		ItemStack bookStack = fabrication$owner.getSlot(1).getStack();

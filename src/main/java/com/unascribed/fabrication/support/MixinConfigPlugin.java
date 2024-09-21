@@ -11,18 +11,9 @@ import com.google.common.reflect.ClassPath;
 import com.unascribed.fabrication.EarlyAgnos;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.FabLog;
-import com.unascribed.fabrication.support.injection.FabModifyConstInjectionInfo;
-import com.unascribed.fabrication.support.injection.FabRefMap;
-import com.unascribed.fabrication.support.injection.FailsoftCallbackInjectionInfo;
-import com.unascribed.fabrication.support.injection.FailsoftModifyArgInjectionInfo;
-import com.unascribed.fabrication.support.injection.FailsoftModifyVariableInjectionInfo;
-import com.unascribed.fabrication.support.injection.FabInjector;
-import com.unascribed.fabrication.support.injection.Hijack;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -34,24 +25,19 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
-import org.spongepowered.asm.mixin.injection.struct.InjectionInfo;
 import org.spongepowered.asm.util.asm.MethodNodeEx;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class MixinConfigPlugin implements IMixinConfigPlugin {
 
@@ -74,10 +60,10 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 			}
 		}
 		FabConf.reload();
-		InjectionInfo.register(FailsoftCallbackInjectionInfo.class);
-		InjectionInfo.register(FailsoftModifyArgInjectionInfo.class);
-		InjectionInfo.register(FailsoftModifyVariableInjectionInfo.class);
-		InjectionInfo.register(FabModifyConstInjectionInfo.class);
+//		InjectionInfo.register(FailsoftCallbackInjectionInfo.class);
+//		InjectionInfo.register(FailsoftModifyArgInjectionInfo.class);
+//		InjectionInfo.register(FailsoftModifyVariableInjectionInfo.class);
+//		InjectionInfo.register(FabModifyConstInjectionInfo.class);
 	}
 
 	@Override
@@ -456,63 +442,63 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 	@Override
 	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		if (FabConf.limitRuntimeConfigs()) finalizeIsEnabled(targetClass);
-		fakeMixinHack(targetClass);
-		FabInjector.apply(targetClass);
+//		fakeMixinHack(targetClass);
+//		FabInjector.apply(targetClass);
 		lithiumCompat(targetClass, mixinClassName);
 		if (targetClass.visibleAnnotations != null) {
 			targetClass.visibleAnnotations.removeIf(an -> an.desc.startsWith("Lcom/unascribed/fabrication"));
 		}
 	}
 
-	public static void fakeMixinHack(ClassNode targetClass) {
-		if (targetClass.visibleAnnotations == null) return;
-		for (AnnotationNode annotationNode : targetClass.visibleAnnotations) {
-			if ("Lcom/unascribed/fabrication/support/injection/FakeMixinHack;".equals(annotationNode.desc)) {
-				Object list = annotationNode.values.get(annotationNode.values.indexOf("value") + 1);
-				if (!(list instanceof List<?>) || ((List<?>) list).isEmpty() || !(((List<?>) list).get(0) instanceof String))
-					continue;
-				List<FabInjector.ToInject> toInject = new ArrayList<>();
-				for (String className : (List<String>) list) {
-					Class<?> cl;
-					try {
-						cl = Class.forName(className);
-					}catch (Exception ignore){
-						continue;
-					}
-					for (Method mthd : cl.getMethods()) {
-						ModifyReturn mr = mthd.getAnnotation(ModifyReturn.class);
-						Hijack hi = mthd.getAnnotation(Hijack.class);
-						String[] method = null;
-						String[] target = null;
-						String desc = null;
-						if (mr != null) {
-							method = mr.method();
-							target = mr.target();
-							desc = "Lcom/unascribed/fabrication/support/injection/ModifyReturn;";
-						} else if (hi != null) {
-							method = hi.method();
-							target = hi.target();
-							desc = "Lcom/unascribed/fabrication/support/injection/Hijack;";
-						}
-						if (target != null && method != null && desc != null) {
-							toInject.add(new FabInjector.ToInject(
-									Arrays.stream(method).map(s -> FabRefMap.relativeMap(cl.getName(), s)).collect(Collectors.toList()),
-									Arrays.stream(target).map(FabRefMap::absoluteMap).collect(Collectors.toList()),
-									cl.getName().replace('.', '/'),
-									mthd.getName(),
-									Type.getMethodDescriptor(mthd),
-									Opcodes.INVOKESTATIC,
-									desc,
-									cl.getName()
-							));
-						}
-
-					}
-				}
-				FabInjector.apply(targetClass, toInject);
-			}
-		}
-	}
+//	public static void fakeMixinHack(ClassNode targetClass) {
+//		if (targetClass.visibleAnnotations == null) return;
+//		for (AnnotationNode annotationNode : targetClass.visibleAnnotations) {
+//			if ("Lcom/unascribed/fabrication/support/injection/FakeMixinHack;".equals(annotationNode.desc)) {
+//				Object list = annotationNode.values.get(annotationNode.values.indexOf("value") + 1);
+//				if (!(list instanceof List<?>) || ((List<?>) list).isEmpty() || !(((List<?>) list).get(0) instanceof String))
+//					continue;
+//				List<FabInjector.ToInject> toInject = new ArrayList<>();
+//				for (String className : (List<String>) list) {
+//					Class<?> cl;
+//					try {
+//						cl = Class.forName(className);
+//					}catch (Exception ignore){
+//						continue;
+//					}
+//					for (Method mthd : cl.getMethods()) {
+//						ModifyReturn mr = mthd.getAnnotation(ModifyReturn.class);
+//						Hijack hi = mthd.getAnnotation(Hijack.class);
+//						String[] method = null;
+//						String[] target = null;
+//						String desc = null;
+//						if (mr != null) {
+//							method = mr.method();
+//							target = mr.target();
+//							desc = "Lcom/unascribed/fabrication/support/injection/ModifyReturn;";
+//						} else if (hi != null) {
+//							method = hi.method();
+//							target = hi.target();
+//							desc = "Lcom/unascribed/fabrication/support/injection/Hijack;";
+//						}
+//						if (target != null && method != null && desc != null) {
+//							toInject.add(new FabInjector.ToInject(
+//									Arrays.stream(method).map(s -> FabRefMap.relativeMap(cl.getName(), s)).collect(Collectors.toList()),
+//									Arrays.stream(target).map(FabRefMap::absoluteMap).collect(Collectors.toList()),
+//									cl.getName().replace('.', '/'),
+//									mthd.getName(),
+//									Type.getMethodDescriptor(mthd),
+//									Opcodes.INVOKESTATIC,
+//									desc,
+//									cl.getName()
+//							));
+//						}
+//
+//					}
+//				}
+//				FabInjector.apply(targetClass, toInject);
+//			}
+//		}
+//	}
 
 	public static void lithiumCompat(ClassNode targetClass, String mixinClassName){
 		if(EarlyAgnos.isModLoaded("lithium") && "com.unascribed.fabrication.mixin.e_mechanics.colorful_redstone.MixinRedstoneWireBlock".equals(mixinClassName)) {

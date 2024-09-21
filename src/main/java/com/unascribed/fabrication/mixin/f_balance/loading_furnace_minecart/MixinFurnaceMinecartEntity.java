@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.f_balance.loading_furnace_minecart;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,7 +36,7 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 	protected MixinFurnaceMinecartEntity(EntityType<?> entityType, World world) {
 		super(entityType, world);
 	}
-	@FabInject(method="tick()V", at=@At("HEAD"))
+	@Inject(method="tick()V", at=@At("HEAD"))
 	void tick(CallbackInfo ci) {
 		if (FabConf.isEnabled("*.loading_furnace_minecart") && fuel>0 && getWorld() instanceof ServerWorld) {
 			((ServerWorld)getWorld()).getChunkManager().addTicket(ChunkTicketType.PORTAL, new ChunkPos(this.getBlockPos()),3, this.getBlockPos());

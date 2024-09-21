@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.photoallergic_creepers;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,7 +26,7 @@ public abstract class MixinCreeperEntity extends HostileEntity {
 		super(entityType, world);
 	}
 
-	@FabInject(at=@At("HEAD"), method="tick()V")
+	@Inject(at=@At("HEAD"), method="tick()V")
 	public void onTick(CallbackInfo ci) {
 		if (FabConf.isEnabled("*.photoallergic_creepers")) {
 			if (isAffectedByDaylight()) {

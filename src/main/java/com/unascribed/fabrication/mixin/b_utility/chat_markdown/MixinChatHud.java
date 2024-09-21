@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.b_utility.chat_markdown;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import com.unascribed.fabrication.util.Markdown;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.MutableText;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @EligibleIf(configAvailable="*.chat_markdown")
 public class MixinChatHud {
 
-	@FabModifyVariable(at=@At(value="HEAD"), method="addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;ILnet/minecraft/client/gui/hud/MessageIndicator;Z)V", argsOnly=true)
+	@ModifyVariable(at=@At(value="HEAD"), method="addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V", argsOnly=true)
 	public Text consume(Text message) {
 		if (!FabConf.isEnabled("*.chat_markdown")) return message;
 		if (!(message instanceof MutableText && message.getContent() instanceof TranslatableTextContent && "chat.type.text".equals(((TranslatableTextContent)message.getContent()).getKey()))) return message;

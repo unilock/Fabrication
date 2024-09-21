@@ -5,7 +5,7 @@ import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.unascribed.fabrication.logic.ObsidianTears;
@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinAbstractBlockState {
 
-	@FabInject(at=@At("HEAD"), method="onUseWithItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ItemActionResult;",
+	@Inject(at=@At("HEAD"), method="onUseWithItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ItemActionResult;",
 			cancellable=true)
 	public void onUse(ItemStack held, World world, PlayerEntity user, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> ci) {
 		if (FabConf.isEnabled("*.obsidian_tears") && world.getBlockState(hit.getBlockPos()).getBlock() == Blocks.CRYING_OBSIDIAN) {

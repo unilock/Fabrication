@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -42,12 +42,12 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 		super(type, world);
 	}
 
-	@FabInject(method="interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at=@At("HEAD"))
+	@Inject(method="interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at=@At("HEAD"))
 	public void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
 		if (fabrication$pauseFuel > 32000) cir.setReturnValue(ActionResult.success(this.getWorld().isClient));
 	}
 
-	@FabInject(at=@At("HEAD"), method="moveOnRail(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
+	@Inject(at=@At("HEAD"), method="moveOnRail(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
 	protected void toggleOnUnpoweredPoweredRail(BlockPos pos, BlockState state, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.toggleable_furnace_carts")) return;
 		if (state.isOf(Blocks.POWERED_RAIL) && !state.get(PoweredRailBlock.POWERED)) {
@@ -67,14 +67,14 @@ public abstract class MixinFurnaceMinecartEntity extends AbstractMinecartEntity 
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	protected void writeCustomDataToTag(NbtCompound nbt, CallbackInfo ci) {
 		super.writeCustomDataToNbt(nbt);
 		nbt.putInt("fabrication:PauseFuel", fabrication$pauseFuel);
 		if (fabrication$lastMovDirection != null) nbt.putByte("fabrication:LastMoveDir", (byte) fabrication$lastMovDirection.getId());
 	}
 
-	@FabInject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	protected void readCustomDataFromTag(NbtCompound nbt, CallbackInfo ci) {
 		fabrication$pauseFuel = nbt.getInt("fabrication:PauseFuel");
 		if (nbt.contains("fabrication:LastMoveDir", NbtElement.BYTE_TYPE)) fabrication$lastMovDirection = Direction.byId(nbt.getByte("fabrication:LastMoveDir"));

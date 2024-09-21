@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.support.EligibleIf;
@@ -36,7 +36,7 @@ public abstract class MixinDrawContext {
 	@Shadow
 	public abstract VertexConsumerProvider.Immediate getVertexConsumers();
 
-	@FabInject(at=@At("TAIL"), method="drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V")
+	@Inject(at=@At("TAIL"), method="drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V")
 	public void renderGuiItemOverlay(TextRenderer renderer, ItemStack stack, int x, int y, String countLabel, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.show_map_id") && stack.getItem() == Items.FILLED_MAP){
 			VertexConsumerProvider.Immediate vc = this.getVertexConsumers();

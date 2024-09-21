@@ -151,10 +151,10 @@ public class FabricationMod implements ModInitializer {
 	public static Set<PlayerAssociatedNetworkHandler> getTrackers(Entity entity) {
 		ServerChunkManager cm = ((ServerWorld)entity.getWorld()).getChunkManager();
 		ServerChunkLoadingManager sclm = cm.chunkLoadingManager;
-		Int2ObjectMap<ServerChunkLoadingManager.EntityTracker> entityTrackers = FabRefl.getEntityTrackers(sclm);
+		Int2ObjectMap<ServerChunkLoadingManager.EntityTracker> entityTrackers = sclm.entityTrackers;
 		ServerChunkLoadingManager.EntityTracker tracker = entityTrackers.get(entity.getId());
 		if (tracker == null) return Collections.emptySet();
-		return FabRefl.getPlayersTracking(tracker);
+		return tracker.listeners;
 	}
 
 	public static void sendToTrackersMatching(Entity entity, CustomPayloadS2CPacket pkt, Predicate<ServerPlayerEntity> predicate) {

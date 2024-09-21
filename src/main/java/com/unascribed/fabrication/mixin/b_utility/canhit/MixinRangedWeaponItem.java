@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.b_utility.canhit;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.CrossbowItem;

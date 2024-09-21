@@ -1,4 +1,4 @@
-accessWidener v1 named
+accessWidener v2 named
 
 mutable field net/minecraft/resource/ResourcePackManager providers Ljava/util/Set;
 
@@ -11,3 +11,27 @@ accessible class net/minecraft/entity/ai/brain/task/CrossbowAttackTask$CrossbowS
 accessible class net/minecraft/entity/ai/goal/CrossbowAttackGoal$Stage
 accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
 accessible class net/minecraft/client/render/RenderLayer$MultiPhase
+
+accessible field net/minecraft/block/AbstractBlock$AbstractBlockState hardness F
+accessible field net/minecraft/block/FireBlock burnChances Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+accessible field net/minecraft/block/FireBlock spreadChances Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+accessible field net/minecraft/client/MinecraftClient itemColors Lnet/minecraft/client/color/item/ItemColors;
+accessible field net/minecraft/client/texture/SpriteAtlasTexture animatedSprites Ljava/util/List;
+accessible field net/minecraft/client/texture/SpriteAtlasTexture sprites Ljava/util/Map;
+accessible field net/minecraft/entity/ItemEntity pickupDelay I
+accessible field net/minecraft/entity/ai/TargetPredicate attackable Z
+accessible field net/minecraft/entity/ai/goal/FleeEntityGoal withinRangePredicate Lnet/minecraft/entity/ai/TargetPredicate;
+accessible field net/minecraft/entity/vehicle/FurnaceMinecartEntity ACCEPTABLE_FUEL Lnet/minecraft/recipe/Ingredient;
+accessible field net/minecraft/resource/ResourcePackManager providers Ljava/util/Set;
+accessible field net/minecraft/server/world/ServerChunkLoadingManager entityTrackers Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+accessible field net/minecraft/server/world/ServerChunkLoadingManager$EntityTracker listeners Ljava/util/Set;
+accessible field net/minecraft/server/world/ServerWorld worldProperties Lnet/minecraft/world/level/ServerWorldProperties;
+accessible field net/minecraft/world/biome/GenerationSettings$LookupBackedBuilder placedFeatureLookup Lnet/minecraft/registry/RegistryEntryLookup;
+accessible method net/minecraft/client/render/item/ItemRenderer renderBakedItemModel (Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/item/ItemStack;IILnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;)V
+accessible method net/minecraft/client/texture/MipmapHelper blend (IIIIZ)I
+accessible method net/minecraft/client/texture/NativeImage <init> (Lnet/minecraft/client/texture/NativeImage$Format;IIZJ)V
+accessible method net/minecraft/entity/mob/MobEntity getDropChance (Lnet/minecraft/entity/EquipmentSlot;)F
+accessible method net/minecraft/server/command/GameModeCommand execute (Lcom/mojang/brigadier/context/CommandContext;Ljava/util/Collection;Lnet/minecraft/world/GameMode;)I
+accessible method net/minecraft/server/command/GiveCommand execute (Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/argument/ItemStackArgument;Ljava/util/Collection;I)I
+mutable field net/minecraft/block/AbstractBlock$AbstractBlockState hardness F
+mutable field net/minecraft/entity/ai/TargetPredicate attackable Z

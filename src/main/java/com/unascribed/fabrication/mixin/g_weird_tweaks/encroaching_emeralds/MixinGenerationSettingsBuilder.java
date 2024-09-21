@@ -1,6 +1,5 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.encroaching_emeralds;
 
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.interfaces.GenerationSettingsAddEmeralds;
 import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.registry.RegistryEntryLookup;
@@ -13,7 +12,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -30,12 +29,12 @@ public abstract class MixinGenerationSettingsBuilder implements GenerationSettin
 		fabrication$hasDefaultOres = true;
 	}
 
-	@FabInject(at=@At("HEAD"), method="build()Lnet/minecraft/world/biome/GenerationSettings;")
+	@Inject(at=@At("HEAD"), method="build()Lnet/minecraft/world/biome/GenerationSettings;")
 	public void build(CallbackInfoReturnable<GenerationSettings> cir) {
 		if (!fabrication$hasDefaultOres) return;
 		Object self = this;
 		if (!(self instanceof GenerationSettings.LookupBackedBuilder)) return;
-		RegistryEntryLookup<PlacedFeature> placedFeatureLookup = FabRefl.getPlacedFeatureLookup((GenerationSettings.LookupBackedBuilder) self);
+		RegistryEntryLookup<PlacedFeature> placedFeatureLookup = ((GenerationSettings.LookupBackedBuilder) self).placedFeatureLookup;
 		int step = GenerationStep.Feature.UNDERGROUND_ORES.ordinal();
 		RegistryEntry<PlacedFeature> feature = placedFeatureLookup.getOrThrow(OrePlacedFeatures.ORE_EMERALD);
 		if (indexedFeaturesList.size() > step && !indexedFeaturesList.get(step).contains(feature)) {

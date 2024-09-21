@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.c_tweaks.cactus_damage;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,7 +25,7 @@ public class MixinCactusBlock {
 	private static final Predicate<LivingEntity> fabrication$cactusWalkWithBoots = ConfigPredicates.getFinalPredicate("*.cactus_walk_doesnt_hurt_with_boots");
 	private static final Predicate<LivingEntity> fabrication$cactusWalkWithChest = ConfigPredicates.getFinalPredicate("*.cactus_brush_doesnt_hurt_with_chest");
 
-	@FabInject(at=@At("HEAD"), method="onEntityCollision(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onEntityCollision(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)V", cancellable=true)
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
 		if (!(entity instanceof LivingEntity)) return;
 		LivingEntity le = (LivingEntity)entity;

@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.c_tweaks.ghost_chest_woo_woo;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,7 +34,7 @@ public class MixinChestBlockEntityRenderer {
 	@Shadow
 	private boolean christmas;
 
-	@FabInject(at=@At("HEAD"), method="render(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;II)V")
+	@Inject(at=@At("HEAD"), method="render(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;II)V")
 	public void renderHead(BlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.ghost_chest_woo_woo")) return;
 		if (entity.hashCode()%20 == 5 && vertexConsumers instanceof Immediate) {
@@ -44,7 +44,7 @@ public class MixinChestBlockEntityRenderer {
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="render(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;II)V")
+	@Inject(at=@At("TAIL"), method="render(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;II)V")
 	public void renderTail(BlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.ghost_chest_woo_woo")) return;
 		if (entity.hashCode()%20 == 5 && vertexConsumers instanceof Immediate) {

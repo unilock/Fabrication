@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.fire_resistance_two;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -23,14 +23,14 @@ import java.util.Optional;
 @EligibleIf(configAvailable="*.fire_resistance_two")
 public abstract class MixinBrewingRecipeRegistry {
 
-	@FabInject(method="hasRecipe(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z", at=@At("HEAD"), cancellable=true)
+	@Inject(method="hasRecipe(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z", at=@At("HEAD"), cancellable=true)
 	private void fabrication$fireResistTwoRecipe(ItemStack input, ItemStack ingredient, CallbackInfoReturnable<Boolean> cir) {
 		if (!FabConf.isEnabled("*.fire_resistance_two")) return;
 		if (ingredient.isOf(Items.GLOWSTONE_DUST) && input.contains(DataComponentTypes.POTION_CONTENTS) && input.get(DataComponentTypes.POTION_CONTENTS).matches(Potions.FIRE_RESISTANCE)) {
 			cir.setReturnValue(true);
 		}
 	}
-	@FabInject(method="craft(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", at=@At("HEAD"), cancellable=true)
+	@Inject(method="craft(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", at=@At("HEAD"), cancellable=true)
 	private void fabrication$fireResistTwoCraft(ItemStack ingredient, ItemStack input, CallbackInfoReturnable<ItemStack> cir) {
 		if (!FabConf.isEnabled("*.fire_resistance_two")) return;
 		if (ingredient.isOf(Items.GLOWSTONE_DUST) && input.contains(DataComponentTypes.POTION_CONTENTS) && input.get(DataComponentTypes.POTION_CONTENTS).matches(Potions.FIRE_RESISTANCE)) {

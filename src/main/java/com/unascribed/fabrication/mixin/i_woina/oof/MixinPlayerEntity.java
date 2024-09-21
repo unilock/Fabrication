@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import net.minecraft.entity.damage.DamageTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.unascribed.fabrication.FabricationMod;
@@ -20,7 +20,7 @@ import net.minecraft.sound.SoundEvents;
 @EligibleIf(configAvailable="*.oof", envMatches=Env.CLIENT)
 public abstract class MixinPlayerEntity {
 
-	@FabInject(at=@At("HEAD"), method="getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;",
+	@Inject(at=@At("HEAD"), method="getHurtSound(Lnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/sound/SoundEvent;",
 			cancellable=true)
 	public void getHurtSound(DamageSource src, CallbackInfoReturnable<SoundEvent> ci) {
 		if (!FabConf.isEnabled("*.oof") || !((PlayerEntity)(Object)this).getWorld().isClient) return;

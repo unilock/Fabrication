@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
@@ -32,7 +32,7 @@ public abstract class MixinBackgroundRenderer {
 
 	private static float fabrication$voidFog = 1;
 
-	@FabInject(method="render(Lnet/minecraft/client/render/Camera;FLnet/minecraft/client/world/ClientWorld;IF)V", at=@At("TAIL"))
+	@Inject(method="render(Lnet/minecraft/client/render/Camera;FLnet/minecraft/client/world/ClientWorld;IF)V", at=@At("TAIL"))
 	private static void fabrication$voidFogColor(Camera camera, float tickDelta, ClientWorld world, int i, float f, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.void_fog")) return;
 		MinecraftClient client = MinecraftClient.getInstance();
@@ -52,7 +52,7 @@ public abstract class MixinBackgroundRenderer {
 			fabrication$voidFog = MathHelper.lerp(.1f, fabrication$voidFog, 1);
 		}
 	}
-	@FabInject(method="applyFog(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/BackgroundRenderer$FogType;FZF)V", at=@At("TAIL"))
+	@Inject(method="applyFog(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/BackgroundRenderer$FogType;FZF)V", at=@At("TAIL"))
 	private static void fabrication$voidFogDistance(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.void_fog")) return;
 		if (fogType != BackgroundRenderer.FogType.FOG_TERRAIN) return;;
