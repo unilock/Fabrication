@@ -116,18 +116,6 @@ public class FabRefl {
 	}
 
 	@FabReflField
-	private static final String es_basePredicate_field = "net/minecraft/command/EntitySelector;basePredicate";
-	private static final MethodHandle es_basePredicate = unreflectGetter("EntitySelector", () -> EntitySelector.class, es_basePredicate_field)
-			.requiredBy("*.canhit").get();
-	public static Predicate<Entity> getBasePredicate(EntitySelector subject) {
-		try {
-			return (Predicate<Entity>)checkHandle(es_basePredicate).invokeExact(subject);
-		} catch (Throwable t) {
-			throw rethrow(t);
-		}
-	}
-
-	@FabReflField
 	private static final String tacs_entityTrackers_field = "net/minecraft/server/world/ServerChunkLoadingManager;entityTrackers";
 	private static final MethodHandle tacs_entityTrackers = unreflectGetter("ServerChunkLoadingManager", () -> ServerChunkLoadingManager.class, tacs_entityTrackers_field)
 			.requiredBy("*.sync_attacker_yaw", "*.despawning_items_blink").get();
@@ -260,28 +248,6 @@ public class FabRefl {
 	public static int gameModeExecute(CommandContext<ServerCommandSource> context, Collection<ServerPlayerEntity> targets, GameMode gameMode) {
 		try {
 			return (int) checkHandle(gmc_execute).invokeExact(context, targets, gameMode);
-		} catch (Throwable t) {
-			throw rethrow(t);
-		}
-	}
-	@FabReflField
-	private static final String e_setSprinting_field = "Lnet/minecraft/entity/Entity;setSprinting(Z)V";
-	private static final MethodHandle e_setSprinting = unreflectMethod("Entity", () -> Entity.class, e_setSprinting_field, void.class, boolean.class)
-		.requiredBy("*.no_sprint").get();
-	public static void setSprinting(Entity context, boolean on) {
-		try {
-			checkHandle(e_setSprinting).invokeExact(context, on);
-		} catch (Throwable t) {
-			throw rethrow(t);
-		}
-	}
-	@FabReflField
-	private static final String e_isSwimming_field = "Lnet/minecraft/entity/Entity;isSwimming()Z";
-	private static final MethodHandle e_isSwimming = unreflectMethod("Entity", () -> Entity.class, e_isSwimming_field, boolean.class)
-		.requiredBy("*.no_sprint").get();
-	public static boolean isSwimming(Entity context) {
-		try {
-			return (boolean) checkHandle(e_isSwimming).invokeExact(context);
 		} catch (Throwable t) {
 			throw rethrow(t);
 		}
