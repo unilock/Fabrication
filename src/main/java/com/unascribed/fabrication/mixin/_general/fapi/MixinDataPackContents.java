@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
 @Mixin(DataPackContents.class)
 public class MixinDataPackContents {
 	// TODO: @ModifyReturnValue would be better
-	@FabInject(at=@At("RETURN"), method="reload", cancellable=true)
+	@FabInject(at=@At("RETURN"), method="reload(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/registry/CombinedDynamicRegistries;Lnet/minecraft/resource/featuretoggle/FeatureSet;Lnet/minecraft/server/command/CommandManager$RegistrationEnvironment;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;", cancellable=true)
 	private static void reload(ResourceManager manager, CombinedDynamicRegistries<ServerDynamicRegistryType> dynamicRegistries, FeatureSet enabledFeatures, CommandManager.RegistrationEnvironment environment, int functionPermissionLevel, Executor prepareExecutor, Executor applyExecutor, CallbackInfoReturnable<CompletableFuture<DataPackContents>> cir) {
 		cir.setReturnValue(cir.getReturnValue().whenComplete((dataPackContents, throwable) -> {
 			if (dataPackContents != null && throwable == null) {

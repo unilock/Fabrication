@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.blaze_fertilizer;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.util.BlazeFertilizerDispencerBehavior;
+import com.unascribed.fabrication.util.BlazeFertilizerDispenserBehavior;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class MixinDispenserBlock {
 	public void getBehaviorForItem(World world, ItemStack stack, CallbackInfoReturnable<DispenserBehavior> ci) {
 		if (!FabConf.isEnabled("*.blaze_fertilizer")) return;
 		if (stack.getItem() == Items.BLAZE_POWDER) {
-			ci.setReturnValue(BlazeFertilizerDispencerBehavior.INSTANCE);
+			ci.setReturnValue(BlazeFertilizerDispenserBehavior.INSTANCE);
 		}
 	}
 

@@ -1,10 +1,10 @@
 package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.mojang.brigadier.StringReader;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.FabInject;
+import com.unascribed.fabrication.support.injection.ModifyReturn;
+import com.unascribed.fabrication.util.ItemStringReaderReaderReader;
 import net.minecraft.command.argument.ItemStringReader;
 import net.minecraft.component.Component;
 import net.minecraft.component.ComponentChanges;
@@ -18,10 +18,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @EligibleIf(configAvailable="*.legacy_command_syntax")
 public class MixinItemStringReader {
 
+	private Integer fabrication$legacyDamage = null;
+
+	@ModifyReturn(method="consume(Lcom/mojang/brigadier/StringReader;Lnet/minecraft/command/argument/ItemStringReader$Callbacks;)V", target="Lnet/minecraft/command/argument/ItemStringReader$Reader;read()V")
+	public void consume(Object reader) {
+		fabrication$legacyDamage = ((ItemStringReaderReaderReader) reader).fabrication$getLegacyDamage();
+	}
+
 	// TODO: @ModifyReturnValue would work better
 	@FabInject(at=@At("RETURN"), method="consume(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/command/argument/ItemStringReader$ItemResult;")
-	public void consume(StringReader reader, CallbackInfoReturnable<ItemStringReader.ItemResult> cir, @Share("legacyDamage") LocalIntRef legacyDamage) {
-		if (legacyDamage.get() != -1) {
+	public void consume(StringReader reader, CallbackInfoReturnable<ItemStringReader.ItemResult> cir) {
+		if (fabrication$legacyDamage != null) {
 			ItemStringReader.ItemResult result = cir.getReturnValue();
 			ComponentChanges.AddedRemovedPair addedRemovedPair = result.components().toAddedRemovedPair();
 			ComponentChanges.Builder builder = ComponentChanges.builder();
@@ -35,7 +42,7 @@ public class MixinItemStringReader {
 					builder.remove(removed);
 				}
 			}
-			builder.add(DataComponentTypes.DAMAGE, legacyDamage.get());
+			builder.add(DataComponentTypes.DAMAGE, fabrication$legacyDamage);
 			cir.setReturnValue(new ItemStringReader.ItemResult(result.item(), builder.build()));
 		}
 	}
