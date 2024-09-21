@@ -8,6 +8,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
@@ -18,7 +19,7 @@ public class FeatureShowBeeCountTooltip implements Feature {
 	private boolean active = false;
 
 	@Override
-	public void apply(World world) {
+	public void apply(MinecraftServer minecraftServer, World world) {
 		active = true;
 		if (!applied) {
 			applied = true;
@@ -34,7 +35,7 @@ public class FeatureShowBeeCountTooltip implements Feature {
 	}
 
 	@Override
-	public boolean undo(World world) {
+	public boolean undo(MinecraftServer minecraftServer, World world) {
 		active = false;
 		return true;
 	}
