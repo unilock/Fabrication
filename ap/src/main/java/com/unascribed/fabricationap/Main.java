@@ -68,7 +68,12 @@ public class Main {
 				int dot = ad.indexOf('.');
 				if (col == -1 || dot < col && dot != -1) col = dot;
 				try {
-					Class<?> cl = Class.forName(ad.substring(ad.charAt(0) == 'L' ? 1 : 0, col).replace('/', '.'), false, classLoader);
+					Class<?> cl;
+					try {
+						cl = Class.forName(ad.substring(ad.charAt(0) == 'L' ? 1 : 0, col).replace('/', '.'), false, classLoader);
+					} catch (StringIndexOutOfBoundsException ingore) {
+						continue;
+					}
 					while (cl != null) {
 						add.add(cl.getName());
 						for (Class<?> cla : cl.getInterfaces()) add.add(cla.getName());
