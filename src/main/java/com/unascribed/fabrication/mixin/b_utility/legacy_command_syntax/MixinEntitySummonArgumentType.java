@@ -22,19 +22,19 @@ import java.util.Locale;
 @Mixin(RegistryEntryArgumentType.class)
 @EligibleIf(configAvailable="*.legacy_command_syntax")
 public class MixinEntitySummonArgumentType {
-	private boolean isNotEntityArgument = true;
+	private boolean fabrication$isNotEntityArgument = true;
 
 	@FabInject(at=@At("TAIL"), method="<init>(Lnet/minecraft/command/CommandRegistryAccess;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V")
 	public void legacyCommandInput(CommandRegistryAccess access, RegistryKey key, Codec codec, CallbackInfo ci) {
 		if (key == RegistryKeys.ENTITY_TYPE) {
-			isNotEntityArgument = false;
+			fabrication$isNotEntityArgument = false;
 		}
-
 	}
+
 	@Hijack(method="parseAsNbt(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/nbt/NbtElement;",
 			target="Lnet/minecraft/util/Identifier;fromCommandInput(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/util/Identifier;")
-	public HijackReturn legacyCommandInput(StringReader sr) {
-		if (isNotEntityArgument) return null;
+	public HijackReturn legacyCommandInput(RegistryEntryArgumentType self, StringReader sr) {
+		if (fabrication$isNotEntityArgument) return null;
 		if (!FabConf.isEnabled("*.legacy_command_syntax")) return null;
 		char peek = sr.peek();
 		if (peek >= 'A' && peek <= 'Z') {

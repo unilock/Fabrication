@@ -18,4 +18,8 @@ public interface AccessorEnchantmentDefinition {
 	@Accessor("primaryItems")
 	@Mutable
 	void setPrimaryItems(Optional<RegistryEntryList<Item>> value);
+
+	@Accessor("maxLevel")
+	@Mutable
+	void setMaxLevel(int value);
 }

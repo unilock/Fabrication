@@ -33,7 +33,6 @@ import java.util.Optional;
 @EligibleIf(configAvailable="*.swap_conflicting_enchants")
 public abstract class MixinAnvilScreenHandler extends ForgingScreenHandler {
 
-
 	public MixinAnvilScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
 		super(type, syncId, playerInventory, context);
 	}

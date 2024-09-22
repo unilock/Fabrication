@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class MixinAnimalEntity {
 
 	@FabModifyVariable(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", argsOnly=true)
-	public float damage(DamageSource source, float amount) {
+	public float damage(float amount, DamageSource source) {
 		Object self = this;
 		if (self instanceof SheepEntity && FabConf.isEnabled("*.wool_protected_sheep") && !((SheepEntity)self).isSheared()
 				&& !source.isIn(DamageTypeTags.BYPASSES_SHIELD) && amount > 0 && !source.isIn(DamageTypeTags.BYPASSES_ARMOR) && !source.isOf(DamageTypes.OUT_OF_WORLD)) {

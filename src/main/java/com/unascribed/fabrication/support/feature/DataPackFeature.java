@@ -2,6 +2,7 @@ package com.unascribed.fabrication.support.feature;
 
 import com.google.common.collect.Lists;
 import com.unascribed.fabrication.FabLog;
+import com.unascribed.fabrication.support.FabricationEvents;
 import com.unascribed.fabrication.support.Feature;
 import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.server.MinecraftServer;
@@ -41,17 +42,19 @@ public class DataPackFeature implements Feature {
 	}
 
 	private boolean reload(MinecraftServer minecraftServer) {
+		FabLog.info("Reloading datapacks!");
 		ResourcePackManager resourcePackManager = minecraftServer.getDataPackManager();
 		SaveProperties saveProperties = minecraftServer.getSaveProperties();
 		Collection<String> collection = resourcePackManager.getEnabledIds();
 		Collection<String> collection2 = findNewDataPacks(resourcePackManager, saveProperties, collection);
 		tryReloadDataPacks(collection2, minecraftServer);
+		FabricationEvents.reload(minecraftServer.getRegistryManager());
 		return true;
 	}
 
 	private static void tryReloadDataPacks(Collection<String> dataPacks, MinecraftServer server) {
 		server.reloadResources(dataPacks).exceptionally(throwable -> {
-			FabLog.warn("Failed to execute reload", throwable);
+			FabLog.warn("Failed to reload datapacks", throwable);
 			return null;
 		});
 	}
