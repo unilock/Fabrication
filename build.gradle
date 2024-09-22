@@ -264,7 +264,7 @@ jar {
                         if (col == -1 || dot < col && dot != -1) col = dot
                         bldrAbs.put(s, 'L' + classMap.get(s.substring(s.charAt(0) == 'L' as char ? 1 : 0, col)) + ';' + ad)
                     } else if (!s.isBlank() && !expectedFailThatFailsAutoFilter.contains(s + intr.key)
-                            && !s.startsWith("Ljava/lang/") && !s.startsWith("Ljava/util") && !s.startsWith("com/mojang/blaze3d/")
+                            && !s.startsWith("Ljava/lang/") && !s.startsWith("Ljava/util/") && !s.startsWith("com/mojang/blaze3d/")
                     ) {
                         logger.log(LogLevel.ERROR, "Failed to map " + s + " for " + intr.key)
                     }

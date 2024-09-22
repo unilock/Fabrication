@@ -7,6 +7,7 @@ import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.support.injection.HijackReturn;
 import com.unascribed.fabrication.util.ItemStringReaderReaderReader;
+import net.minecraft.command.argument.ItemStringReader;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
@@ -15,7 +16,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(targets = "net.minecraft.command.argument.ItemStringReader.Reader")
+@Mixin(ItemStringReader.Reader.class)
 @EligibleIf(configAvailable="*.legacy_command_syntax")
 public class MixinItemStringReaderReader implements ItemStringReaderReaderReader {
 

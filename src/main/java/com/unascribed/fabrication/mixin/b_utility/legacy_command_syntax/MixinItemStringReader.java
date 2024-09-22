@@ -1,9 +1,10 @@
 package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 
 import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
+import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.util.ItemStringReaderReaderReader;
 import net.minecraft.command.argument.ItemStringReader;
 import net.minecraft.component.Component;
@@ -20,9 +21,13 @@ public class MixinItemStringReader {
 
 	private Integer fabrication$legacyDamage = null;
 
-	@ModifyReturn(method="consume(Lcom/mojang/brigadier/StringReader;Lnet/minecraft/command/argument/ItemStringReader$Callbacks;)V", target="Lnet/minecraft/command/argument/ItemStringReader$Reader;read()V")
-	public void consume(Object reader) {
-		fabrication$legacyDamage = ((ItemStringReaderReaderReader) reader).fabrication$getLegacyDamage();
+	@Hijack(method="consume(Lcom/mojang/brigadier/StringReader;Lnet/minecraft/command/argument/ItemStringReader$Callbacks;)V", target="Lnet/minecraft/command/argument/ItemStringReader$Reader;read()V")
+	public boolean consume(ItemStringReader.Reader subject) {
+		try {
+			subject.read();
+			fabrication$legacyDamage = ((ItemStringReaderReaderReader) subject).fabrication$getLegacyDamage();
+		} catch (CommandSyntaxException ignore) {}
+		return true;
 	}
 
 	// TODO: @ModifyReturnValue would work better
