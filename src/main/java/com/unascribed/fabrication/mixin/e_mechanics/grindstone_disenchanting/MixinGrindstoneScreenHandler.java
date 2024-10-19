@@ -41,7 +41,7 @@ public abstract class MixinGrindstoneScreenHandler extends ScreenHandler {
 	@FabInject(at=@At("HEAD"), method="updateResult()V", cancellable=true)
 	private void updateResult(CallbackInfo ci) {
 		if (getSlot(1).getStack().getItem() == Items.BOOK && getSlot(1).getStack().getCount() == 1 && getSlot(0).getStack().hasEnchantments()) {
-			getSlot(2).setStack(grind(getSlot(0).getStack()));
+			getSlot(2).setStack(grind(getSlot(0).getStack().copy()));
 			sendContentUpdates();
 			ci.cancel();
 		}
