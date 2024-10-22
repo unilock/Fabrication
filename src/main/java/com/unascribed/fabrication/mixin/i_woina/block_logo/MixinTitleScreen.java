@@ -37,7 +37,7 @@ public class MixinTitleScreen extends Screen {
 	private long backgroundFadeStart;
 
 	@Hijack(method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V", target="Lnet/minecraft/client/gui/LogoDrawer;draw(Lnet/minecraft/client/gui/DrawContext;IF)V")
-	public boolean fabrication$drawBlockLogo(LogoDrawer logo, DrawContext context, int i, float f) {
+	public boolean fabrication$drawBlockLogo(LogoDrawer logo, DrawContext context) {
 		if (FabConf.isEnabled("*.block_logo")) {
 			fabrication$blockLogo.drawLogo(context, doBackgroundFade, backgroundFadeStart, MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true));
 			return true;
