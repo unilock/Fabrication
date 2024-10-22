@@ -1,6 +1,5 @@
 package com.unascribed.fabrication.mixin.f_balance.disable_prior_work_penalty;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -18,10 +17,9 @@ import java.util.function.Predicate;
 @EligibleIf(anyConfigAvailable={"*.disable_prior_work_penalty", "*.anvil_no_xp_cost"})
 public class MixinGrindstoneScreenHandler {
 
-	//TODO: non-Fabrication annotation
 	private static final Predicate<ItemStack> fabrication$disablePriorWorkPenalty = ConfigPredicates.getFinalPredicate("*.disable_prior_work_penalty");
 	@ModifyArgs(method="grind(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;set(Lnet/minecraft/component/ComponentType;Ljava/lang/Object;)Ljava/lang/Object;"))
-	public void grind(Args args, @Local(argsOnly=true) ItemStack stack) {
+	public void grind(Args args, ItemStack stack) {
 		if (!DataComponentTypes.REPAIR_COST.equals(args.get(0))) return;
 		if (!(
 				FabConf.isEnabled("*.disable_prior_work_penalty") && fabrication$disablePriorWorkPenalty.test(stack)
