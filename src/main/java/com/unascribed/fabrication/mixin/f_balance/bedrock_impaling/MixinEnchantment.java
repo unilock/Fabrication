@@ -14,11 +14,9 @@ import net.minecraft.enchantment.effect.EnchantmentValueEffect;
 import net.minecraft.enchantment.effect.value.AddEnchantmentEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.loot.condition.EntityPropertiesLootCondition;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.condition.LootConditionType;
-import net.minecraft.loot.condition.LootConditionTypes;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.EntityTypePredicate;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -53,37 +51,21 @@ public class MixinEnchantment {
 				mutableEffects.removeIf(entry ->
 					entry.effect().getCodec() == AddEnchantmentEffect.CODEC
 					&& entry.requirements().isPresent()
-					&& entry.requirements().get().getType() == LootConditionTypes.ENTITY_PROPERTIES
-					&& ((EntityPropertiesLootCondition) entry.requirements().get()).predicate().isPresent()
-					&& ((EntityPropertiesLootCondition) entry.requirements().get()).predicate().get().type().isPresent()
-					&& new HashSet<>(((EntityPropertiesLootCondition) entry.requirements().get()).predicate().get().type().get().types().stream().toList())
+					&& entry.requirements().get() instanceof EntityPropertiesLootCondition condition
+					&& condition.predicate().isPresent()
+					&& condition.predicate().get().type().isPresent()
+					&& new HashSet<>(condition.predicate().get().type().get().types().stream().toList())
 						.equals(new HashSet<>(Registries.ENTITY_TYPE.getEntryList(EntityTypeTags.SENSITIVE_TO_IMPALING).orElseThrow().stream().toList()))
 				);
 
 				mutableEffects.add(new EnchantmentEffectEntry<>(
 					new AddEnchantmentEffect(EnchantmentLevelBasedValue.linear(2.5F, 2.5F)),
-					Optional.of(new LootCondition() {
-						// We're pretending to be an EntityPropertiesLootCondition, so just in case something checks...
-						private final Optional<EntityPredicate> predicate = Optional.empty();
-						private final LootContext.EntityTarget entity = LootContext.EntityTarget.THIS;
-
-						public Optional<EntityPredicate> predicate() {
-							return this.predicate;
-						}
-
-						public LootContext.EntityTarget entity() {
-							return this.entity;
-						}
-
-						@Override
-						public LootConditionType getType() {
-							return LootConditionTypes.ENTITY_PROPERTIES;
-						}
-
+					// TODO: Ye gods...
+					Optional.of(new EntityPropertiesLootCondition(Optional.of(EntityPredicate.Builder.create().type(EntityTypePredicate.create(EntityTypeTags.SENSITIVE_TO_IMPALING)).build()), LootContext.EntityTarget.THIS) {
 						@Override
 						public boolean test(LootContext lootContext) {
-							Entity entity = lootContext.get(this.entity.getParameter());
-							return entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_IMPALING) || entity.isWet();
+							Entity entity = lootContext.get(this.entity().getParameter());
+							return entity != null && (entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_IMPALING) || entity.isWet());
 						}
 					})
 				));
