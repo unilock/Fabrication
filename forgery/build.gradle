@@ -14,5 +14,3 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     implementation 'net.neoforged:neoforge:21.1.76'
 }
-
-jar.finalizedBy('reobfJar') 
