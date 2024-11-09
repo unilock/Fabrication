@@ -1,12 +1,12 @@
 package com.unascribed.fabrication;
 
 import com.unascribed.fabrication.support.Env;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.versions.forge.ForgeVersion;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 
 import java.nio.file.Path;
 
@@ -41,6 +41,6 @@ public final class EarlyAgnos {
 	}
 
 	public static String getLoaderVersion() {
-		return ForgeVersion.getVersion();
+		return NeoForgeVersion.getVersion();
 	}
 }

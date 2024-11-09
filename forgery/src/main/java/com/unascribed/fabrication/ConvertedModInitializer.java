@@ -1,17 +1,17 @@
 package com.unascribed.fabrication;
 
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 public abstract class ConvertedModInitializer {
 
-	public ConvertedModInitializer() {
+	public ConvertedModInitializer(ModContainer modContainer) {
 		onInitialize();
 		try {
 			ModMenuAdapter mma = (ModMenuAdapter) Class.forName("com.unascribed.fabrication.ModMenuInitializer").getConstructor().newInstance();
-			ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((mc, parent) -> {
-				return mma.getModConfigScreenFactory().create(parent);
-			}));
+			modContainer.registerExtensionPoint(IConfigScreenFactory.class, (container, modListScreen) -> {
+				return mma.getModConfigScreenFactory().create(modListScreen);
+			});
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

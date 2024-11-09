@@ -1,32 +1,18 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://repo.spongepowered.org/maven' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-    }
+plugins {
+    id 'eclipse'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.0.168'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
 
 group = 'com.unascribed'
 archivesBaseName = 'forgery'
 
-sourceCompatibility = compileJava.sourceCompatibility = '8'
-targetCompatibility = compileJava.targetCompatibility = '17'
-
-minecraft {
-    mappings channel: 'official', version: '1.20.4'
-}
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.4-49.0.3'
+    implementation 'net.neoforged:neoforge:21.1.76'
 }
 
 jar.finalizedBy('reobfJar') 
