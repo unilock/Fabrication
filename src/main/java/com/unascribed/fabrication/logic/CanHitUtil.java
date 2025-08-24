@@ -7,7 +7,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.unascribed.fabrication.FabConf;
 
-import com.unascribed.fabrication.FabRefl;
+import com.unascribed.fabrication.mixin.b_utility.canhit.AccessorEntitySelector;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.EntitySelectorReader;
 import net.minecraft.component.DataComponentTypes;
@@ -38,7 +38,7 @@ public class CanHitUtil {
 				}
 				if (s.startsWith("@")) {
 					EntitySelector ep = new EntitySelectorReader(new StringReader(s), true).read();
-					for (Predicate<Entity> predicate : FabRefl.getBasePredicate(ep)) {
+					for (Predicate<Entity> predicate : ((AccessorEntitySelector) ep).getPredicates()) {
 						if (!predicate.test(entity)) return false;
 					}
 					return true;

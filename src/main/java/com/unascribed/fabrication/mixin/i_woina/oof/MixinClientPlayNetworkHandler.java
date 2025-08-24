@@ -15,7 +15,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 
 @Mixin(ClientPlayNetworkHandler.class)
-@EligibleIf(configAvailable="*.oof", envMatches= Env.CLIENT)
+@EligibleIf(configAvailable="*.oof", envMatches=Env.CLIENT)
 public class MixinClientPlayNetworkHandler {
 
 	@FabModifyArg(method="onPlaySound(Lnet/minecraft/network/packet/s2c/play/PlaySoundS2CPacket;)V", at=@At(value="INVOKE", target="Lnet/minecraft/client/world/ClientWorld;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/sound/SoundCategory;FFJ)V"))

@@ -1,6 +1,5 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.encroaching_emeralds;
 
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.interfaces.GenerationSettingsAddEmeralds;
 import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.registry.RegistryEntryLookup;
@@ -35,7 +34,7 @@ public abstract class MixinGenerationSettingsBuilder implements GenerationSettin
 		if (!fabrication$hasDefaultOres) return;
 		Object self = this;
 		if (!(self instanceof GenerationSettings.LookupBackedBuilder)) return;
-		RegistryEntryLookup<PlacedFeature> placedFeatureLookup = FabRefl.getPlacedFeatureLookup((GenerationSettings.LookupBackedBuilder) self);
+		RegistryEntryLookup<PlacedFeature> placedFeatureLookup = ((AccessorGenerationSettingsLookupBackedBuilder) self).getPlacedFeatureLookup();
 		int step = GenerationStep.Feature.UNDERGROUND_ORES.ordinal();
 		RegistryEntry<PlacedFeature> feature = placedFeatureLookup.getOrThrow(OrePlacedFeatures.ORE_EMERALD);
 		if (indexedFeaturesList.size() > step && !indexedFeaturesList.get(step).contains(feature)) {

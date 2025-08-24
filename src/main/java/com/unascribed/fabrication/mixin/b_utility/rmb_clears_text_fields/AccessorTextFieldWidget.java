@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(TextFieldWidget.class)
-@EligibleIf(configAvailable="*.rmb_clears_text_fields", envMatches= Env.CLIENT)
+@EligibleIf(configAvailable="*.rmb_clears_text_fields", envMatches=Env.CLIENT)
 public interface AccessorTextFieldWidget {
 	@Accessor("focusUnlocked")
 	boolean fabrication$clear$getFocusUnlocked();

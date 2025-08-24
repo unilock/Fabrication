@@ -2,8 +2,8 @@ package com.unascribed.fabrication.support;
 
 import com.google.common.collect.Sets;
 import com.unascribed.fabrication.FabLog;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.FabricationResourcePack;
+import com.unascribed.fabrication.mixin._general.packs.AccessorResourcePackManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourcePack;
 import net.minecraft.resource.ResourcePackInfo;
@@ -22,13 +22,15 @@ import java.util.function.Consumer;
 public class FabricationDefaultResources implements ResourcePackProvider {
 
 	public static void apply() {
-		Set<ResourcePackProvider> providers = FabRefl.getProviders(MinecraftClient.getInstance().getResourcePackManager());
+		AccessorResourcePackManager accessor = ((AccessorResourcePackManager) MinecraftClient.getInstance().getResourcePackManager());
+		Set<ResourcePackProvider> providers = accessor.getProviders();
 		try {
 			providers.add(new FabricationDefaultResources());
 		} catch (UnsupportedOperationException e) {
 			FabLog.info("Injecting mutable resource pack provider set, as no-one else has yet.");
 			providers = Sets.newHashSet(providers);
-			FabRefl.setProviders(MinecraftClient.getInstance().getResourcePackManager(), providers);
+			providers.add(new FabricationDefaultResources());
+			accessor.setProviders(providers);
 		}
 	}
 	@Override

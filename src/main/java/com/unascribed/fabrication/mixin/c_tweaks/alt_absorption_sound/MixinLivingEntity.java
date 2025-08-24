@@ -2,9 +2,9 @@ package com.unascribed.fabrication.mixin.c_tweaks.alt_absorption_sound;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.registry.Registries;
-import net.minecraft.server.network.PlayerAssociatedNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -13,7 +13,6 @@ import com.unascribed.fabrication.support.injection.FabInject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.interfaces.DidJustAbsorp;
 import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -74,8 +73,7 @@ public abstract class MixinLivingEntity extends Entity implements DidJustAbsorp 
 			CustomPayloadS2CPacket fabPkt = new CustomPayloadS2CPacket(new ByteBufCustomPayload(Identifier.of("fabrication", "play_absorp_sound"), data));
 			SoundEvent defHurtSound = getHurtSound(src);
 			PlaySoundFromEntityS2CPacket vanPkt = defHurtSound == null ? null : new PlaySoundFromEntityS2CPacket(Registries.SOUND_EVENT.getEntry(defHurtSound), getSoundCategory(), this, getSoundVolume(), getSoundPitch(), this.random.nextLong());
-			for (PlayerAssociatedNetworkHandler etl : FabricationMod.getTrackers(this)) {
-				ServerPlayerEntity spe = etl.getPlayer();
+			for (ServerPlayerEntity spe : PlayerLookup.tracking(this)) {
 				//TODO access spe.entity for instanceof check
 				if (spe instanceof SetFabricationConfigAware && ((SetFabricationConfigAware) spe).fabrication$getReqVer() >= 0) {
 					spe.networkHandler.sendPacket(fabPkt);

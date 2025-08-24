@@ -1,6 +1,5 @@
 package com.unascribed.fabrication.mixin.a_fixes.multiline_sign_paste;
 
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.support.injection.FabInject;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.AbstractSignEditScreen;
@@ -51,7 +50,7 @@ public abstract class MixinAbstractSignEditScreen extends Screen {
 			SelectionManager.makeClipboardGetter(this.client), SelectionManager.makeClipboardSetter(this.client), (text) -> this.client.textRenderer.getWidth(text) <= 90) {
 			@Override
 			public void paste() {
-				Supplier<String> supplier = FabRefl.Client.getClipboardGetter(this);
+				Supplier<String> supplier = ((AccessorSelectionManager) (Object) this).fabrication$getClipboardGetter();
 				String text = supplier.get();
 				String[] lines = text.split("\r?\n");
 				if (lines.length <=1) {
@@ -60,14 +59,14 @@ public abstract class MixinAbstractSignEditScreen extends Screen {
 				}
 				for (int i=0; i<lines.length; i++) {
 					String line = lines[i];
-					FabRefl.Client.setClipboardGetter(this, () -> line);
+					((AccessorSelectionManager) (Object) this).fabrication$setClipboardGetter(() -> line);
 					super.paste();
 					if (i+1<lines.length) {
 						self.setCurrentRow(self.getCurrentRow() + 1 & 3);
 						this.putCursorAtEnd();
 					}
 				}
-				FabRefl.Client.setClipboardGetter(this, supplier);
+				((AccessorSelectionManager) (Object) this).fabrication$setClipboardGetter(supplier);
 			}
 		};
 	}

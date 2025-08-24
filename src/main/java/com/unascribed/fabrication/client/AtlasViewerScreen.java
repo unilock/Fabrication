@@ -1,5 +1,6 @@
 package com.unascribed.fabrication.client;
 
+import com.unascribed.fabrication.mixin._general.atlas.AccessorSpriteAtlasTexture;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.BufferBuilder;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.unascribed.fabrication.FabRefl;
 
 import com.google.common.collect.Lists;
 import org.joml.Matrix4f;
@@ -118,12 +118,12 @@ public class AtlasViewerScreen extends Screen {
 		SpriteAtlasTexture sat = getAtlas();
 		renderTooltip(drawContext, Lists.<Text>newArrayList(
 				Text.literal(atlas.toString()),
-				Text.literal("§7"+atlasWidth+"×"+atlasHeight+"×"+(atlasMaxLevel+1)+" @"+(level+1)+" §f|§7 "+FabRefl.Client.getSprites(sat).size()+" sprites")
+				Text.literal("§7"+atlasWidth+"×"+atlasHeight+"×"+(atlasMaxLevel+1)+" @"+(level+1)+" §f|§7 "+((AccessorSpriteAtlasTexture) sat).fabrication$getSprites().size()+" sprites")
 			), -9, 15);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		List<Sprite> sprites = Lists.newArrayList();
-		for (Sprite s : FabRefl.Client.getSprites(sat).values()) {
+		for (Sprite s : ((AccessorSpriteAtlasTexture) sat).fabrication$getSprites().values()) {
 			int x = s.getX();
 			int y = s.getY();
 			int w = s.getContents().getWidth();

@@ -2,14 +2,15 @@ package com.unascribed.fabrication.mixin.b_utility.despawning_items_blink;
 
 import com.unascribed.fabrication.interfaces.SetItemDespawnAware;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
-import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import com.unascribed.fabrication.support.injection.FabInject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.interfaces.RenderingAgeAccess;
 import com.unascribed.fabrication.support.EligibleIf;
 
@@ -43,7 +44,11 @@ public abstract class MixinItemEntity extends Entity implements RenderingAgeAcce
 				PacketByteBuf data = new PacketByteBuf(Unpooled.buffer(8));
 				data.writeInt(getId());
 				data.writeInt(itemAge);
-				FabricationMod.sendToTrackersMatching(this, new CustomPayloadS2CPacket(new ByteBufCustomPayload(FABRICATION$ITEM_DESPAWN, data)), spe -> spe instanceof SetItemDespawnAware && ((SetItemDespawnAware) spe).fabrication$isItemDespawnAware());
+				for (ServerPlayerEntity spe : PlayerLookup.tracking(this)) {
+					if (spe instanceof SetItemDespawnAware sida && sida.fabrication$isItemDespawnAware()) {
+						ServerPlayNetworking.send(spe, new ByteBufCustomPayload(FABRICATION$ITEM_DESPAWN, data));
+					}
+				}
 			}
 		}
 		fabrication$renderingAge++;

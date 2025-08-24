@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.util;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
+import com.unascribed.fabrication.mixin.d_minor_mechanics.furnace_minecart_resupplying.AccessorFurnaceMinecartEntity;
 import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -103,7 +103,7 @@ public class FurnaceResupplierFakeInventory extends Entity implements SidedInven
 		if (!FabConf.isEnabled("*.furnace_minecart_resupplying")) return false;
 		if (slot != 0 || !this.stack.isEmpty()) return false;
 		if (FabConf.isEnabled("*.furnace_minecart_any_fuel")) return FurnaceBlockEntity.canUseAsFuel(stack);
-		return  FabRefl.getAcceltableFuel().test(stack);
+		return AccessorFurnaceMinecartEntity.getACCEPTABLE_FUEL().test(stack);
 	}
 
 	@Override

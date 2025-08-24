@@ -7,6 +7,9 @@ import java.nio.IntBuffer;
 import java.util.function.Consumer;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.mixin.i_woina.classic_block_drops.AccessorItemRenderer;
+import com.unascribed.fabrication.mixin.i_woina.classic_block_drops.AccessorNativeImage;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.MapColor;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.sound.BlockSoundGroup;
@@ -24,7 +27,6 @@ import org.lwjgl.system.MemoryUtil;
 
 import com.mojang.blaze3d.platform.TextureUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.loaders.LoaderClassicBlockDrops;
 
 import net.minecraft.block.Block;
@@ -118,7 +120,7 @@ public class WoinaDrops {
 										MemoryUtil.memFree(dest);
 										throw e;
 									}
-									NativeImage img = FabRefl.Client.NativeImage_new(Format.RGBA, w, h, false, MemoryUtil.memAddress(dest));
+									NativeImage img = AccessorNativeImage.fabrication$new(Format.RGBA, w, h, false, MemoryUtil.memAddress(dest));
 									try {
 										NativeImage mipped = MipmapHelper.getMipmapLevelsImages(new NativeImage[]{img}, 1)[1];
 										try {
@@ -149,7 +151,7 @@ public class WoinaDrops {
 							RenderLayer.getEntityCutout(Identifier.of("fabrication", "textures/atlas/blocks-mip.png")) :
 								RenderLayer.getEntityTranslucent(Identifier.of("fabrication", "textures/atlas/blocks-mip.png"));
 					VertexConsumer vertices = vertexConsumers.getBuffer(layer);
-					FabRefl.Client.ItemRenderer_renderBakedItemModel(subject, model, stack, light, overlay, matrices, vertices);
+					((AccessorItemRenderer) subject).fabrication$renderBakedItemModel(model, stack, light, overlay, matrices, vertices);
 				}
 				matrices.pop();
 				return;
@@ -163,7 +165,7 @@ public class WoinaDrops {
 
 		int packedColor = -1;
 		if (quad.hasColor()) {
-			packedColor = FabRefl.Client.getItemColors(MinecraftClient.getInstance()).getColor(is, quad.getColorIndex());
+			packedColor = ColorProviderRegistry.ITEM.get(is.getItem()).getColor(is, quad.getColorIndex());
 			Block b = ((BlockItem)is.getItem()).getBlock();
 			BlockSoundGroup sg = b.getDefaultState().getSoundGroup();
 			isProbablyGrass = sg == BlockSoundGroup.GRASS || (sg == BlockSoundGroup.GRAVEL && b.getDefaultMapColor() == MapColor.DIRT_BROWN);

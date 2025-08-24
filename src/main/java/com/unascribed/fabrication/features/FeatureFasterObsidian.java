@@ -1,6 +1,6 @@
 package com.unascribed.fabrication.features;
 
-import com.unascribed.fabrication.FabRefl;
+import com.unascribed.fabrication.mixin.f_balance.faster_obsidian.AccessorAbstractBlockState;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
 
@@ -34,9 +34,9 @@ public class FeatureFasterObsidian implements Feature {
 		for (Block b : BLOCKS) {
 			for (BlockState bs : b.getStateManager().getStates()) {
 				try {
-					float base = FabRefl.getHardness(bs);
+					float base = ((AccessorAbstractBlockState) bs).getHardness();
 					float nw = base*m;
-					FabRefl.setHardness(bs, nw);
+					((AccessorAbstractBlockState) bs).setHardness(nw);
 				} catch (Exception e) {
 					throw new RuntimeException("Can't update hardness", e);
 				}

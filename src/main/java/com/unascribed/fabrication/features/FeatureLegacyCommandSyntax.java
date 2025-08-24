@@ -11,8 +11,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.unascribed.fabrication.Agnos;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
 import com.unascribed.fabrication.FabricationMod;
+import com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax.AccessorGameModeCommand;
+import com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax.AccessorServerWorld;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
 
@@ -45,9 +46,9 @@ public class FeatureLegacyCommandSyntax implements Feature {
 						.requires(scs -> FabConf.isEnabled("*.legacy_command_syntax") && scs.hasPermissionLevel(2));
 				for (GameMode mode : GameMode.values()) {
 					gmCmd.then(CommandManager.literal(Integer.toString(mode.getId()))
-							.executes(c -> FabRefl.gameModeExecute(c, Collections.singleton(c.getSource().getPlayerOrThrow()), mode))
+							.executes(c -> AccessorGameModeCommand.fabrication$execute(c, Collections.singleton(c.getSource().getPlayerOrThrow()), mode))
 							.then(CommandManager.argument("target", EntityArgumentType.players())
-									.executes(c -> (int) FabRefl.gameModeExecute(c, EntityArgumentType.getPlayers(c, "target"), mode)))
+									.executes(c -> AccessorGameModeCommand.fabrication$execute(c, EntityArgumentType.getPlayers(c, "target"), mode)))
 							);
 				}
 				dispatcher.register(gmCmd);
@@ -87,7 +88,7 @@ public class FeatureLegacyCommandSyntax implements Feature {
 						.requires(scs -> FabConf.isEnabled("*.legacy_command_syntax") && scs.hasPermissionLevel(2))
 						.executes(c -> {
 							ServerWorld world = c.getSource().getWorld();
-							ServerWorldProperties props = (ServerWorldProperties) FabRefl.getWorldProperties(world);
+							ServerWorldProperties props = ((AccessorServerWorld) world).getWorldProperties();
 							if (props.isRaining()) {
 								world.setWeather(12000, 0, false, props.isThundering());
 							} else {

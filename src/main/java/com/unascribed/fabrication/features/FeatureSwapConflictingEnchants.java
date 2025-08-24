@@ -2,7 +2,7 @@ package com.unascribed.fabrication.features;
 
 import com.unascribed.fabrication.Agnos;
 import com.unascribed.fabrication.EarlyAgnos;
-import com.unascribed.fabrication.FabRefl;
+import com.unascribed.fabrication.mixin.e_mechanics.swap_conflicting_enchants.AccessorItemEnchantmentsComponent;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
@@ -44,7 +44,7 @@ public class FeatureSwapConflictingEnchants implements Feature {
 	private void applyClient() {
 		Agnos.runForTooltipRender((stack, lines) -> {
 			if (!stack.isEmpty() && stack.contains(DataComponentTypes.CUSTOM_DATA)) {
-				if (!FabRefl.getShowInTooltip(stack.getEnchantments())) return;
+				if (!((AccessorItemEnchantmentsComponent) stack.getEnchantments()).getShowInTooltip()) return;
 				NbtCompound lTag = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).getNbt().getCompound("fabrication#conflictingEnchants");
 				if (lTag == null || lTag.isEmpty()) return;
 				int ii=0;

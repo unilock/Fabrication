@@ -9,7 +9,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.unascribed.fabrication.Agnos;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
+import com.unascribed.fabrication.mixin.b_utility.i_and_more.AccessorGiveCommand;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
 
@@ -141,7 +141,7 @@ public class FeatureIMore implements Feature {
 		} catch (IllegalArgumentException e) {
 			count = 1;
 		}
-		return FabRefl.GiveCommand_execute(ctx.getSource(), ctx.getArgument("item", ItemStackArgument.class), Collections.singleton(ctx.getSource().getPlayerOrThrow()), count);
+		return AccessorGiveCommand.fabrication$execute(ctx.getSource(), ctx.getArgument("item", ItemStackArgument.class), Collections.singleton(ctx.getSource().getPlayerOrThrow()), count);
 	}
 
 	@Override
