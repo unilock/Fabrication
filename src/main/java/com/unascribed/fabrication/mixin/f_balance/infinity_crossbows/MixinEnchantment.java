@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.f_balance.infinity_crossbows;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.mixin.z_combined.enchantments.AccessorEnchantmentDefinition;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.enchantment.Enchantments;
@@ -31,7 +31,7 @@ import java.util.List;
 @Mixin(Enchantment.class)
 @EligibleIf(anyConfigAvailable={"*.infinity_crossbows", "*.infinity_crossbows_modded"})
 public abstract class MixinEnchantment {
-	@FabInject(at=@At("HEAD"), method="isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", cancellable=true)
 	private void isAcceptable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isAnyEnabled("*.infinity_crossbows") && EnchantmentHelperHelper.matches(this, Enchantments.INFINITY)) {
 			if (FabConf.isEnabled("*.infinity_crossbows_modded") ? stack.getItem() instanceof CrossbowItem : stack.getItem() == Items.CROSSBOW) {

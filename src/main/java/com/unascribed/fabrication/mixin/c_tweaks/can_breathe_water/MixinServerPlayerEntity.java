@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +25,7 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
 		super(world, pos, yaw, gameProfile);
 	}
 
-	@FabInject(at=@At("TAIL"), method="tick()V")
+	@Inject(at=@At("TAIL"), method="tick()V")
 	public void tick(CallbackInfo ci) {
 		if (FabConf.isEnabled("*.can_breathe_water") && fabrication$canBreatheWaterPredicate.test(this)) {
 			setAir(getMaxAir());

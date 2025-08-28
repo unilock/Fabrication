@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.c_tweaks.recipe_book_auto_craft;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.StonecutterScreen;
@@ -26,7 +26,7 @@ public abstract class MixinStonecutterScreen extends HandledScreen<StonecutterSc
 		super(handler, inventory, title);
 	}
 
-	@FabInject(method="mouseClicked(DDI)Z", at=@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerInteractionManager;clickButton(II)V", shift=At.Shift.AFTER))
+	@Inject(method="mouseClicked(DDI)Z", at=@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerInteractionManager;clickButton(II)V", shift=At.Shift.AFTER))
 	private void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir){
 		if (FabConf.isEnabled("*.recipe_book_auto_craft") && (button == 0 || button == 1) && !hasControlDown()) {
 			if (hasShiftDown()) {

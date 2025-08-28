@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.b_utility.canhit;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -32,7 +32,7 @@ import java.util.List;
 @EligibleIf(configAvailable="*.canhit")
 public class MixinRangedWeaponItem {
 
-	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
 			method="shootAll(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;Ljava/util/List;FFZLnet/minecraft/entity/LivingEntity;)V",
 			locals=LocalCapture.CAPTURE_FAILHARD)
 	public void shootAll$bow(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack bowStack, List<ItemStack> projectiles, float speed, float divergence, boolean critical, LivingEntity target, CallbackInfo ci, float f, float g, float h, float i, int j, ItemStack arrowStack, float k, ProjectileEntity arrow) {
@@ -47,7 +47,7 @@ public class MixinRangedWeaponItem {
 		}
 	}
 
-	@FabInject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"),
 		method="shootAll(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;Ljava/util/List;FFZLnet/minecraft/entity/LivingEntity;)V",
 		locals=LocalCapture.CAPTURE_FAILHARD)
 	public void shootAll$crossbow(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack crossbow, List<ItemStack> projectiles, float speed, float divergence, boolean critical, LivingEntity target, CallbackInfo ci, float f, float g, float h, float i, int j, ItemStack projectile, float k, ProjectileEntity proj) {

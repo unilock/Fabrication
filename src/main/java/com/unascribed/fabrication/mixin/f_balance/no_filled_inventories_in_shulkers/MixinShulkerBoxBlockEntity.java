@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.f_balance.no_filled_inventories_in_shul
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.ItemNbtScanner;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinShulkerBoxBlockEntity {
 
 
-	@FabInject(method="canInsert(ILnet/minecraft/item/ItemStack;Lnet/minecraft/util/math/Direction;)Z", at=@At("HEAD"), cancellable=true)
+	@Inject(method="canInsert(ILnet/minecraft/item/ItemStack;Lnet/minecraft/util/math/Direction;)Z", at=@At("HEAD"), cancellable=true)
 	private void preventClosingScreen(int slot, ItemStack stack, Direction dir, CallbackInfoReturnable<Boolean> cir) {
 		if (!FabConf.isEnabled("*.no_filled_inventories_in_shulkers")) return;
 		if (ItemNbtScanner.hasItemInvNBT(stack)) {

@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.swap_conflicting_enchants;
 import com.google.common.collect.Lists;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.support.injection.ModifyReturn;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryIdentifier;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryNbt;
@@ -61,7 +61,7 @@ public abstract class MixinAnvilScreenHandler extends ForgingScreenHandler {
 		return old;
 	}
 
-	@FabInject(at=@At("TAIL"), method="updateResult()V")
+	@Inject(at=@At("TAIL"), method="updateResult()V")
 	public void allowCombiningIncompatibleEnchants(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.swap_conflicting_enchants")) return;
 		ItemStack stack = output.getStack(0);

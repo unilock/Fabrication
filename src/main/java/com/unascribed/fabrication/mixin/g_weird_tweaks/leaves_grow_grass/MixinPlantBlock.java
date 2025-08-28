@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.leaves_grow_grass;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.registry.tag.BlockTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +19,7 @@ import net.minecraft.world.BlockView;
 @EligibleIf(configAvailable="*.leaves_grow_grass")
 public abstract class MixinPlantBlock {
 
-	@FabInject(at=@At("HEAD"), method="canPlantOnTop(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="canPlantOnTop(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z", cancellable=true)
 	private void canPlantOnTop(BlockState floor, BlockView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
 		if (!FabConf.isEnabled("*.leaves_grow_grass")) return;
 		if (floor.isIn(BlockTags.LEAVES) && (((Object)this) == Blocks.SHORT_GRASS || ((Object)this) == Blocks.TALL_GRASS)){

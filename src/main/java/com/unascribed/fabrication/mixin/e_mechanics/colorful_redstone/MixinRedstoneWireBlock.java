@@ -3,11 +3,11 @@ package com.unascribed.fabrication.mixin.e_mechanics.colorful_redstone;
 import java.util.Iterator;
 
 import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.registry.tag.BlockTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinRedstoneWireBlock {
 
-	@FabInject(at=@At("RETURN"), method="getRenderConnectionType(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;Z)Lnet/minecraft/block/enums/WireConnection;", cancellable=true)
+	@Inject(at=@At("RETURN"), method="getRenderConnectionType(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;Z)Lnet/minecraft/block/enums/WireConnection;", cancellable=true)
 	private void getRenderConnectionType(BlockView blockView, BlockPos blockPos, Direction direction, boolean bl, CallbackInfoReturnable<WireConnection> ci) {
 		if (!FabConf.isEnabled("*.colorful_redstone")) return;
 		if (ci.getReturnValue() != WireConnection.NONE && !fabrication$canConnect(blockView, blockPos, direction)) {
@@ -64,14 +64,14 @@ public class MixinRedstoneWireBlock {
 
 	private final ThreadLocal<Direction> fabrication$capturedDirection = new ThreadLocal<>();
 
-	@FabInject(at=@At(value="INVOKE_ASSIGN", target="net/minecraft/world/World.getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
+	@Inject(at=@At(value="INVOKE_ASSIGN", target="net/minecraft/world/World.getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
 			method="getReceivedRedstonePower(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)I", locals=LocalCapture.CAPTURE_FAILHARD)
 	private void captureLocals(World world, BlockPos ourPos, CallbackInfoReturnable<Integer> ci, int i, int j, Iterator var5, Direction dir, BlockPos theirPos) {
 		if (!FabConf.isEnabled("*.colorful_redstone")) return;
 		fabrication$capturedDirection.set(dir);
 	}
 
-	@FabModifyVariable(at=@At(value="INVOKE_ASSIGN", target="net/minecraft/world/World.getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
+	@ModifyVariable(at=@At(value="INVOKE_ASSIGN", target="net/minecraft/world/World.getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"),
 			method="getReceivedRedstonePower(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)I", ordinal=0)
 	private BlockState hideNonConnectedBlockState(BlockState orig, World world, BlockPos ourPos) {
 		if (!FabConf.isEnabled("*.colorful_redstone")) return orig;
@@ -81,7 +81,7 @@ public class MixinRedstoneWireBlock {
 		return orig;
 	}
 
-	@FabModifyVariable(at=@At(value="INVOKE", target="net/minecraft/block/BlockState.isSolidBlock(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z"),
+	@ModifyVariable(at=@At(value="INVOKE", target="net/minecraft/block/BlockState.isSolidBlock(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z"),
 			method="getReceivedRedstonePower(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)I", ordinal=1)
 	private BlockPos mockNonsolidBelowForDisconnect(BlockPos orig, World world, BlockPos ourPos) {
 		if (!FabConf.isEnabled("*.colorful_redstone")) return orig;

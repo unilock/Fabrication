@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.obsidian_tears;
 
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +22,7 @@ public class MixinModelLoader {
 	@Shadow
 	private void loadInventoryVariantItemModel(Identifier modelId) {}
 
-	@FabInject(at=@At(value="CONSTANT", args="stringValue=special"), method="<init>", require=0)
+	@Inject(at=@At(value="CONSTANT", args="stringValue=special"), method="<init>", require=0)
 	public void construct(CallbackInfo ci) {
 		loadInventoryVariantItemModel(Identifier.of("fabrication", "obsidian_tears"));
 	}

@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.util.ItemStringReaderReaderReader;
 import net.minecraft.command.argument.ItemStringReader;
@@ -31,7 +31,7 @@ public class MixinItemStringReader {
 	}
 
 	// TODO: @ModifyReturnValue would work better
-	@FabInject(at=@At("RETURN"), method="consume(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/command/argument/ItemStringReader$ItemResult;")
+	@Inject(at=@At("RETURN"), method="consume(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/command/argument/ItemStringReader$ItemResult;")
 	public void consume(StringReader reader, CallbackInfoReturnable<ItemStringReader.ItemResult> cir) {
 		if (fabrication$legacyDamage != null) {
 			ItemStringReader.ItemResult result = cir.getReturnValue();

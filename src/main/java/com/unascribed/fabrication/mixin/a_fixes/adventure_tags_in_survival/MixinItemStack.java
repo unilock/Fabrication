@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.a_fixes.adventure_tags_in_survival;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +20,7 @@ import net.minecraft.util.ActionResult;
 @EligibleIf(configAvailable="*.adventure_tags_in_survival")
 public class MixinItemStack {
 
-	@FabInject(at=@At("HEAD"), method="useOnBlock(Lnet/minecraft/item/ItemUsageContext;)Lnet/minecraft/util/ActionResult;",
+	@Inject(at=@At("HEAD"), method="useOnBlock(Lnet/minecraft/item/ItemUsageContext;)Lnet/minecraft/util/ActionResult;",
 			cancellable=true)
 	public void useOnBlock(ItemUsageContext iuc, CallbackInfoReturnable<ActionResult> ci) {
 		if (!FabConf.isEnabled("*.adventure_tags_in_survival")) return;

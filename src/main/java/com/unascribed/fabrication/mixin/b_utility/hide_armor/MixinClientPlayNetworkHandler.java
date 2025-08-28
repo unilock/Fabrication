@@ -6,7 +6,7 @@ import net.minecraft.client.network.ClientConnectionState;
 import net.minecraft.network.packet.CustomPayload;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.interfaces.GetSuppressedSlots;
@@ -28,7 +28,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 		super(client, connection, connectionState);
 	}
 
-	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
 	public void onCustomPayload(CustomPayload payload, CallbackInfo ci) {
 		if (!(payload instanceof ByteBufCustomPayload)) return;
 		if (((ByteBufCustomPayload) payload).id().getNamespace().equals("fabrication") && ((ByteBufCustomPayload) payload).id().getPath().equals("hide_armor")) {

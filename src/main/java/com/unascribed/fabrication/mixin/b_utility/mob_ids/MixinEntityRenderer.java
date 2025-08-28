@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.b_utility.mob_ids;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -28,7 +28,7 @@ public abstract class MixinEntityRenderer {
 	@Shadow
 	protected abstract void renderLabelIfPresent(Entity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta);
 
-	@FabInject(at=@At("TAIL"), method="render(Lnet/minecraft/entity/Entity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
+	@Inject(at=@At("TAIL"), method="render(Lnet/minecraft/entity/Entity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public void render(Entity e, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vcp, int light, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.mob_ids")) return;
 		MinecraftClient mc = MinecraftClient.getInstance();
@@ -46,7 +46,7 @@ public abstract class MixinEntityRenderer {
 		}
 	}
 
-	@FabInject(at=@At(value="INVOKE", target="net/minecraft/client/util/math/MatrixStack.scale(FFF)V", shift=At.Shift.AFTER),
+	@Inject(at=@At(value="INVOKE", target="net/minecraft/client/util/math/MatrixStack.scale(FFF)V", shift=At.Shift.AFTER),
 			method= "renderLabelIfPresent(Lnet/minecraft/entity/Entity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IF)V")
 	public void renderLabelIfPresentAdjustPosition(Entity e, Text text, MatrixStack matrices, VertexConsumerProvider vcp, int light, float tickDelta, CallbackInfo ci) {
 		if (fabrication$mobIdsShiftTextDown) {

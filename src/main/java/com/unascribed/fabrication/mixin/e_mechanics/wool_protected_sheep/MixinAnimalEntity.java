@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.wool_protected_sheep;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @EligibleIf(configAvailable="*.wool_protected_sheep")
 public abstract class MixinAnimalEntity {
 
-	@FabModifyVariable(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", argsOnly=true)
+	@ModifyVariable(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", argsOnly=true)
 	public float damage(float amount, DamageSource source) {
 		Object self = this;
 		if (self instanceof SheepEntity && FabConf.isEnabled("*.wool_protected_sheep") && !((SheepEntity)self).isSheared()

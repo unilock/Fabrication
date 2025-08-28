@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(targets="net.minecraft.block.dispenser.DispenserBehavior$6")
@@ -26,7 +26,7 @@ public abstract class MixinGlassBottleDispenserBehavior {
 	@Shadow
 	protected abstract ItemStack replace(BlockPointer pointer, ItemStack emptyBottleStack, ItemStack filledBottleStack);
 
-	@FabInject(at=@At("HEAD"), method="dispenseSilently(Lnet/minecraft/util/math/BlockPointer;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;",
+	@Inject(at=@At("HEAD"), method="dispenseSilently(Lnet/minecraft/util/math/BlockPointer;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;",
 			cancellable=true)
 	public void dispenseSilently(BlockPointer pointer, ItemStack stack, CallbackInfoReturnable<ItemStack> ci) {
 		ServerWorld w = pointer.world();

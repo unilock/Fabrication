@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.villagers_follow_emerald_blocks;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public abstract class MixinVillagerEntity extends MerchantEntity  {
 	private PlayerEntity fabrication$player = null;
 
-	@FabInject(method="mobTick()V", at=@At("TAIL"))
+	@Inject(method="mobTick()V", at=@At("TAIL"))
 	public void mobTick(CallbackInfo ci){
 		if(FabConf.isEnabled("*.villagers_follow_emerald_blocks") && !isAiDisabled()){
 			if (getWorld().getTime()%40 == 0)

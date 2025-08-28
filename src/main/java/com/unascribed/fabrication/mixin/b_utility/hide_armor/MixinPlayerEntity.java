@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Set;
 
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryNbt;
 import net.minecraft.nbt.NbtElement;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +34,7 @@ public abstract class MixinPlayerEntity implements GetSuppressedSlots {
 		return fabrication$suppressedSlots;
 	}
 
-	@FabInject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void writeCustomDataToTag(NbtCompound tag, CallbackInfo ci) {
 		NbtList li = ForgeryNbt.getList();
 		for (EquipmentSlot pt : fabrication$suppressedSlots) {
@@ -45,7 +45,7 @@ public abstract class MixinPlayerEntity implements GetSuppressedSlots {
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void readCustomDataFromTag(NbtCompound tag, CallbackInfo ci) {
 		fabrication$suppressedSlots.clear();
 		NbtList li = tag.getList("fabrication:SuppressedSlots", NbtElement.STRING_TYPE);

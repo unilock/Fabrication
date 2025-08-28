@@ -5,7 +5,7 @@ import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.unascribed.fabrication.support.EligibleIf;
@@ -17,7 +17,7 @@ import net.minecraft.entity.ItemEntity;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public abstract class MixinItemEntity {
 
-	@FabInject(at=@At("HEAD"), method="canMerge()Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="canMerge()Z", cancellable=true)
 	public void canMerge(CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.dropped_items_dont_stack")) cir.setReturnValue(false);
 	}

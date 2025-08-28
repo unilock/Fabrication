@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.b_utility.weapons_accept_silk;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -17,13 +17,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @EligibleIf(configAvailable="*.weapons_accept_silk")
 public abstract class MixinEnchantment {
 
-	@FabInject(at=@At("HEAD"), method="canBeCombined(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="canBeCombined(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)Z", cancellable=true)
 	private static void canCombine(RegistryEntry<Enchantment> first, RegistryEntry<Enchantment> second, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.weapons_accept_silk")) return;
 		if (first.matchesKey(Enchantments.LOOTING) && second.matchesKey(Enchantments.SILK_TOUCH)) cir.setReturnValue(false);
 		if (first.matchesKey(Enchantments.SILK_TOUCH) && second.matchesKey(Enchantments.LOOTING)) cir.setReturnValue(false);
 	}
-	@FabInject(at=@At("HEAD"), method="isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", cancellable=true)
 	private void isacceptable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.weapons_accept_silk")) return;
 		if (!EnchantmentHelperHelper.matches(this, Enchantments.SILK_TOUCH)) return;

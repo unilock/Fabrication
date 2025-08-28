@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public abstract class MixinLivingEntity {
 
-	@FabModifyArg(method="dropLoot(Lnet/minecraft/entity/damage/DamageSource;Z)V", at=@At(value="INVOKE", target="Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"))
+	@ModifyArg(method="dropLoot(Lnet/minecraft/entity/damage/DamageSource;Z)V", at=@At(value="INVOKE", target="Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"))
 	public Consumer<ItemStack> splitLoot(Consumer<ItemStack> lootConsumer) {
 		if(!FabConf.isEnabled("*.dropped_items_dont_stack")) return lootConsumer;
 		return stack ->{

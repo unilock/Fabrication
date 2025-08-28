@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.d_minor_mechanics.infibows;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
@@ -23,7 +23,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 		super(entityType, world);
 	}
 
-	@FabInject(at=@At(value="FIELD", target="Lnet/minecraft/entity/player/PlayerAbilities;creativeMode:Z"), method="getProjectileType(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", cancellable=true)
+	@Inject(at=@At(value="FIELD", target="Lnet/minecraft/entity/player/PlayerAbilities;creativeMode:Z"), method="getProjectileType(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", cancellable=true)
 	private void infiBow(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
 		if (FabConf.isEnabled("*.infibows") && EnchantmentHelperHelper.getLevel(this.getWorld().getRegistryManager(), Enchantments.INFINITY, stack) > 0)
 			cir.setReturnValue(new ItemStack(Items.ARROW));

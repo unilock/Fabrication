@@ -8,7 +8,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.interfaces.RenderingAgeAccess;
@@ -37,7 +37,7 @@ public abstract class MixinItemEntity extends Entity implements RenderingAgeAcce
 
 	private int fabrication$renderingAge = -1000000;
 
-	@FabInject(at=@At("TAIL"), method="tick()V")
+	@Inject(at=@At("TAIL"), method="tick()V")
 	public void tick(CallbackInfo ci) {
 		if (!getWorld().isClient) {
 			if (age % 10 == 0) {

@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.crunchy_cake;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CakeBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @EligibleIf(configAvailable="*.crunchy_cake")
 public class MixinCakeBlock {
 
-	@FabInject(method="tryEat(Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/util/ActionResult;", at=@At(value="INVOKE", target="Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
+	@Inject(method="tryEat(Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/util/ActionResult;", at=@At(value="INVOKE", target="Lnet/minecraft/entity/player/HungerManager;add(IF)V"))
 	private static void fabrication$munch(WorldAccess world, BlockPos pos, BlockState state, PlayerEntity player, CallbackInfoReturnable<?> cir) {
 		if (!FabConf.isEnabled("*.crunchy_cake")) return;
 		if (!world.isClient()) {

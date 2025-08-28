@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.NoHungerAdd;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
@@ -30,7 +30,7 @@ public abstract class MixinHungerManager implements NoHungerAdd {
 	private int foodLevel;
 	private static final Predicate<PlayerEntity> fabrication$noHungerPredicate = ConfigPredicates.getFinalPredicate("*.no_hunger");
 
-	@FabInject(at=@At("HEAD"), method="eat(Lnet/minecraft/component/type/FoodComponent;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="eat(Lnet/minecraft/component/type/FoodComponent;)V", cancellable=true)
 	public void eatFood(FoodComponent foodComponent, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.no_hunger")) return;
 		if (foodComponent == null) return;
@@ -42,7 +42,7 @@ public abstract class MixinHungerManager implements NoHungerAdd {
 		fabrication$noHungerHeal += (sat = (food+sat)*0.75f) < 1f ? sat*.5f : (int) sat;
 	}
 
-	@FabInject(at=@At("HEAD"), method="update(Lnet/minecraft/entity/player/PlayerEntity;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="update(Lnet/minecraft/entity/player/PlayerEntity;)V", cancellable=true)
 	public void update(PlayerEntity pe, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.no_hunger")) return;
 		if (!fabrication$noHungerPredicate.test(pe)) {

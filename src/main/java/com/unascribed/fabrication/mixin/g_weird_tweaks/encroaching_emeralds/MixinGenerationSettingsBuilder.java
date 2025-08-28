@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public abstract class MixinGenerationSettingsBuilder implements GenerationSettin
 		fabrication$hasDefaultOres = true;
 	}
 
-	@FabInject(at=@At("HEAD"), method="build()Lnet/minecraft/world/biome/GenerationSettings;")
+	@Inject(at=@At("HEAD"), method="build()Lnet/minecraft/world/biome/GenerationSettings;")
 	public void build(CallbackInfoReturnable<GenerationSettings> cir) {
 		if (!fabrication$hasDefaultOres) return;
 		Object self = this;

@@ -5,7 +5,7 @@ import com.mojang.serialization.Codec;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.IsEntityArg;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.support.injection.HijackReturn;
 import net.minecraft.command.CommandRegistryAccess;
@@ -29,7 +29,7 @@ public class MixinEntitySummonArgumentType implements IsEntityArg {
 	@Unique
 	private boolean fabrication$isNotEntityArgument = true;
 
-	@FabInject(at=@At("TAIL"), method="<init>(Lnet/minecraft/command/CommandRegistryAccess;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V")
+	@Inject(at=@At("TAIL"), method="<init>(Lnet/minecraft/command/CommandRegistryAccess;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V")
 	public void legacyCommandInput(CommandRegistryAccess access, RegistryKey key, Codec codec, CallbackInfo ci) {
 		if (key == RegistryKeys.ENTITY_TYPE) {
 			fabrication$isNotEntityArgument = false;

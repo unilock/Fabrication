@@ -5,7 +5,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.unascribed.fabrication.support.EligibleIf;
@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 @EligibleIf(configAvailable="*.leaves_grow_grass")
 public abstract class MixinBoneMealItem {
 
-	@FabInject(at=@At("HEAD"), method="useOnBlock(Lnet/minecraft/item/ItemUsageContext;)Lnet/minecraft/util/ActionResult;", cancellable=true)
+	@Inject(at=@At("HEAD"), method="useOnBlock(Lnet/minecraft/item/ItemUsageContext;)Lnet/minecraft/util/ActionResult;", cancellable=true)
 	private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
 		if (!FabConf.isEnabled("*.leaves_grow_grass")) return;
 

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
@@ -25,7 +25,7 @@ public abstract class MixinInGameHud {
 	@Shadow
 	protected abstract void renderPortalOverlay(DrawContext context, float nauseaStrength);
 
-	@FabInject(method="renderMiscOverlays(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/render/RenderTickCounter;)V", at=@At(value="INVOKE",target="Lnet/minecraft/client/network/ClientPlayerEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"))
+	@Inject(method="renderMiscOverlays(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/render/RenderTickCounter;)V", at=@At(value="INVOKE",target="Lnet/minecraft/client/network/ClientPlayerEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"))
 	private void fixPortal(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci){
 		if (!FabConf.isEnabled("*.fix_nether_portal_nausea")) return;
 		if (((PortalRenderFix)this.client.player).fabrication$shouldRenderPortal()) {

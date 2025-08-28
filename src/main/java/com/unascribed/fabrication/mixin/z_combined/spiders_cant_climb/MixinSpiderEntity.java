@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.FabricationMod;
@@ -36,7 +36,7 @@ public abstract class MixinSpiderEntity extends HostileEntity {
 	@Shadow
 	public abstract boolean isClimbingWall();
 
-	@FabInject(at=@At("TAIL"), method="tick()V")
+	@Inject(at=@At("TAIL"), method="tick()V")
 	public void tickTail(CallbackInfo ci) {
 		if (!getWorld().isClient) {
 			if (isClimbingWall()) {

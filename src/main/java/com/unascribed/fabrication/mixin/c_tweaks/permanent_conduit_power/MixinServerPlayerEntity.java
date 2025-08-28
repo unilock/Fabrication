@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
@@ -29,7 +29,7 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
 		super(world, pos, yaw, gameProfile);
 	}
 
-	@FabInject(at=@At("TAIL"), method="tick()V")
+	@Inject(at=@At("TAIL"), method="tick()V")
 	public void tick(CallbackInfo ci) {
 		if (FabConf.isEnabled("*.permanent_conduit_power") && fabrication$permanentConduitPowerPredicate.test(this)) {
 			if (!fabrication$permConduitPower) fabrication$permConduitPower = true;
@@ -42,12 +42,12 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void writeCustomDataToTag(NbtCompound tag, CallbackInfo ci) {
 		tag.putBoolean("fabrication:permanent_conduit_power", fabrication$permConduitPower);
 	}
 
-	@FabInject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
+	@Inject(at=@At("TAIL"), method="readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V")
 	public void readCustomDataFromTag(NbtCompound tag, CallbackInfo ci) {
 		fabrication$permConduitPower = tag.getBoolean("fabrication:permanent_conduit_power");
 	}

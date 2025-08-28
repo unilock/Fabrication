@@ -8,7 +8,7 @@ import com.unascribed.fabrication.interfaces.GetServerConfig;
 import com.unascribed.fabrication.support.ConfigValues;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.MinecraftClient;
@@ -51,7 +51,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 		super(client, connection, connectionState);
 	}
 
-	@FabInject(at=@At("TAIL"), method="onGameJoin(Lnet/minecraft/network/packet/s2c/play/GameJoinS2CPacket;)V")
+	@Inject(at=@At("TAIL"), method="onGameJoin(Lnet/minecraft/network/packet/s2c/play/GameJoinS2CPacket;)V")
 	public void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		data.writeVarInt(0);
@@ -59,7 +59,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 		connection.send(new CustomPayloadC2SPacket(new ByteBufCustomPayload(Identifier.of("fabrication", "config"), data)));
 	}
 
-	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
 	public void onCustomPayload(CustomPayload payload, CallbackInfo ci) {
 		if (!(payload instanceof ByteBufCustomPayload)) return;
 

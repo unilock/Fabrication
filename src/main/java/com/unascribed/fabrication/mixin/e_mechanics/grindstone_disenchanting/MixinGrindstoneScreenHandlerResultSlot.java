@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.grindstone_disenchanting;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,7 +38,7 @@ public class MixinGrindstoneScreenHandlerResultSlot implements SetOwner<Grindsto
 		fabrication$owner = owner;
 	}
 
-	@FabInject(at=@At("HEAD"), method="onTakeItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)V")
+	@Inject(at=@At("HEAD"), method="onTakeItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)V")
 	public void onTakeItemPre(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
 		fabrication$storedResultBook = null;
 		if (FabConf.isEnabled("*.grindstone_disenchanting") && fabrication$owner.getSlot(1).getStack().getItem() == Items.BOOK) {
@@ -53,7 +53,7 @@ public class MixinGrindstoneScreenHandlerResultSlot implements SetOwner<Grindsto
 		}
 	}
 
-	@FabInject(at=@At("TAIL"), method="onTakeItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)V")
+	@Inject(at=@At("TAIL"), method="onTakeItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;)V")
 	public void onTakeItemPost(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
 		if (fabrication$storedResultBook != null) {
 			fabrication$owner.getSlot(1).setStack(fabrication$storedResultBook);
@@ -61,7 +61,7 @@ public class MixinGrindstoneScreenHandlerResultSlot implements SetOwner<Grindsto
 		}
 	}
 
-	@FabInject(at=@At("HEAD"), method="getExperience(Lnet/minecraft/world/World;)I", cancellable=true)
+	@Inject(at=@At("HEAD"), method="getExperience(Lnet/minecraft/world/World;)I", cancellable=true)
 	private void getExperience(World world, CallbackInfoReturnable<Integer> ci) {
 		if (fabrication$storedResultBook != null) ci.setReturnValue(0);
 	}

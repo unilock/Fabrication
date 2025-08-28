@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.e_mechanics.swap_conflicting_enchants;
 
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import com.unascribed.fabrication.util.SwappingEnchants;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @EligibleIf(configAvailable="*.swap_conflicting_enchants")
 public class MixinServerPlayNetworkHandler {
 
-	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/c2s/common/CustomPayloadC2SPacket;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/c2s/common/CustomPayloadC2SPacket;)V", cancellable=true)
 	public void onCustomPayload(CustomPayloadC2SPacket packet, CallbackInfo ci) {
 		Object self = this;
 		if (!(self instanceof ServerPlayNetworkHandler)) return;

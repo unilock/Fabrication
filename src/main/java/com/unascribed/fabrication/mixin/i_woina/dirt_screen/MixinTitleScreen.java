@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.i_woina.dirt_screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +28,7 @@ public class MixinTitleScreen extends Screen {
 		super(title);
 	}
 
-	@FabInject(at=@At("HEAD"), method="renderPanoramaBackground(Lnet/minecraft/client/gui/DrawContext;F)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="renderPanoramaBackground(Lnet/minecraft/client/gui/DrawContext;F)V", cancellable=true)
 	public void drawDirt(DrawContext context, float delta, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.dirt_screen")) {
 			// TODO: check if we need to mess with atlases

@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.support.EligibleIf;
@@ -19,7 +19,7 @@ public class MixinWindow {
 	@Shadow
 	private boolean fullscreen;
 
-	@FabInject(at=@At("HEAD"), method="updateWindowRegion()V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="updateWindowRegion()V", cancellable=true)
 	public void updateWindowRegion(CallbackInfo ci) {
 		if (FabConf.isEnabled("*.no_set_window_pos") && !fullscreen) {
 			ci.cancel();

@@ -6,7 +6,7 @@ import com.unascribed.fabrication.support.SpecialEligibility;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.unascribed.fabrication.support.EligibleIf;
@@ -28,7 +28,7 @@ public class MixinServerPlayerInteractionManager {
 	@Shadow
 	protected ServerWorld world;
 
-	@FabInject(at=@At(value="INVOKE", target="net/minecraft/block/BlockState.onBlockBreakStart(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;)V"),
+	@Inject(at=@At(value="INVOKE", target="net/minecraft/block/BlockState.onBlockBreakStart(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;)V"),
 			method="processBlockBreakingAction(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/network/packet/c2s/play/PlayerActionC2SPacket$Action;Lnet/minecraft/util/math/Direction;II)V")
 	public void processBlockBreakingAction(BlockPos pos, Action action, Direction direction, int worldHeight, int sequence, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.pursurvers") && action == Action.START_DESTROY_BLOCK) {

@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.z_combined.trident_enchantments;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 @EligibleIf(anyConfigAvailable={"*.tridents_accept_power", "*.tridents_accept_sharpness"})
 public abstract class MixinEnchantment {
 
-	@FabInject(at=@At("HEAD"), method="canBeCombined(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="canBeCombined(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/registry/entry/RegistryEntry;)Z", cancellable=true)
 	private static void canCombine(RegistryEntry<Enchantment> first, RegistryEntry<Enchantment> second, CallbackInfoReturnable<Boolean> cir) {
 		if (!(FabConf.isEnabled("*.tridents_accept_sharpness") ||  FabConf.isEnabled("*.tridents_accept_power"))) return;
 		Predicate<RegistryKey<Enchantment>> predicate = new Predicate<RegistryKey<Enchantment>>() {
@@ -38,7 +38,7 @@ public abstract class MixinEnchantment {
 		if (first.matches(predicate) && second.matches(predicate)) cir.setReturnValue(false);
 
 	}
-	@FabInject(at=@At("HEAD"), method="isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", cancellable=true)
+	@Inject(at=@At("HEAD"), method="isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", cancellable=true)
 	private void isAcceptable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (stack.getItem() != Items.TRIDENT) return;
 		if (FabConf.isEnabled("*.tridents_accept_sharpness") && EnchantmentHelperHelper.matches(this, Enchantments.SHARPNESS)) {
@@ -48,7 +48,7 @@ public abstract class MixinEnchantment {
 			cir.setReturnValue(true);
 		}
 	}
-	@FabInject(at=@At("HEAD"), method="modifyDamage(Lnet/minecraft/server/world/ServerWorld;ILnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;Lorg/apache/commons/lang3/mutable/MutableFloat;)V")
+	@Inject(at=@At("HEAD"), method="modifyDamage(Lnet/minecraft/server/world/ServerWorld;ILnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;Lorg/apache/commons/lang3/mutable/MutableFloat;)V")
 	private void modify(ServerWorld world, int level, ItemStack stack, Entity user, DamageSource damageSource, MutableFloat damage, CallbackInfo ci) {
 		if (stack.getItem() != Items.TRIDENT) return;
 		if (FabConf.isEnabled("*.bedrock_impaling") && EnchantmentHelperHelper.matches(this, Enchantments.IMPALING) && level > 0 && user.isWet()) {

@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.i_woina.block_logo;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.util.BlockLogoRenderer;
 import net.minecraft.client.MinecraftClient;
@@ -45,7 +45,7 @@ public class MixinTitleScreen extends Screen {
 		return false;
 	}
 
-	@FabInject(at=@At("HEAD"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
+	@Inject(at=@At("HEAD"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
 	public void renderHead(DrawContext matrices, int mouseX, int mouseY, float tickDelta, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.block_logo")) return;
 		FabConf.addFailure("*.block_logo", "Not Ported");
@@ -55,14 +55,14 @@ public class MixinTitleScreen extends Screen {
 		*/
 	}
 
-	@FabInject(at=@At("RETURN"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
+	@Inject(at=@At("RETURN"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
 	public void renderReturn(DrawContext matrices, int mouseX, int mouseY, float tickDelta, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.block_logo")) return;
 		splashText = fabrication$splashText;
 		fabrication$splashText = null;
 	}
 
-	@FabInject(at=@At("TAIL"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
+	@Inject(at=@At("TAIL"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
 	public void renderTail(DrawContext drawContext, int mouseX, int mouseY, float tickDelta, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.block_logo")) return;
 		if (splashText != null) {
@@ -72,7 +72,7 @@ public class MixinTitleScreen extends Screen {
 	}
 
 
-	@FabInject(at=@At("TAIL"), method="tick()V")
+	@Inject(at=@At("TAIL"), method="tick()V")
 	public void tick(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.block_logo")) return;
 		fabrication$blockLogo.tick();

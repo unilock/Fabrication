@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.mechanism_muffling;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPointer;
 @EligibleIf(configAvailable="*.mechanism_muffling")
 public class MixinDispenserBehaviors {
 
-	@FabInject(at=@At("HEAD"), method="playSound(Lnet/minecraft/util/math/BlockPointer;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="playSound(Lnet/minecraft/util/math/BlockPointer;)V", cancellable=true)
 	public void playSound(BlockPointer ptr, CallbackInfo ci) {
 		if (FabConf.isEnabled("*.mechanism_muffling") && MechanismMuffling.isMuffled(ptr.world(), ptr.pos())) {
 			ci.cancel();

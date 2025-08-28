@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.d_minor_mechanics.collision_based_veloc
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -27,7 +27,7 @@ public abstract class MixinEntity {
 
 	private static final Predicate<Entity> fabrication$collisionBasedVelocityPos = ConfigPredicates.getFinalPredicate("*.collision_based_velocity_pos");
 
-	@FabInject(method="getVelocityAffectingPos()Lnet/minecraft/util/math/BlockPos;", at=@At(value="RETURN"), cancellable=true)
+	@Inject(method="getVelocityAffectingPos()Lnet/minecraft/util/math/BlockPos;", at=@At(value="RETURN"), cancellable=true)
 	public void getLandingPos(CallbackInfoReturnable<BlockPos> cir) {
 		if (!FabConf.isEnabled("*.collision_based_velocity_pos")) return;
 		Entity self = (Entity)(Object)this;

@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.entities_sink_in_falling
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import com.unascribed.fabrication.support.injection.ModifyReturn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -33,7 +33,7 @@ public class MixinEntity {
 		if (fabrication$inUpstreamFluid) fabrication$inUpstreamFluid = false;
 		return state;
 	}
-	@FabModifyArg(method="updateMovementInFluid(Lnet/minecraft/registry/tag/TagKey;D)Z",
+	@ModifyArg(method="updateMovementInFluid(Lnet/minecraft/registry/tag/TagKey;D)Z",
 			  at=@At(value="INVOKE", target="Lnet/minecraft/util/math/Vec3d;add(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;", ordinal=0))
 	private Vec3d fabrication$disableUpstream(Vec3d vec) {
 		if (fabrication$inUpstreamFluid) {

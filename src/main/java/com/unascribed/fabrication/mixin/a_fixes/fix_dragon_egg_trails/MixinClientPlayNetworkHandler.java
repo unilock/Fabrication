@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.a_fixes.fix_dragon_egg_trails;
 
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -23,7 +23,7 @@ import java.util.Random;
 public class MixinClientPlayNetworkHandler {
 	private static final Random fabrication$RANDOM = new Random();
 
-	@FabInject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onCustomPayload(Lnet/minecraft/network/packet/CustomPayload;)V", cancellable=true)
 	public void onCustomPayload(CustomPayload packet, CallbackInfo ci) {
 		if (!(packet instanceof ByteBufCustomPayload)) return;
 		if (((ByteBufCustomPayload) packet).id().getNamespace().equals("fabrication") && ((ByteBufCustomPayload) packet).id().getPath().equals("dragon_egg_trail")) {

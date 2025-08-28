@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public abstract class MixinLivingEntity {
 	@Shadow
 	protected ItemStack activeItemStack;
 	private static final Predicate<List<?>> fabrication$shieldStaggerPredicate = ConfigPredicates.getFinalPredicate("*.shield_stagger");
-	@FabInject(method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z",
+	@Inject(method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z",
 			at=@At(value="INVOKE", target="Lnet/minecraft/entity/LivingEntity;damageShield(F)V"))
 	public void brittleShield(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (!(FabConf.isEnabled("*.shield_stagger") && fabrication$shieldStaggerPredicate.test(ImmutableList.of(this, source)))) return;

@@ -2,7 +2,7 @@ package com.unascribed.fabrication.mixin.f_balance.soul_speed_doesnt_damage_boot
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @EligibleIf(configAvailable="*.soul_speed_doesnt_damage_boots")
 public class MixinEnchantment {
 
-	@FabInject(at=@At("HEAD"), method="modifyItemDamage(Lnet/minecraft/server/world/ServerWorld;ILnet/minecraft/item/ItemStack;Lorg/apache/commons/lang3/mutable/MutableFloat;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="modifyItemDamage(Lnet/minecraft/server/world/ServerWorld;ILnet/minecraft/item/ItemStack;Lorg/apache/commons/lang3/mutable/MutableFloat;)V", cancellable=true)
 	private void modify(ServerWorld world, int level, ItemStack stack, MutableFloat itemDamage, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.soul_speed_doesnt_damage_boots")) return;
 		if (EnchantmentHelperHelper.matches(this, Enchantments.SOUL_SPEED)) ci.cancel();

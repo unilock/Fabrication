@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.sound.SoundCategory;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @EligibleIf(configAvailable="*.long_levelup_sound_at_30", envMatches=Env.CLIENT)
 public class MixinClientWorld {
 
-	@FabInject(at=@At("HEAD"), method="playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZJ)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZJ)V", cancellable=true)
 	public void playSound(double x, double y, double z, SoundEvent event, SoundCategory category, float volume, float pitch, boolean useDistance, long seed, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.long_levelup_sound_at_30")) return;
 		if (event == SoundEvents.ENTITY_PLAYER_LEVELUP && category == SoundCategory.PLAYERS) {

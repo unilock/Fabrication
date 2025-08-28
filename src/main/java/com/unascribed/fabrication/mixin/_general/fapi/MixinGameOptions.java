@@ -4,7 +4,7 @@ import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.FabricationEventsClient;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import org.spongepowered.asm.mixin.Final;
@@ -20,7 +20,7 @@ public class MixinGameOptions {
 		@Mutable @Final @Shadow
 		public KeyBinding[] allKeys;
 
-		@FabInject(at=@At("HEAD"), method="load()V")
+		@Inject(at=@At("HEAD"), method="load()V")
 		public void load(CallbackInfo info) {
 			allKeys = FabricationEventsClient.keys(allKeys);
 		}

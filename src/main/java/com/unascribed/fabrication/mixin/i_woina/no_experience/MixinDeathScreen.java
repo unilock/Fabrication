@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.i_woina.no_experience;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public class MixinDeathScreen {
 	@Shadow
 	private Text scoreText;
 
-	@FabInject(at=@At("TAIL"), method="init()V")
+	@Inject(at=@At("TAIL"), method="init()V")
 	public void renderExperienceBar(CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.no_experience")) return;
 		this.scoreText = Text.of("");

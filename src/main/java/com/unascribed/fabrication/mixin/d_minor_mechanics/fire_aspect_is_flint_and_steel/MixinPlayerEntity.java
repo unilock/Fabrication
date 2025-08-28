@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.fire_aspect_is_flint_and_steel;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +24,7 @@ import net.minecraft.util.Hand;
 @EligibleIf(configAvailable="*.fire_aspect_is_flint_and_steel")
 public class MixinPlayerEntity {
 
-	@FabInject(at=@At("RETURN"), method="interact(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
+	@Inject(at=@At("RETURN"), method="interact(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
 			cancellable=true)
 	public void interact(Entity e, Hand hand, CallbackInfoReturnable<ActionResult> ci) {
 		if (FabConf.isEnabled("*.fire_aspect_is_flint_and_steel") && ci.getReturnValue() == ActionResult.PASS) {

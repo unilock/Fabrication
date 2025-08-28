@@ -3,9 +3,9 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.foliage_creepers;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
-import com.unascribed.fabrication.support.injection.FabModifyArg;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -30,7 +30,7 @@ public abstract class MixinLivingEntityRenderer extends EntityRenderer<LivingEnt
 		super(ctx);
 	}
 
-	@FabInject(at=@At("HEAD"), method="render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
+	@Inject(at=@At("HEAD"), method="render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public void captureEntity(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci){
 		if (FabConf.isEnabled("*.foliage_creepers") && fabrication$creeperTexture.equals(this.getTexture(livingEntity))) {
 			fabrication$colorFoliageCreeper = livingEntity.getWorld().getColor(livingEntity.getBlockPos(), BiomeColors.FOLIAGE_COLOR);
@@ -39,14 +39,14 @@ public abstract class MixinLivingEntityRenderer extends EntityRenderer<LivingEnt
 		}
 	}
 
-	@FabModifyArg(at=@At(value="INVOKE", target="net/minecraft/client/render/entity/model/EntityModel.render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;III)V"), index=4,
+	@ModifyArg(at=@At(value="INVOKE", target="net/minecraft/client/render/entity/model/EntityModel.render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;III)V"), index=4,
 			method="render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public int changeColor(int i) {
 		if (fabrication$colorFoliageCreeper == -1) return i;
 		return fabrication$colorFoliageCreeper;
 	}
 
-	@FabModifyVariable(at=@At("STORE"), method="getRenderLayer(Lnet/minecraft/entity/LivingEntity;ZZZ)Lnet/minecraft/client/render/RenderLayer;")
+	@ModifyVariable(at=@At("STORE"), method="getRenderLayer(Lnet/minecraft/entity/LivingEntity;ZZZ)Lnet/minecraft/client/render/RenderLayer;")
 	public Identifier transformCreeperIdentifier(Identifier id){
 		if (FabConf.isEnabled("*.foliage_creepers") && fabrication$creeperTexture.equals(id)) {
 			return Identifier.of("fabrication_grayscale", id.getPath());

@@ -3,7 +3,7 @@ package com.unascribed.fabrication.mixin.f_balance.lava_causes_fall_damage;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +26,7 @@ public abstract class MixinLivingEntity extends Entity {
 
 	private static final Predicate<LivingEntity> fabrication$lavaFallDamagePredicate = ConfigPredicates.getFinalPredicate("*.lava_causes_fall_damage");
 
-	@FabModifyVariable(method="fall(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", at=@At("HEAD"), argsOnly=true)
+	@ModifyVariable(method="fall(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V", at=@At("HEAD"), argsOnly=true)
 	public boolean fabrication$treatLavaAsGround(boolean onGround) {
 		if (!FabConf.isEnabled("*.lava_causes_fall_damage")) return onGround;
 		if (!this.getWorld().isClient && this.fallDistance > 6F && this.updateMovementInFluid(FluidTags.LAVA, 0.014D)) {

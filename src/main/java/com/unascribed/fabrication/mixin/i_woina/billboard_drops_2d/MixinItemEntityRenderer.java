@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.OverlayTexture;
@@ -39,7 +39,7 @@ public class MixinItemEntityRenderer {
 	private ItemRenderer itemRenderer;
 
 
-	@FabInject(at=@At("HEAD"), cancellable=true,
+	@Inject(at=@At("HEAD"), cancellable=true,
 			method="render(Lnet/minecraft/entity/ItemEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
 	public void render(ItemEntity entity, float a, float b, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
 		if (!FabConf.isEnabled("*.billboard_drops_2d")) return;

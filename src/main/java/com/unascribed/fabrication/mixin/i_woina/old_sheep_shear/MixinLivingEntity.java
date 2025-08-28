@@ -1,7 +1,7 @@
 package com.unascribed.fabrication.mixin.i_woina.old_sheep_shear;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -27,7 +27,7 @@ public abstract class MixinLivingEntity extends Entity {
 		super(entityType, world);
 	}
 
-	@FabInject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
+	@Inject(at=@At("HEAD"), method="damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
 	public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		Object self = this;
 		if (self instanceof SheepEntity && FabConf.isEnabled("*.old_sheep_shear") && ((SheepEntity)self).isShearable() && source.getAttacker() instanceof PlayerEntity) {

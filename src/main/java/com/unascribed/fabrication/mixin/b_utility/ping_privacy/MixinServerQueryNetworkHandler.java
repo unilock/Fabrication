@@ -6,7 +6,7 @@ import com.unascribed.fabrication.interfaces.SetServerAware;
 import com.unascribed.fabrication.logic.PingPrivacy;
 import com.unascribed.fabrication.logic.PingPrivacyPersistentState;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.FabInject;
+import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryServerMetadata;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.c2s.query.QueryRequestC2SPacket;
@@ -46,7 +46,7 @@ public class MixinServerQueryNetworkHandler implements SetServerAware {
 	@Shadow @Final
 	private ServerMetadata metadata;
 
-	@FabInject(at=@At("HEAD"), method="onRequest(Lnet/minecraft/network/packet/c2s/query/QueryRequestC2SPacket;)V", cancellable=true)
+	@Inject(at=@At("HEAD"), method="onRequest(Lnet/minecraft/network/packet/c2s/query/QueryRequestC2SPacket;)V", cancellable=true)
 	public void onRequest(QueryRequestC2SPacket p, CallbackInfo ci) {
 		if (fabrication$pingPrivacyServer == null) return;
 		if (FabConf.isEnabled("*.ping_privacy") && !responseSent) {
