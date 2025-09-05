@@ -1,8 +1,8 @@
 package com.unascribed.fabrication.interfaces;
 
-import java.util.Set;
-
 import net.minecraft.entity.EquipmentSlot;
+
+import java.util.Set;
 
 public interface GetSuppressedSlots {
 

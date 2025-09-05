@@ -1,9 +1,9 @@
 package com.unascribed.fabrication.interfaces;
 
+import com.unascribed.fabrication.support.ConfigValues;
+
 import java.util.Map;
 import java.util.Set;
-
-import com.unascribed.fabrication.support.ConfigValues;
 
 public interface GetServerConfig {
 

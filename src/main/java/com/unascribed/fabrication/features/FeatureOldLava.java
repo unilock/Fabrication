@@ -9,9 +9,13 @@ import com.unascribed.fabrication.mixin.i_woina.old_lava.AccessorMipmapHelper;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
-
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.texture.*;
+import net.minecraft.client.texture.NativeImage;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.texture.SpriteContents;
+import net.minecraft.client.texture.SpriteDimensions;
+import net.minecraft.client.texture.SpriteLoader;
 import net.minecraft.resource.metadata.ResourceMetadata;
 import net.minecraft.util.Identifier;
 

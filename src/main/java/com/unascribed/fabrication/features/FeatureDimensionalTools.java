@@ -1,8 +1,8 @@
 package com.unascribed.fabrication.features;
 
-import java.text.NumberFormat;
-import java.util.Set;
-
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
+import com.google.common.collect.Sets;
 import com.unascribed.fabrication.Agnos;
 import com.unascribed.fabrication.EarlyAgnos;
 import com.unascribed.fabrication.loaders.LoaderDimensionalTools;
@@ -11,11 +11,6 @@ import com.unascribed.fabrication.loaders.LoaderDimensionalTools.NameSubstitutio
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
-
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Sets;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.component.DataComponentTypes;
@@ -25,11 +20,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Language;
+
+import java.text.NumberFormat;
+import java.util.Set;
 
 @EligibleIf(configAvailable="*.dimensional_tools")
 public class FeatureDimensionalTools implements Feature {

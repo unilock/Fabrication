@@ -5,8 +5,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.unascribed.fabrication.mixin._general.atlas.AccessorSpriteAtlasTexture;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat.DrawMode;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
@@ -19,7 +23,18 @@ import org.joml.Matrix4f;
 import java.util.List;
 import java.util.Optional;
 
-import static org.lwjgl.opengl.GL30C.*;
+import static org.lwjgl.opengl.GL30C.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL30C.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL30C.GL_TEXTURE_BASE_LEVEL;
+import static org.lwjgl.opengl.GL30C.GL_TEXTURE_BINDING_2D;
+import static org.lwjgl.opengl.GL30C.GL_TEXTURE_HEIGHT;
+import static org.lwjgl.opengl.GL30C.GL_TEXTURE_MAX_LEVEL;
+import static org.lwjgl.opengl.GL30C.GL_TEXTURE_WIDTH;
+import static org.lwjgl.opengl.GL30C.glBindTexture;
+import static org.lwjgl.opengl.GL30C.glGetInteger;
+import static org.lwjgl.opengl.GL30C.glGetTexLevelParameteri;
+import static org.lwjgl.opengl.GL30C.glGetTexParameteri;
+import static org.lwjgl.opengl.GL30C.glTexParameteri;
 
 public class AtlasViewerScreen extends Screen {
 

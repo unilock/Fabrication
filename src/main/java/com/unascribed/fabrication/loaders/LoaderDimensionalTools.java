@@ -1,7 +1,13 @@
 package com.unascribed.fabrication.loaders;
 
 import com.google.common.base.Function;
-import com.google.common.collect.*;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
+import com.google.common.collect.Table;
 import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.QDIni;
@@ -24,9 +30,17 @@ import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.world.dimension.DimensionTypes;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 public class LoaderDimensionalTools implements ConfigLoader {
 

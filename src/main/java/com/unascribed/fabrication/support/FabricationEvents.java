@@ -3,12 +3,9 @@ package com.unascribed.fabrication.support;
 import com.mojang.brigadier.CommandDispatcher;
 import com.unascribed.fabrication.Agnos;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.command.ServerCommandSource;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class FabricationEvents {

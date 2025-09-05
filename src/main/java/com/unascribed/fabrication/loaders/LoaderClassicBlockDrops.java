@@ -11,7 +11,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.WeakHashMap;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

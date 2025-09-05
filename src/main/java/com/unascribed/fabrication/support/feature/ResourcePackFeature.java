@@ -11,8 +11,14 @@ import com.unascribed.fabrication.support.MixinConfigPlugin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.*;
+import net.minecraft.resource.ResourcePack;
+import net.minecraft.resource.ResourcePackInfo;
+import net.minecraft.resource.ResourcePackPosition;
+import net.minecraft.resource.ResourcePackProfile;
 import net.minecraft.resource.ResourcePackProfile.InsertionPosition;
+import net.minecraft.resource.ResourcePackProvider;
+import net.minecraft.resource.ResourcePackSource;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 
 import java.util.Optional;

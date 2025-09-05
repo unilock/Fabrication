@@ -2,7 +2,6 @@ package com.unascribed.fabrication.features;
 
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
-
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.Blocks;
 

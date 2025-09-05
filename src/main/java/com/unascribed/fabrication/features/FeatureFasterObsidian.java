@@ -1,11 +1,9 @@
 package com.unascribed.fabrication.features;
 
+import com.google.common.collect.ImmutableList;
 import com.unascribed.fabrication.mixin.f_balance.faster_obsidian.AccessorAbstractBlockState;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
-
-import com.google.common.collect.ImmutableList;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

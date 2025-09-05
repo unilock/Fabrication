@@ -1,13 +1,5 @@
 package com.unascribed.fabrication.support;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.ImmutableMap;
 import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.util.EnchantmentHelperHelper;
@@ -20,6 +12,14 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static com.unascribed.fabrication.FabConf.remap;
 

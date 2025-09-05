@@ -27,11 +27,9 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Pair;
 import org.lwjgl.system.Platform;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;

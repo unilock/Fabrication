@@ -1,8 +1,6 @@
 package com.unascribed.fabrication.features;
 
-import java.util.List;
-import java.util.Set;
-
+import com.google.common.collect.Lists;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -18,9 +16,6 @@ import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.Feature;
-
-import com.google.common.collect.Lists;
-
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import io.netty.buffer.Unpooled;
 import net.minecraft.entity.Entity;
@@ -35,6 +30,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
+import java.util.Set;
 
 @EligibleIf(configAvailable="*.hide_armor")
 public class FeatureHideArmor implements Feature {

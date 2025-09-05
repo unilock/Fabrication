@@ -1,11 +1,5 @@
 package com.unascribed.fabrication.support;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 import com.google.common.collect.ImmutableMap;
 import com.mojang.brigadier.context.CommandContext;
 import com.unascribed.fabrication.FabConf;
@@ -13,14 +7,18 @@ import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.FeaturesFile;
 import com.unascribed.fabrication.features.FeatureFabricationCommand;
 import com.unascribed.fabrication.loaders.LoaderFScript;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Util;
 import tf.ssf.sfort.script.Default;
 import tf.ssf.sfort.script.PredicateProvider;
 import tf.ssf.sfort.script.StitchedPredicateProvider;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class OptionalFScript {
 	public static ImmutableMap<String, PredicateProvider<?>> predicateProviders;

@@ -1,15 +1,12 @@
 package com.unascribed.fabrication.support;
 
-import java.util.Set;
-
+import com.google.common.base.Joiner;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.FabLog;
 import org.spongepowered.asm.mixin.extensibility.IMixinErrorHandler;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import com.unascribed.fabrication.FabLog;
-
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableMap;
+import java.util.Set;
 
 public class MixinErrorHandler {
 

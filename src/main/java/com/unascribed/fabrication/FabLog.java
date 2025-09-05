@@ -1,11 +1,9 @@
 package com.unascribed.fabrication;
 
+import com.google.common.base.Stopwatch;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.unascribed.fabrication.support.SpecialEligibility;
-
-import com.google.common.base.Stopwatch;
 
 public class FabLog {
 
