@@ -6,7 +6,6 @@ import com.unascribed.fabrication.interfaces.SetServerAware;
 import com.unascribed.fabrication.logic.PingPrivacy;
 import com.unascribed.fabrication.logic.PingPrivacyPersistentState;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryServerMetadata;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.c2s.query.QueryRequestC2SPacket;
@@ -22,6 +21,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.net.InetSocketAddress;

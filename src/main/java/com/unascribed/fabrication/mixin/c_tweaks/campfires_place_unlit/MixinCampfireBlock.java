@@ -1,16 +1,14 @@
 package com.unascribed.fabrication.mixin.c_tweaks.campfires_place_unlit;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.item.ItemPlacementContext;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CampfireBlock.class)
 @EligibleIf(configAvailable="*.campfires_place_unlit")

@@ -1,22 +1,20 @@
 package com.unascribed.fabrication.mixin.i_woina.drops;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.SpecialEligibility;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.unascribed.fabrication.interfaces.RenderingAgeAccess;
 import com.unascribed.fabrication.logic.WoinaDrops;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
+import com.unascribed.fabrication.support.FailOn;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.ItemEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.ItemEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemEntityRenderer.class)
 @EligibleIf(anyConfigAvailable= {"*.blinking_drops", "*.classic_block_drops"}, envMatches=Env.CLIENT)

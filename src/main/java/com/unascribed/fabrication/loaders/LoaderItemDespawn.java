@@ -1,19 +1,16 @@
 package com.unascribed.fabrication.loaders;
 
-import java.nio.file.Path;
-import java.util.Map;
-
+import com.google.common.collect.Maps;
 import com.unascribed.fabrication.QDIni;
 import com.unascribed.fabrication.support.ConfigLoader;
 import com.unascribed.fabrication.util.ParsedTime;
 import com.unascribed.fabrication.util.Resolvable;
-
-import com.google.common.collect.Maps;
-
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+
+import java.nio.file.Path;
+import java.util.Map;
 
 public class LoaderItemDespawn implements ConfigLoader {
 

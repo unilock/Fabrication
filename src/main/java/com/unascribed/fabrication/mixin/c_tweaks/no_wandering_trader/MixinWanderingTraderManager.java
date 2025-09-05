@@ -1,22 +1,21 @@
 package com.unascribed.fabrication.mixin.c_tweaks.no_wandering_trader;
 
-import java.util.List;
-import java.util.function.Predicate;
-
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.WanderingTraderManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import com.unascribed.fabrication.support.EligibleIf;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.WanderingTraderManager;
+import java.util.List;
+import java.util.function.Predicate;
 
 @Mixin(WanderingTraderManager.class)
 @EligibleIf(configAvailable="*.no_wandering_trader")

@@ -1,37 +1,34 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.dimensional_tools;
 
-import java.util.Collections;
-import java.util.Set;
-
+import com.google.common.collect.Sets;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.util.forgery_nonsense.ForgeryStatusEffect;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.unascribed.fabrication.loaders.LoaderDimensionalTools;
 import com.unascribed.fabrication.loaders.LoaderDimensionalTools.MohsIdentifier;
 import com.unascribed.fabrication.support.EligibleIf;
-
-import com.google.common.collect.Sets;
-
+import com.unascribed.fabrication.util.forgery_nonsense.ForgeryStatusEffect;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Collections;
+import java.util.Set;
 
 @Mixin(Item.class)
 @EligibleIf(configAvailable="*.dimensional_tools")

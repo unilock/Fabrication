@@ -1,18 +1,10 @@
 package com.unascribed.fabrication.mixin.e_mechanics.grindstone_disenchanting;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.FailOn;
-import org.spongepowered.asm.mixin.injection.Inject;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.unascribed.fabrication.interfaces.SetOwner;
 import com.unascribed.fabrication.support.EligibleIf;
-
+import com.unascribed.fabrication.support.FailOn;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +14,12 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.screen.GrindstoneScreenHandler;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(targets="net.minecraft.screen.GrindstoneScreenHandler$4")
 @EligibleIf(configAvailable="*.grindstone_disenchanting", modNotLoaded="pollen")

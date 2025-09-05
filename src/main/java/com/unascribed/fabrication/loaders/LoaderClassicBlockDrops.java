@@ -1,26 +1,20 @@
 package com.unascribed.fabrication.loaders;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.WeakHashMap;
-import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.google.common.collect.Lists;
 import com.unascribed.fabrication.QDIni;
 import com.unascribed.fabrication.support.ConfigLoader;
 import com.unascribed.fabrication.support.ConfigValues;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
-import com.google.common.collect.Lists;
-
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+
+import java.nio.file.Path;
+import java.util.*;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @EligibleIf(envMatches=Env.CLIENT)
 public class LoaderClassicBlockDrops implements ConfigLoader {

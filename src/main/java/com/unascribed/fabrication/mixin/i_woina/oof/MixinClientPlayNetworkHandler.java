@@ -1,18 +1,16 @@
 package com.unascribed.fabrication.mixin.i_woina.oof;
 
 import com.unascribed.fabrication.FabConf;
-import net.minecraft.registry.entry.RegistryEntry;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-
 import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ClientPlayNetworkHandler.class)
 @EligibleIf(configAvailable="*.oof", envMatches=Env.CLIENT)

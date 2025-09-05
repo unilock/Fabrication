@@ -1,10 +1,6 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.channeling_two;
 
-import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
-import com.unascribed.fabrication.util.EnchantmentHelperHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;

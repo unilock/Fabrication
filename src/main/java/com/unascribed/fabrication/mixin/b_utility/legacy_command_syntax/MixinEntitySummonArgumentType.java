@@ -1,13 +1,12 @@
 package com.unascribed.fabrication.mixin.b_utility.legacy_command_syntax;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.brigadier.StringReader;
 import com.mojang.serialization.Codec;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.IsEntityArg;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.Inject;
-import com.unascribed.fabrication.support.injection.Hijack;
-import com.unascribed.fabrication.support.injection.HijackReturn;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.RegistryEntryArgumentType;
 import net.minecraft.nbt.NbtElement;
@@ -19,6 +18,7 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Locale;
@@ -36,9 +36,9 @@ public class MixinEntitySummonArgumentType implements IsEntityArg {
 		}
 	}
 
-	@Hijack(method="parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/registry/entry/RegistryEntry;",
-			target="Lnet/minecraft/command/argument/RegistryEntryArgumentType;parseAsNbt(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/nbt/NbtElement;")
-	private HijackReturn fabriaciotn$legacyCommandInputInject(StringReader sr) {
+	@WrapOperation(method="parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/registry/entry/RegistryEntry;",
+			at=@At(value="INVOKE", target="Lnet/minecraft/command/argument/RegistryEntryArgumentType;parseAsNbt(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/nbt/NbtElement;"))
+	private NbtElement fabriaciotn$legacyCommandInputInject(StringReader sr, Operation<NbtElement> original) {
 		if (((IsEntityArg)this).fabriaciot$esat$isNotEntityArg()) return null;
 		if (!FabConf.isEnabled("*.legacy_command_syntax")) return null;
 		int i = sr.getCursor();
@@ -50,7 +50,7 @@ public class MixinEntitySummonArgumentType implements IsEntityArg {
 				sr.setCursor(i);
 				Identifier identifier = fabriaciotn$legacyCommandInput(sr);
 				if (identifier != null && (!sr.canRead() || sr.peek() == ' ')) {
-					return new HijackReturn(NbtString.of(identifier.toString()));
+					return NbtString.of(identifier.toString());
 				} else {
 					sr.setCursor(i);
 				}
@@ -58,7 +58,7 @@ public class MixinEntitySummonArgumentType implements IsEntityArg {
 		} catch (Exception e) {
 			sr.setCursor(i);
 		}
-		return null;
+		return original.call(sr);
 	}
 	@Unique
 	private static Identifier fabriaciotn$legacyCommandInput(StringReader sr) {

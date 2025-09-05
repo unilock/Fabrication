@@ -1,20 +1,18 @@
 package com.unascribed.fabrication.mixin.a_fixes.colored_crack_particles;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.client.particle.CrackParticle;
+import net.minecraft.client.particle.SpriteBillboardParticle;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-
-import net.minecraft.client.particle.CrackParticle;
-import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
 
 @Mixin(CrackParticle.class)
 @EligibleIf(configAvailable="*.colored_crack_particles", envMatches=Env.CLIENT)

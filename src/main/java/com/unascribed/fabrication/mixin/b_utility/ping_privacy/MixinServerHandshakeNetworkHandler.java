@@ -2,7 +2,6 @@ package com.unascribed.fabrication.mixin.b_utility.ping_privacy;
 
 import com.unascribed.fabrication.interfaces.SetServerAware;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import net.minecraft.network.listener.PacketListener;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerHandshakeNetworkHandler;
@@ -10,6 +9,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ServerHandshakeNetworkHandler.class)
 @EligibleIf(configAvailable="*.ping_privacy")

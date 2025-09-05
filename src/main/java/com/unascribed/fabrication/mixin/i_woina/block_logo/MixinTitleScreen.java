@@ -3,7 +3,6 @@ package com.unascribed.fabrication.mixin.i_woina.block_logo;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.util.BlockLogoRenderer;
 import net.minecraft.client.MinecraftClient;
@@ -16,6 +15,7 @@ import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)

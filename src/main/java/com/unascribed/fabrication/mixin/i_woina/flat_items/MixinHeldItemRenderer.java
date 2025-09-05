@@ -4,7 +4,6 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.client.FlatItems;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(HeldItemRenderer.class)
 @EligibleIf(configAvailable="*.flat_items", envMatches=Env.CLIENT)

@@ -6,10 +6,10 @@ import com.unascribed.fabrication.logic.WoinaDrops;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.FailOn;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(SkullBlockEntityRenderer.class)
 @EligibleIf(configAvailable="*.blinking_drops", envMatches=Env.CLIENT)

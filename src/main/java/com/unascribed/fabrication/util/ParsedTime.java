@@ -1,16 +1,15 @@
 package com.unascribed.fabrication.util;
 
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Preconditions;
+import com.unascribed.fabrication.FabLog;
+import com.unascribed.fabrication.QDIni;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
-
-import com.unascribed.fabrication.FabLog;
-import com.unascribed.fabrication.QDIni;
-
-import com.google.common.base.CharMatcher;
-import com.google.common.base.Preconditions;
 
 public class ParsedTime {
 	public static class Unset extends ParsedTime {

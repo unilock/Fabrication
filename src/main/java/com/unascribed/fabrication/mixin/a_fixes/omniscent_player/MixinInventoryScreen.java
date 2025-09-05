@@ -1,20 +1,18 @@
 package com.unascribed.fabrication.mixin.a_fixes.omniscent_player;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import net.minecraft.client.gui.DrawContext;
-import org.lwjgl.glfw.GLFW;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import org.lwjgl.glfw.GLFW;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(InventoryScreen.class)
 @EligibleIf(configAvailable="*.omniscent_player", envMatches=Env.CLIENT)

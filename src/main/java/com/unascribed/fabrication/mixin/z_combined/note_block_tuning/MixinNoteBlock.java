@@ -1,13 +1,26 @@
 package com.unascribed.fabrication.mixin.z_combined.note_block_tuning;
 
-import java.util.Collection;
-import java.util.Iterator;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.math.IntMath;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.NoteBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.stat.Stats;
+import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ItemActionResult;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,24 +30,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.unascribed.fabrication.support.EligibleIf;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.math.IntMath;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.block.NoteBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.stat.Stats;
-import net.minecraft.state.property.Property;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import java.util.Collection;
+import java.util.Iterator;
 
 @Mixin(NoteBlock.class)
 @EligibleIf(anyConfigAvailable={"*.exact_note_block_tuning", "*.note_block_notes", "*.reverse_note_block_tuning"})

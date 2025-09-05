@@ -1,11 +1,9 @@
 package com.unascribed.fabrication.mixin.b_utility.despawning_items_blink;
 
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.unascribed.fabrication.interfaces.SetItemDespawnAware;
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PlayerEntity.class)
 @EligibleIf(configAvailable="*.despawning_items_blink")

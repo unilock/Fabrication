@@ -1,30 +1,28 @@
 package com.unascribed.fabrication.mixin.b_utility.canhit;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.interfaces.SetCanHitList;
+import com.unascribed.fabrication.logic.CanHitUtil;
+import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import com.unascribed.fabrication.interfaces.SetCanHitList;
-import com.unascribed.fabrication.logic.CanHitUtil;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtList;
 
 import java.util.List;
 

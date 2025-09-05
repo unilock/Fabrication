@@ -1,19 +1,17 @@
 package com.unascribed.fabrication.logic;
 
-import java.util.Map;
-
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.unascribed.fabrication.FabLog;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+
+import java.util.Map;
 
 public class LegacyIDs {
 

@@ -1,18 +1,16 @@
 package com.unascribed.fabrication.mixin.a_fixes.inanimates_can_be_invisible;
 
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.render.entity.MinecartEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({BoatEntityRenderer.class, MinecartEntityRenderer.class})
 @EligibleIf(configAvailable="*.inanimates_can_be_invisible", envMatches=Env.CLIENT)

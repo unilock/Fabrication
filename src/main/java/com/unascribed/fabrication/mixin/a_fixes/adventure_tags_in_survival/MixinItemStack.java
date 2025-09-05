@@ -1,20 +1,18 @@
 package com.unascribed.fabrication.mixin.a_fixes.adventure_tags_in_survival;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 @EligibleIf(configAvailable="*.adventure_tags_in_survival")

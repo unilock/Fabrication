@@ -1,14 +1,7 @@
 package com.unascribed.fabrication.mixin.e_mechanics.directional_detector_rails;
 
-import java.util.function.Predicate;
-
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DetectorRailBlock;
@@ -17,6 +10,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+
+import java.util.function.Predicate;
 
 @Mixin(DetectorRailBlock.class)
 @EligibleIf(configAvailable="*.directional_detector_rails")

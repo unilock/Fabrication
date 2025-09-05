@@ -1,15 +1,7 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.unsaddle_creatures;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.SaddledComponent;
 import net.minecraft.entity.passive.StriderEntity;
@@ -17,6 +9,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(StriderEntity.class)
 @EligibleIf(configAvailable="*.unsaddle_creatures")

@@ -2,16 +2,14 @@ package com.unascribed.fabrication.mixin.f_balance.disable_pearl_stasis;
 
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.nbt.NbtCompound;
 
 @Mixin(ThrownItemEntity.class)
 @EligibleIf(configAvailable="*.disable_pearl_stasis")

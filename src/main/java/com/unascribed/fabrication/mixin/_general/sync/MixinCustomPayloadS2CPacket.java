@@ -1,12 +1,12 @@
 package com.unascribed.fabrication.mixin._general.sync;
 
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(CustomPayloadS2CPacket.class)
 public class MixinCustomPayloadS2CPacket {

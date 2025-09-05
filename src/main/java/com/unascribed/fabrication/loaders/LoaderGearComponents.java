@@ -1,26 +1,15 @@
 package com.unascribed.fabrication.loaders;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.unascribed.fabrication.FabLog;
-import com.unascribed.fabrication.FabricationMod;
-import com.unascribed.fabrication.QDIni;
-import com.unascribed.fabrication.support.ConfigLoader;
-import com.unascribed.fabrication.util.Resolvable;
-
 import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.Ints;
-
+import com.unascribed.fabrication.FabLog;
+import com.unascribed.fabrication.FabricationMod;
+import com.unascribed.fabrication.QDIni;
+import com.unascribed.fabrication.support.ConfigLoader;
+import com.unascribed.fabrication.util.Resolvable;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -29,6 +18,15 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoaderGearComponents implements ConfigLoader {
 

@@ -1,19 +1,17 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.mechanism_muffling;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.unascribed.fabrication.logic.MechanismMuffling;
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.block.dispenser.BoatDispenserBehavior;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.util.math.BlockPointer;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({ItemDispenserBehavior.class, FallibleItemDispenserBehavior.class, ProjectileDispenserBehavior.class, BoatDispenserBehavior.class})
 @EligibleIf(configAvailable="*.mechanism_muffling")

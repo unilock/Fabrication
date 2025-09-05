@@ -1,21 +1,15 @@
 package com.unascribed.fabrication.mixin.c_tweaks.legible_signs;
 
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.SpecialEligibility;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
 import net.minecraft.block.entity.SignText;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
+import net.minecraft.util.DyeColor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-
-import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
-import net.minecraft.util.DyeColor;
 
 @Mixin(SignBlockEntityRenderer.class)
 @EligibleIf(configAvailable="*.legible_signs", envMatches=Env.CLIENT)

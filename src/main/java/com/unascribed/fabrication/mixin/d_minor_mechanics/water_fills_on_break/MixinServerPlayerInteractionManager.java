@@ -1,20 +1,18 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.water_fills_on_break;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.logic.WaterFillsOnBreak;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.SpecialEligibility;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.server.network.ServerPlayerInteractionManager;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.logic.WaterFillsOnBreak;
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.SpecialEligibility;
-
-import net.minecraft.fluid.Fluids;
-import net.minecraft.server.network.ServerPlayerInteractionManager;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 
 @Mixin(ServerPlayerInteractionManager.class)
 @EligibleIf(anyConfigAvailable={"*.water_fills_on_break", "*.water_fills_on_break_strict"}, specialConditions=SpecialEligibility.FORGE)

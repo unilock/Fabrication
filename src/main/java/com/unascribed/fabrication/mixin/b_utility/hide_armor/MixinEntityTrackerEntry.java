@@ -1,21 +1,19 @@
 package com.unascribed.fabrication.mixin.b_utility.hide_armor;
 
-import java.util.List;
-
+import com.mojang.datafixers.util.Pair;
+import com.unascribed.fabrication.features.FeatureHideArmor;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.EntityTrackerEntry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import com.mojang.datafixers.util.Pair;
-import com.unascribed.fabrication.features.FeatureHideArmor;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.EntityTrackerEntry;
+import java.util.List;
 
 @Mixin(EntityTrackerEntry.class)
 @EligibleIf(configAvailable="*.hide_armor")

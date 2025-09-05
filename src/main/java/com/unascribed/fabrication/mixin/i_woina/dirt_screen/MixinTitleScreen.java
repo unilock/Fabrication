@@ -2,20 +2,18 @@ package com.unascribed.fabrication.mixin.i_woina.dirt_screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.text.Text;
 
 @Mixin(TitleScreen.class)
 @EligibleIf(envMatches=Env.CLIENT, configAvailable="*.dirt_screen")

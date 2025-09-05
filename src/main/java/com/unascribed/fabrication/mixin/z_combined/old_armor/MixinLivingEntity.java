@@ -3,8 +3,6 @@ package com.unascribed.fabrication.mixin.z_combined.old_armor;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.FailOn;
-import com.unascribed.fabrication.support.SpecialEligibility;
 import com.unascribed.fabrication.support.injection.Hijack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

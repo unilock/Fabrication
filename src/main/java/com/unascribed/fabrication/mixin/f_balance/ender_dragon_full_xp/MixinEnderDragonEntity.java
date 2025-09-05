@@ -1,13 +1,11 @@
 package com.unascribed.fabrication.mixin.f_balance.ender_dragon_full_xp;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 
 @Mixin(EnderDragonEntity.class)
 @EligibleIf(configAvailable="*.ender_dragon_full_xp")

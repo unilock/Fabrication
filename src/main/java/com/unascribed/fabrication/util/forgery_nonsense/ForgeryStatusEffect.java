@@ -2,8 +2,6 @@ package com.unascribed.fabrication.util.forgery_nonsense;
 
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.entry.RegistryEntry;
 
 public class ForgeryStatusEffect {

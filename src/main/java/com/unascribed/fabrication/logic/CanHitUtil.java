@@ -1,12 +1,8 @@
 package com.unascribed.fabrication.logic;
 
-import java.util.UUID;
-import java.util.function.Predicate;
-
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.unascribed.fabrication.FabConf;
-
 import com.unascribed.fabrication.mixin.b_utility.canhit.AccessorEntitySelector;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.EntitySelectorReader;
@@ -18,6 +14,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+
+import java.util.UUID;
+import java.util.function.Predicate;
 
 public class CanHitUtil {
 

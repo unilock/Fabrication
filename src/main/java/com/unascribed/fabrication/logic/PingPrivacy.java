@@ -1,11 +1,11 @@
 package com.unascribed.fabrication.logic;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
 
 public class PingPrivacy {
 

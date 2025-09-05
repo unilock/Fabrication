@@ -1,13 +1,12 @@
 package com.unascribed.fabrication.logic;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import com.unascribed.fabrication.loaders.LoaderBlockLogo;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundEvents;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LogoBlock {
 

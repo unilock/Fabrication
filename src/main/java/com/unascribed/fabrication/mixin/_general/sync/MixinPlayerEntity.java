@@ -1,10 +1,8 @@
 package com.unascribed.fabrication.mixin._general.sync;
 
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
-
 import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PlayerEntity.class)
 public class MixinPlayerEntity implements SetFabricationConfigAware {

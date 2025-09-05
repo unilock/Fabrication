@@ -1,27 +1,25 @@
 package com.unascribed.fabrication.mixin.b_utility.killmessage;
 
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.interfaces.GetKillMessage;
+import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.unascribed.fabrication.interfaces.GetKillMessage;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Mixin(DamageSource.class)
 @EligibleIf(configAvailable="*.killmessage")

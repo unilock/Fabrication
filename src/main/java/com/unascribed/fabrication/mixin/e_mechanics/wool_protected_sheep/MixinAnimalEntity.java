@@ -2,7 +2,6 @@ package com.unascribed.fabrication.mixin.e_mechanics.wool_protected_sheep;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
@@ -10,6 +9,7 @@ import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value= LivingEntity.class, priority=999)
 @EligibleIf(configAvailable="*.wool_protected_sheep")

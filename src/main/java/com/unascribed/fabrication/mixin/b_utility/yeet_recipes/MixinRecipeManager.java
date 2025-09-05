@@ -1,28 +1,25 @@
 package com.unascribed.fabrication.mixin.b_utility.yeet_recipes;
 
-import java.util.Map;
-
-import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.google.gson.JsonElement;
-import com.unascribed.fabrication.loaders.LoaderYeetRecipes;
-import com.unascribed.fabrication.support.EligibleIf;
-
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
-
+import com.google.gson.JsonElement;
+import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.loaders.LoaderYeetRecipes;
+import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Map;
 
 @Mixin(RecipeManager.class)
 @EligibleIf(configAvailable="*.yeet_recipes")

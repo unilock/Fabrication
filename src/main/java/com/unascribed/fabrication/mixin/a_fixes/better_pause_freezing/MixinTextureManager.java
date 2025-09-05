@@ -2,16 +2,14 @@ package com.unascribed.fabrication.mixin.a_fixes.better_pause_freezing;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.client.AtlasViewerScreen;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.TextureManager;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TextureManager.class)
 @EligibleIf(configAvailable="*.better_pause_freezing", envMatches=Env.CLIENT)

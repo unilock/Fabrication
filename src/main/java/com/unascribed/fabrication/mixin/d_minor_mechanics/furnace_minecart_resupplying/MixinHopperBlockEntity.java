@@ -3,8 +3,6 @@ package com.unascribed.fabrication.mixin.d_minor_mechanics.furnace_minecart_resu
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.ResupplyingFurnaceCart;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryFurnaceCartResupplying;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.Entity;
@@ -13,6 +11,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;

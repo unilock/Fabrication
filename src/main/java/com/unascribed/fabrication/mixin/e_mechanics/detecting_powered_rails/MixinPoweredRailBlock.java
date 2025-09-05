@@ -1,24 +1,17 @@
 package com.unascribed.fabrication.mixin.e_mechanics.detecting_powered_rails;
 
 import com.unascribed.fabrication.FabConf;
-import net.minecraft.util.math.random.Random;
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DetectorRailBlock;
-import net.minecraft.block.PoweredRailBlock;
-import net.minecraft.block.RepeaterBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PoweredRailBlock.class)
 @EligibleIf(configAvailable="*.detecting_powered_rails")

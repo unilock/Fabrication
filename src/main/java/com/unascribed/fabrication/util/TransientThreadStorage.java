@@ -1,8 +1,8 @@
 package com.unascribed.fabrication.util;
 
-import java.util.Map;
-
 import com.google.common.collect.Maps;
+
+import java.util.Map;
 
 public class TransientThreadStorage {
 

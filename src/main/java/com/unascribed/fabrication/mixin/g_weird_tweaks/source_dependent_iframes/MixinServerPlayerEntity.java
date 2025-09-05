@@ -3,10 +3,10 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.source_dependent_iframes
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.TickSourceIFrames;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.Inject;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)

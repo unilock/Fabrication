@@ -1,18 +1,16 @@
 package com.unascribed.fabrication.mixin.d_minor_mechanics.water_fills_on_break;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.unascribed.fabrication.logic.WaterFillsOnBreak;
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(World.class)
 @EligibleIf(anyConfigAvailable={"*.water_fills_on_break", "*.water_fills_on_break_strict"})

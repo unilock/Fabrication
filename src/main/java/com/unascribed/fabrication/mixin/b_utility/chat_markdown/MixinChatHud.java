@@ -3,7 +3,6 @@ package com.unascribed.fabrication.mixin.b_utility.chat_markdown;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import com.unascribed.fabrication.util.Markdown;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.MutableText;
@@ -11,6 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ChatHud.class)
 @EligibleIf(configAvailable="*.chat_markdown", envMatches=Env.CLIENT)

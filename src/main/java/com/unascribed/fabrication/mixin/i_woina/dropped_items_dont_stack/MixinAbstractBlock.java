@@ -1,26 +1,25 @@
 package com.unascribed.fabrication.mixin.i_woina.dropped_items_dont_stack;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.ModifyReturn;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(AbstractBlock.class)
 @EligibleIf(configAvailable="*.dropped_items_dont_stack")
 @FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public abstract class MixinAbstractBlock {
 
-	@ModifyReturn(method="getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/loot/context/LootContextParameterSet$Builder;)Ljava/util/List;", target="Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;")
-	private static List<ItemStack> splitLoot(List<ItemStack> inp) {
+	@ModifyExpressionValue(method="getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/loot/context/LootContextParameterSet$Builder;)Ljava/util/List;", at=@At(value="INVOKE", target="Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;"))
+	private ObjectArrayList<ItemStack> splitLoot(ObjectArrayList<ItemStack> inp) {
 		if(!FabConf.isEnabled("*.dropped_items_dont_stack") || inp == null) return inp;
-		List<ItemStack> ret = new ArrayList<>();
+		ObjectArrayList<ItemStack> ret = new ObjectArrayList<>();
 		for (ItemStack stack : inp) {
 			ItemStack single = stack.copy();
 			single.setCount(1);

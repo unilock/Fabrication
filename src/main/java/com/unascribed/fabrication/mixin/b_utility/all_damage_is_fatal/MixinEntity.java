@@ -2,18 +2,16 @@ package com.unascribed.fabrication.mixin.b_utility.all_damage_is_fatal;
 
 import com.google.common.collect.ImmutableList;
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import net.minecraft.entity.damage.DamageSource;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.List;
 import java.util.function.Predicate;

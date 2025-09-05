@@ -1,24 +1,14 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.repelling_void;
 
-import java.util.List;
-
-import org.spongepowered.asm.mixin.injection.Inject;
-import net.minecraft.block.BlockState;
-import com.unascribed.fabrication.FabConf;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageTypes;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
 import com.google.common.collect.Lists;
-
+import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -30,6 +20,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 @Mixin(PlayerEntity.class)
 @EligibleIf(configAvailable="*.repelling_void")

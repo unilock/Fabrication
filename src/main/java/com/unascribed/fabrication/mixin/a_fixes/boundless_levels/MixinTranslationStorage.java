@@ -1,18 +1,15 @@
 package com.unascribed.fabrication.mixin.a_fixes.boundless_levels;
 
+import com.google.common.primitives.Ints;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
+import com.unascribed.fabrication.util.RomanNumeral;
+import net.minecraft.client.resource.language.TranslationStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.util.RomanNumeral;
-
-import com.google.common.primitives.Ints;
-
-import net.minecraft.client.resource.language.TranslationStorage;
 
 @Mixin(TranslationStorage.class)
 @EligibleIf(configAvailable="*.boundless_levels", envMatches=Env.CLIENT)

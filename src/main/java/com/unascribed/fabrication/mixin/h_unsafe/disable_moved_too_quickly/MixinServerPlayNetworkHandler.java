@@ -1,12 +1,10 @@
 package com.unascribed.fabrication.mixin.h_unsafe.disable_moved_too_quickly;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(ServerPlayNetworkHandler.class)

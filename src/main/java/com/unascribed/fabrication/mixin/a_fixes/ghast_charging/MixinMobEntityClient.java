@@ -1,18 +1,16 @@
 package com.unascribed.fabrication.mixin.a_fixes.ghast_charging;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.interfaces.GhastAttackTime;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
+import net.minecraft.entity.mob.GhastEntity;
+import net.minecraft.entity.mob.MobEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.interfaces.GhastAttackTime;
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-
-import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.mob.MobEntity;
 
 // MobEntity is our best injection point because GhastEntity doesn't override tick
 @Mixin(MobEntity.class)

@@ -2,7 +2,6 @@ package com.unascribed.fabrication.mixin.f_balance.tools_in_bundles;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.BundleHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;

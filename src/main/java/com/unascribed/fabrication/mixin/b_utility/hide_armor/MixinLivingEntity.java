@@ -1,19 +1,17 @@
 package com.unascribed.fabrication.mixin.b_utility.hide_armor;
 
-import java.util.List;
-
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-
 import com.mojang.datafixers.util.Pair;
 import com.unascribed.fabrication.features.FeatureHideArmor;
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+
+import java.util.List;
 
 @Mixin(LivingEntity.class)
 @EligibleIf(configAvailable="*.hide_armor")

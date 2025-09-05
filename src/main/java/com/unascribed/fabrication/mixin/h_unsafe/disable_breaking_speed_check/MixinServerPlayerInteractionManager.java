@@ -1,12 +1,10 @@
 package com.unascribed.fabrication.mixin.h_unsafe.disable_breaking_speed_check;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.server.network.ServerPlayerInteractionManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.server.network.ServerPlayerInteractionManager;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(ServerPlayerInteractionManager.class)

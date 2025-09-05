@@ -1,17 +1,15 @@
 package com.unascribed.fabrication.mixin.f_balance.disable_prior_work_penalty;
 
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.support.injection.HijackReturn;
-
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.AnvilScreenHandler;
+import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.function.Predicate;
 

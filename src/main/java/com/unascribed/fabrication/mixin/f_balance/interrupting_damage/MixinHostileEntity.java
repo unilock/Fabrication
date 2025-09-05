@@ -6,10 +6,8 @@ import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 

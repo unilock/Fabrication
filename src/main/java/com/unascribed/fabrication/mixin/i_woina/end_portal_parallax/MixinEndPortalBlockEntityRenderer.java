@@ -1,7 +1,11 @@
 package com.unascribed.fabrication.mixin.i_woina.end_portal_parallax;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.client.GLUPort;
+import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
@@ -20,13 +24,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.client.GLUPort;
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.SpecialEligibility;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

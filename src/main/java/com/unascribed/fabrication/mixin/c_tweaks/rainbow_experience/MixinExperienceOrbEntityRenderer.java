@@ -3,8 +3,6 @@ package com.unascribed.fabrication.mixin.c_tweaks.rainbow_experience;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import com.unascribed.fabrication.util.forgery_nonsense.ForgeryRandom;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.ExperienceOrbEntityRenderer;
@@ -13,6 +11,8 @@ import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;

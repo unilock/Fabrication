@@ -2,12 +2,10 @@ package com.unascribed.fabrication.mixin.i_woina.no_experience;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.screen.EnchantmentScreenHandler;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.screen.EnchantmentScreenHandler;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(EnchantmentScreenHandler.class)

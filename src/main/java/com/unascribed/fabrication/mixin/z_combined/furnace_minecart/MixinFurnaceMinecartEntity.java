@@ -1,14 +1,12 @@
 package com.unascribed.fabrication.mixin.z_combined.furnace_minecart;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-
 import com.unascribed.fabrication.interfaces.WasShoved;
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.vehicle.FurnaceMinecartEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(FurnaceMinecartEntity.class)
 @EligibleIf(anyConfigAvailable={"*.hyperspeed_furnace_minecart", "*.furnace_minecart_pushing"})

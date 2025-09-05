@@ -1,11 +1,11 @@
 package com.unascribed.fabrication.util;
 
+import net.minecraft.client.texture.NativeImage;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import net.minecraft.client.texture.NativeImage;
 
 public class Grayscale extends InputStream {
 	final InputStream stream;

@@ -1,14 +1,12 @@
 package com.unascribed.fabrication.mixin.b_utility.ping_privacy;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.EligibleIf;
+import io.netty.channel.Channel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import io.netty.channel.Channel;
 
 @Mixin(targets="net.minecraft.server.ServerNetworkIo$1")
 @EligibleIf(configAvailable="*.ping_privacy")

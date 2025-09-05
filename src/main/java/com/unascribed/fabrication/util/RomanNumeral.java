@@ -1,8 +1,8 @@
 package com.unascribed.fabrication.util;
 
-import java.util.TreeMap;
-
 import com.google.common.collect.Maps;
+
+import java.util.TreeMap;
 
 public class RomanNumeral {
 

@@ -1,7 +1,6 @@
 package com.unascribed.fabrication.mixin.e_mechanics.swap_conflicting_enchants;
 
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.Inject;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import com.unascribed.fabrication.util.SwappingEnchants;
 import net.minecraft.item.ItemStack;
@@ -14,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayNetworkHandler.class)

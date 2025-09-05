@@ -4,7 +4,6 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.SetOwner;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
-import org.spongepowered.asm.mixin.injection.Inject;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -17,6 +16,7 @@ import net.minecraft.screen.GrindstoneScreenHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets="net.minecraft.screen.GrindstoneScreenHandler$4")

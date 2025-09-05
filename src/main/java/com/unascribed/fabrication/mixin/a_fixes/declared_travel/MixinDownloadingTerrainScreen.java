@@ -4,11 +4,11 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.DimInformedScreen;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(DownloadingTerrainScreen.class)
 @EligibleIf(configAvailable="*.declared_travel", envMatches=Env.CLIENT)

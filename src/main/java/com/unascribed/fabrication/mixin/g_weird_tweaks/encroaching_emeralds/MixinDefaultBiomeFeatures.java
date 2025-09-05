@@ -1,8 +1,8 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.encroaching_emeralds;
 
+import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.GenerationSettingsAddEmeralds;
 import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.FabConf;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import org.spongepowered.asm.mixin.Mixin;

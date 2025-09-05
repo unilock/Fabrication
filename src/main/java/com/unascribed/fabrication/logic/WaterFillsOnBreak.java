@@ -1,7 +1,6 @@
 package com.unascribed.fabrication.logic;
 
 import com.google.common.collect.ImmutableSet;
-
 import com.unascribed.fabrication.FabConf;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.FluidState;

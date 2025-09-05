@@ -1,16 +1,14 @@
 package com.unascribed.fabrication.mixin.i_woina.yellow_button_hover;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-
-import net.minecraft.client.gui.widget.ClickableWidget;
 
 @Mixin(PressableWidget.class)
 @EligibleIf(configAvailable="*.yellow_button_hover", envMatches=Env.CLIENT)

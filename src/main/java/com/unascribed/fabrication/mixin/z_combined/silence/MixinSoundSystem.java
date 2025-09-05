@@ -1,16 +1,14 @@
 package com.unascribed.fabrication.mixin.z_combined.silence;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.Env;
+import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.client.sound.SoundSystem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.support.EligibleIf;
-import com.unascribed.fabrication.support.Env;
-
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.sound.SoundSystem;
 
 @Mixin(SoundSystem.class)
 @EligibleIf(anyConfigAvailable={"*.disable_equip_sound", "*.endermen_dont_squeal", "*.silent_minecarts"}, envMatches=Env.CLIENT)

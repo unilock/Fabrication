@@ -2,9 +2,9 @@ package com.unascribed.fabrication.mixin.g_weird_tweaks.villager_trades_reset;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(targets="net.minecraft.village.TradeOffers$SellMapFactory")
 @EligibleIf(configAvailable="*.villager_trades_reset")

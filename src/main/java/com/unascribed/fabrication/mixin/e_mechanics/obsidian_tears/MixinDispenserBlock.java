@@ -1,23 +1,21 @@
 package com.unascribed.fabrication.mixin.e_mechanics.obsidian_tears;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.logic.ObsidianTears;
+import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import org.spongepowered.asm.mixin.injection.Inject;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.logic.ObsidianTears;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.DispenserBehavior;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 
 @Mixin(DispenserBlock.class)
 @EligibleIf(configAvailable="*.obsidian_tears")

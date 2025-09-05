@@ -1,27 +1,25 @@
 package com.unascribed.fabrication.mixin.i_woina.no_experience;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.unascribed.fabrication.FabConf;
-import org.objectweb.asm.Opcodes;
-import org.spongepowered.asm.mixin.injection.*;
-import com.unascribed.fabrication.support.injection.Hijack;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.TranslatableTextContent;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-
+import com.unascribed.fabrication.support.injection.Hijack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.EnchantmentScreenHandler;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.util.Identifier;
+import org.objectweb.asm.Opcodes;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Mixin(EnchantmentScreen.class)

@@ -1,10 +1,24 @@
 package com.unascribed.fabrication.mixin.c_tweaks.alt_absorption_sound;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.interfaces.DidJustAbsorp;
+import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
+import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
+import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlaySoundFromEntityS2CPacket;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -12,22 +26,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.interfaces.DidJustAbsorp;
-import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import io.netty.buffer.Unpooled;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.PlaySoundFromEntityS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 @Mixin(LivingEntity.class)
 @EligibleIf(configAvailable="*.alt_absorption_sound")

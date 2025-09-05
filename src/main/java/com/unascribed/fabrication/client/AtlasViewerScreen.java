@@ -1,14 +1,12 @@
 package com.unascribed.fabrication.client;
 
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.unascribed.fabrication.mixin._general.atlas.AccessorSpriteAtlasTexture;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
@@ -16,16 +14,12 @@ import net.minecraft.resource.Resource;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-
-import static org.lwjgl.opengl.GL30C.*;
+import org.joml.Matrix4f;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
-import com.google.common.collect.Lists;
-import org.joml.Matrix4f;
+import static org.lwjgl.opengl.GL30C.*;
 
 public class AtlasViewerScreen extends Screen {
 

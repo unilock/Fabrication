@@ -1,16 +1,14 @@
 package com.unascribed.fabrication.mixin.f_balance.disable_elytra;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.ConfigPredicates;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.item.ElytraItem;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.support.ConfigPredicates;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.item.ElytraItem;
-import net.minecraft.item.ItemStack;
 
 import java.util.function.Predicate;
 

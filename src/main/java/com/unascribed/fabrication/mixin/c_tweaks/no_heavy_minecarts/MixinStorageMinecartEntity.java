@@ -1,13 +1,11 @@
 package com.unascribed.fabrication.mixin.c_tweaks.no_heavy_minecarts;
 
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.entity.vehicle.StorageMinecartEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.vehicle.StorageMinecartEntity;
 
 @Mixin(StorageMinecartEntity.class)
 @EligibleIf(configAvailable="*.no_heavy_minecarts")

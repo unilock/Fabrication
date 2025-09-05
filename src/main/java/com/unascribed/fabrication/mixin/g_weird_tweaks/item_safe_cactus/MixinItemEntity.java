@@ -1,16 +1,14 @@
 package com.unascribed.fabrication.mixin.g_weird_tweaks.item_safe_cactus;
 
 import com.unascribed.fabrication.FabConf;
-import org.spongepowered.asm.mixin.injection.Inject;
+import com.unascribed.fabrication.support.EligibleIf;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.unascribed.fabrication.support.EligibleIf;
-
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.damage.DamageSource;
 
 @Mixin(ItemEntity.class)
 @EligibleIf(configAvailable="*.item_safe_cactus")

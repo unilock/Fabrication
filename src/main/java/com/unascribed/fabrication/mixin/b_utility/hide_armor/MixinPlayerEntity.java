@@ -1,27 +1,24 @@
 package com.unascribed.fabrication.mixin.b_utility.hide_armor;
 
-import java.util.EnumSet;
-import java.util.Locale;
-import java.util.Set;
-
-import org.spongepowered.asm.mixin.injection.Inject;
-import com.unascribed.fabrication.util.forgery_nonsense.ForgeryNbt;
-import net.minecraft.nbt.NbtElement;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import com.google.common.base.Enums;
 import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.interfaces.GetSuppressedSlots;
 import com.unascribed.fabrication.support.EligibleIf;
-
-import com.google.common.base.Enums;
-
+import com.unascribed.fabrication.util.forgery_nonsense.ForgeryNbt;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.EnumSet;
+import java.util.Locale;
+import java.util.Set;
 
 @Mixin(PlayerEntity.class)
 @EligibleIf(configAvailable="*.hide_armor")

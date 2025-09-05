@@ -3,11 +3,11 @@ package com.unascribed.fabrication.mixin.a_fixes.fix_end_portal_render;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import net.minecraft.client.render.block.entity.EndPortalBlockEntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(EndPortalBlockEntityRenderer.class)
 @EligibleIf(configAvailable="*.fix_end_portal_render", envMatches=Env.CLIENT)

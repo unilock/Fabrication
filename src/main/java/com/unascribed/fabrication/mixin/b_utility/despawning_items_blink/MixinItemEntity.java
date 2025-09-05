@@ -1,26 +1,24 @@
 package com.unascribed.fabrication.mixin.b_utility.despawning_items_blink;
 
+import com.unascribed.fabrication.interfaces.RenderingAgeAccess;
 import com.unascribed.fabrication.interfaces.SetItemDespawnAware;
+import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
+import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.unascribed.fabrication.interfaces.RenderingAgeAccess;
-import com.unascribed.fabrication.support.EligibleIf;
-
-import io.netty.buffer.Unpooled;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 @Mixin(ItemEntity.class)
 @EligibleIf(configAvailable="*.despawning_items_blink")

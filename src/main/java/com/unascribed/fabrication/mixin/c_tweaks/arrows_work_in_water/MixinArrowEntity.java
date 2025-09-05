@@ -1,15 +1,12 @@
 package com.unascribed.fabrication.mixin.c_tweaks.arrows_work_in_water;
 
 import com.unascribed.fabrication.FabConf;
-import net.minecraft.item.ItemStack;
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.unascribed.fabrication.support.EligibleIf;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(ArrowEntity.class)
 @EligibleIf(configAvailable="*.arrows_work_in_water")
