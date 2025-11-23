@@ -10,7 +10,6 @@ import com.unascribed.fabrication.support.Env;
 import com.unascribed.fabrication.support.FabricationDefaultResources;
 import com.unascribed.fabrication.support.Feature;
 import com.unascribed.fabrication.support.MixinConfigPlugin;
-import com.unascribed.fabrication.support.OptionalFScript;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
@@ -53,7 +52,7 @@ public class FabricationMod implements ModInitializer {
 				throw new RuntimeException(e);
 			}
 		}
-		if (EarlyAgnos.isModLoaded("fscript")) OptionalFScript.reload();
+//		if (EarlyAgnos.isModLoaded("fscript")) OptionalFScript.reload();
 		for (String s : MixinConfigPlugin.discoverClassesInPackage("com.unascribed.fabrication.features", false)) {
 			try {
 				Feature r = (Feature)Class.forName(s).newInstance();

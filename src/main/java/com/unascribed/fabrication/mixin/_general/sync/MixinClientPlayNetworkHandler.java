@@ -3,7 +3,6 @@ package com.unascribed.fabrication.mixin._general.sync;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.brigadier.ParseResults;
-import com.unascribed.fabrication.client.FScriptScreen;
 import com.unascribed.fabrication.interfaces.GetServerConfig;
 import com.unascribed.fabrication.support.ConfigValues;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -119,7 +118,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 					e.printStackTrace();
 					throw e;
 				}
-			}else if (((ByteBufCustomPayload) payload).id().getPath().equals("fscript")){
+			}/*else if (((ByteBufCustomPayload) payload).id().getPath().equals("fscript")){
 				try{
 					PacketByteBuf buf = ((ByteBufCustomPayload) payload).buf();
 					int code = buf.readVarInt();
@@ -133,7 +132,7 @@ public abstract class MixinClientPlayNetworkHandler extends ClientCommonNetworkH
 					e.printStackTrace();
 					throw e;
 				}
-			}
+			}*/
 		}
 	}
 

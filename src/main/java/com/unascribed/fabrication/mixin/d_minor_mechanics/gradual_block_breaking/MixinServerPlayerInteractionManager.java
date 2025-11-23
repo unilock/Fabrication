@@ -7,8 +7,6 @@ import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import com.unascribed.fabrication.support.injection.Hijack;
-import com.unascribed.fabrication.support.injection.HijackReturn;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SnowBlock;
@@ -77,16 +75,16 @@ public class MixinServerPlayerInteractionManager {
 		return state;
 	}
 
-	@Hijack(target="Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z",
+	@WrapOperation(at=@At(value="INVOKE", target="Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"),
 			method="tryBreakBlock(Lnet/minecraft/util/math/BlockPos;)Z")
-	public HijackReturn fabrication$gradualBreak(ServerWorld world, BlockPos pos) {
-		if (!FabConf.isEnabled("*.gradual_block_breaking")) return null;
+	public boolean fabrication$gradualBreak(ServerWorld world, BlockPos pos, boolean b, Operation<Boolean> original) {
+		if (!FabConf.isEnabled("*.gradual_block_breaking")) return original.call(world, pos, b);
 		if (fabrication$gradualBreakState != null) {
 			world.setBlockState(pos, fabrication$gradualBreakState);
 			fabrication$gradualBreakState = null;
-			return HijackReturn.TRUE;
+			return true; // TODO: HijackReturn.TRUE
 		}
-		return null;
+		return original.call(world, pos, b);
 	}
 
 }

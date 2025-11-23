@@ -1,19 +1,13 @@
 package com.unascribed.fabrication.mixin._general.sync;
 
-import com.unascribed.fabrication.EarlyAgnos;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.FabricationMod;
-import com.unascribed.fabrication.FeaturesFile;
 import com.unascribed.fabrication.features.FeatureHideArmor;
 import com.unascribed.fabrication.interfaces.SetFabricationConfigAware;
-import com.unascribed.fabrication.loaders.LoaderFScript;
-import com.unascribed.fabrication.support.OptionalFScript;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
-import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
-import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -70,7 +64,7 @@ public class MixinServerPlayNetworkHandler {
 						}
 					}
 				}
-			} else if (channel.getPath().equals("fscript")) {
+			}/* else if (channel.getPath().equals("fscript")) {
 				ci.cancel();
 				PacketByteBuf recvdData = ((ByteBufCustomPayload) payload).buf();
 				int id = recvdData.readVarInt();
@@ -119,7 +113,7 @@ public class MixinServerPlayNetworkHandler {
 					}
 				}
 				// TODO id 4 world local SET
-			}
+			}*/
 		}
 	}
 	public void fabrication$sendCommandFeedback(Text text){
