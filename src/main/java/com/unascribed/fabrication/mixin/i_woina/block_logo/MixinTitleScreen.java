@@ -1,9 +1,9 @@
 package com.unascribed.fabrication.mixin.i_woina.block_logo;
 
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.Hijack;
 import com.unascribed.fabrication.util.BlockLogoRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -36,13 +36,13 @@ public class MixinTitleScreen extends Screen {
 	@Shadow
 	private long backgroundFadeStart;
 
-	@Hijack(method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V", target="Lnet/minecraft/client/gui/LogoDrawer;draw(Lnet/minecraft/client/gui/DrawContext;IF)V")
-	public boolean fabrication$drawBlockLogo(LogoDrawer logo, DrawContext context) {
+	@WrapWithCondition(method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V", at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/LogoDrawer;draw(Lnet/minecraft/client/gui/DrawContext;IF)V"))
+	public boolean fabrication$drawBlockLogo(LogoDrawer logo, DrawContext context, int screenWidth, float alpha) {
 		if (FabConf.isEnabled("*.block_logo")) {
 			fabrication$blockLogo.drawLogo(context, doBackgroundFade, backgroundFadeStart, MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true));
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Inject(at=@At("HEAD"), method="render(Lnet/minecraft/client/gui/DrawContext;IIF)V")

@@ -1,10 +1,10 @@
 package com.unascribed.fabrication.mixin.i_woina.no_experience;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Env;
-import com.unascribed.fabrication.support.injection.Hijack;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -58,18 +58,18 @@ public abstract class MixinEnchantmentScreen extends HandledScreen<EnchantmentSc
 		return original;
 	}
 
-	@Hijack(target="Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V",
+	@WrapWithCondition(at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V"),
 			method="drawBackground(Lnet/minecraft/client/gui/DrawContext;FII)V")
-	public boolean fabrication$noXpHijackDrawTexture(DrawContext drawContext, Identifier texture, int x, int y) {
+	public boolean fabrication$noXpHijackDrawTexture(DrawContext drawContext, Identifier texture, int x, int y, int width, int height) {
 		if (FabConf.isEnabled("*.no_experience")) {
 			if (texture.getPath().startsWith("container/enchanting_table/level_")) {
 				if (!texture.getPath().endsWith("_disabled")) {
 					drawContext.drawText(textRenderer, "" + Integer.parseInt(texture.getPath().substring("container/enchanting_table/level_".length())), x + 98, y + 8, 0x5577FF, true);
 				}
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	@ModifyVariable(at=@At(value="INVOKE", target="net/minecraft/client/font/TextRenderer.getWidth(Ljava/lang/String;)I", ordinal=0),
