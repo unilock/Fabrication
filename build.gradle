@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.11-SNAPSHOT'
+	id 'fabric-loom' version '1.13-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -39,6 +39,7 @@ repositories {
 			includeGroup 'com.terraformersmc'
 		}
 	}
+    mavenLocal()
 }
 
 dependencies {
@@ -55,13 +56,14 @@ dependencies {
 		transitive = false
 	}
 
+    modImplementation include("com.unascribed:lib39-core:${project.lib39_version}")
 	modImplementation include("com.unascribed:lib39-deferral:${project.lib39_version}")
 
 	implementation 'com.google.code.gson:gson:2.13.1'
 }
 
-// apply plugin: FabFeaturesPlugin
-// apply plugin: FabPagesPlugin
+apply plugin: FabFeaturesPlugin
+apply plugin: FabPagesPlugin
 
 processResources {
 	inputs.property 'version', project.version
@@ -69,7 +71,7 @@ processResources {
 	filesMatching('fabric.mod.json') {
 		expand 'version': project.version
 	}
-	// dependsOn(fabGenFeatures)
+	dependsOn(fabGenFeatures)
 }
 
 sourceSets {
@@ -94,7 +96,21 @@ java {
 }
 
 jar {
+    doFirst {
+        StringBuilder bldr = new StringBuilder();
+        File dir = file('build/classes/java/main');
+        dir.eachFileRecurse(groovy.io.FileType.FILES, {
+            if (it.name.endsWith('.class')) {
+                bldr.append(it.getAbsolutePath().substring(dir.getAbsolutePath().length()+1))
+                bldr.append('\n')
+            }
+        })
+        file('build/tmp/classes.txt').text = bldr.toString();
+    }
+
     from("LICENSE") {
         rename { "${it}_${base.archivesName.get()}" }
     }
+
+    from 'build/tmp/classes.txt'
 }

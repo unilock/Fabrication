@@ -519,7 +519,7 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
 		@Override
 		public String getName() {
-			return name.replace('/', '.').replace(".class", "");
+			return name.replace(".class", "").replace('/', '.');
 		}
 
 		@Override

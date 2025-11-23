@@ -25,7 +25,8 @@ public class MixinPlayerEntity {
 	private static final Predicate<PlayerEntity> fabrication$hungerHard = ConfigPredicates.getFinalPredicate("*.hunger_is_hard");
 
 	@WrapOperation(method="tickMovement()V", at=@At(value="INVOKE", target="Lnet/minecraft/world/World;getDifficulty()Lnet/minecraft/world/Difficulty;"))
-	private Difficulty fabrication$pacefullHunger(World world, Operation<Difficulty> original, @Local(argsOnly = true) PlayerEntity pe) {
+	private Difficulty fabrication$pacefullHunger(World world, Operation<Difficulty> original) {
+		PlayerEntity pe = (PlayerEntity) (Object) this;
 		if (FabConf.isEnabled("*.hunger_is_hard") && fabrication$hungerHard.test(pe)) return Difficulty.HARD;
 		if (FabConf.isEnabled("*.hunger_is_normal") && fabrication$hungerNormal.test(pe)) return Difficulty.NORMAL;
 		if (FabConf.isEnabled("*.hunger_is_easy") && fabrication$hungerEasy.test(pe)) return Difficulty.EASY;
