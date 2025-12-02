@@ -3,6 +3,8 @@ package com.unascribed.fabrication.mixin.b_utility.hide_armor;
 import com.mojang.datafixers.util.Pair;
 import com.unascribed.fabrication.features.FeatureHideArmor;
 import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.FailOn;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Mixin(EntityTrackerEntry.class)
 @EligibleIf(configAvailable="*.hide_armor")
+@FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinEntityTrackerEntry {
 
 	@Shadow @Final

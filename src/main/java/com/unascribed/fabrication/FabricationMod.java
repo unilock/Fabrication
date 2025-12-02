@@ -13,6 +13,7 @@ import com.unascribed.fabrication.support.MixinConfigPlugin;
 import com.unascribed.fabrication.util.ByteBufCustomPayload;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
@@ -85,6 +86,8 @@ public class FabricationMod implements ModInitializer {
 			FabricationDefaultResources.apply();
 		}
 
+		PayloadTypeRegistry.playC2S().register(ByteBufCustomPayload.ID, ByteBufCustomPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(ByteBufCustomPayload.ID, ByteBufCustomPayload.CODEC);
 	}
 
 	public static void featureError(Feature f, Throwable t, String reason) {

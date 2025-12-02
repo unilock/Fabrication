@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Either;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.ConfigPredicates;
 import com.unascribed.fabrication.support.EligibleIf;
+import com.unascribed.fabrication.support.FailOn;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Unit;
@@ -17,6 +19,7 @@ import java.util.function.Predicate;
 
 @Mixin(ServerPlayerEntity.class)
 @EligibleIf(configAvailable="*.disable_night_skip")
+@FailOn(invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinServerPlayerEntity {
 
 	private static final Predicate<ServerPlayerEntity> fabrication$disableNightSkip = ConfigPredicates.getFinalPredicate("*.disable_night_skip");

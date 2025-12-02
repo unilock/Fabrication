@@ -22,6 +22,7 @@ import com.unascribed.fabrication.support.MixinConfigPlugin;
 import com.unascribed.fabrication.support.SpecialEligibility;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Pair;
@@ -132,7 +133,7 @@ public class FabConf {
 	private static final FeaturesIniTransformer featuresIniTransformer = new FeaturesIniTransformer();
 
 	static {
-		if (EarlyAgnos.isForge()) {
+		if (FabricLoader.getInstance().isModLoaded("connector")) {
 			setMet(SpecialEligibility.FORGE, true);
 		} else {
 			setMet(SpecialEligibility.NOT_FORGE, true);

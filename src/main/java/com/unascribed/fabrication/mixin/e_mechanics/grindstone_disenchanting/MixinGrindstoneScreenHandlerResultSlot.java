@@ -4,6 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.interfaces.SetOwner;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.FailOn;
+import com.unascribed.fabrication.support.SpecialEligibility;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,8 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(targets="net.minecraft.screen.GrindstoneScreenHandler$4")
-@EligibleIf(configAvailable="*.grindstone_disenchanting", modNotLoaded="pollen")
-@FailOn(modLoaded="fabric:grindenchantments")
+@EligibleIf(configAvailable="*.grindstone_disenchanting", modNotLoaded="pollen", specialConditions=SpecialEligibility.NOT_FORGE)
+@FailOn(modLoaded="fabric:grindenchantments", invertedSpecialConditions=SpecialEligibility.NOT_FORGE)
 public class MixinGrindstoneScreenHandlerResultSlot implements SetOwner<GrindstoneScreenHandler> {
 
 	@Unique

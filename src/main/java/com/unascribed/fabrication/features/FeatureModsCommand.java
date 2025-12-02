@@ -7,7 +7,6 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.FabricationMod;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.Feature;
-import com.unascribed.fabrication.support.SpecialEligibility;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
@@ -20,8 +19,8 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-@EligibleIf(configAvailable="*.mods_command", specialConditions=SpecialEligibility.NOT_FORGE)
-public class FeatureModsCommandFabric implements Feature {
+@EligibleIf(configAvailable="*.mods_command")
+public class FeatureModsCommand implements Feature {
 
 	private boolean applied = false;
 
