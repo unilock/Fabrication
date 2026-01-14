@@ -2,12 +2,7 @@ package com.unascribed.fabrication.mixin.e_mechanics.detecting_powered_rails;
 
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DetectorRailBlock;
-import net.minecraft.block.PoweredRailBlock;
-import net.minecraft.block.RepeaterBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.server.world.ServerWorld;

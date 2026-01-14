@@ -5,14 +5,8 @@ import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.FabricationResourcePack;
 import com.unascribed.fabrication.mixin._general.packs.AccessorResourcePackManager;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.ResourcePack;
-import net.minecraft.resource.ResourcePackInfo;
-import net.minecraft.resource.ResourcePackPosition;
-import net.minecraft.resource.ResourcePackProfile;
+import net.minecraft.resource.*;
 import net.minecraft.resource.ResourcePackProfile.InsertionPosition;
-import net.minecraft.resource.ResourcePackProvider;
-import net.minecraft.resource.ResourcePackSource;
-import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 
 import java.util.Optional;
