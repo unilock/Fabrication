@@ -101,11 +101,11 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 		calculateDespawn();
 	}
 
-	@ModifyExpressionValue(at=@At(value="FIELD", target="net/minecraft/entity/ItemEntity.itemAge:I", opcodes=Opcodes.GETFIELD), method="canMerge()Z")
-	private int fabrication$modifyIllegalAge(int orig) {
+	@ModifyExpressionValue(at=@At(value="FIELD", target="net/minecraft/entity/ItemEntity.itemAge:I", opcode=Opcodes.GETFIELD), method="canMerge()Z")
+	public int fabrication$modifyIllegalAge(int orig) {
 		// age-1 will never be equal to age; short-circuits the "age != -32768" check and allows
 		// items set to "invincible" to stack together
-		return item instanceof ItemDespawn && ((ItemDespawn) item).fabrication$itemDespawn$invinc() ? orig -1 : orig;
+		return this.fabrication$itemDespawn$invinc() ? orig -1 : orig;
 	}
 	public boolean fabrication$itemDespawn$invinc() {
 		return fabrication$invincible;

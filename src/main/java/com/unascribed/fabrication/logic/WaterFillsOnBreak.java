@@ -2,7 +2,7 @@ package com.unascribed.fabrication.logic;
 
 import com.google.common.collect.ImmutableSet;
 import com.unascribed.fabrication.FabConf;
-import com.unascribed.fabrication.FabRefl;
+import com.unascribed.fabrication.mixin.d_minor_mechanics.water_fills_on_break.AccessorFlowableFluid;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -28,8 +28,8 @@ public class WaterFillsOnBreak {
 			Fluid fluid = fluidState.getFluid();
 
 			if (fluidState.isStill()) {
-				if (!(fluid instanceof FlowableFluid && FabRefl.isInfinate((FlowableFluid) fluid, world))) continue;
-				if (retFluid == null) retFluid = (FlowableFluid) fluid;
+				if (!(fluid instanceof FlowableFluid flowableFluid && ((AccessorFlowableFluid) flowableFluid).fabrication$isInfinite(world))) continue;
+				if (retFluid == null) retFluid = flowableFluid;
 				else if (!fluid.matchesType(retFluid)) continue;
 				lastWater = p;
 				countWater++;
