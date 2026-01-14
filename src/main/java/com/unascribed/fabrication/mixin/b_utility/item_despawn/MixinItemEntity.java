@@ -1,7 +1,9 @@
 package com.unascribed.fabrication.mixin.b_utility.item_despawn;
 
 import com.google.common.primitives.Ints;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.interfaces.ItemDespawn;
 import com.unascribed.fabrication.interfaces.SetFromPlayerDeath;
 import com.unascribed.fabrication.loaders.LoaderItemDespawn;
 import com.unascribed.fabrication.support.EligibleIf;
@@ -30,13 +32,12 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -44,7 +45,7 @@ import java.util.Map;
 
 @Mixin(ItemEntity.class)
 @EligibleIf(configAvailable="*.item_despawn")
-public abstract class MixinItemEntity extends Entity implements SetFromPlayerDeath {
+public abstract class MixinItemEntity extends Entity implements SetFromPlayerDeath, ItemDespawn {
 
 	public MixinItemEntity(EntityType<?> type, World world) {
 		super(type, world);
@@ -100,13 +101,15 @@ public abstract class MixinItemEntity extends Entity implements SetFromPlayerDea
 		calculateDespawn();
 	}
 
-	@ModifyConstant(constant=@Constant(intValue=-32768), method="canMerge()Z")
-	public int modifyIllegalAge(int orig) {
+	@ModifyExpressionValue(at=@At(value="FIELD", target="net/minecraft/entity/ItemEntity.itemAge:I", opcodes=Opcodes.GETFIELD), method="canMerge()Z")
+	private int fabrication$modifyIllegalAge(int orig) {
 		// age-1 will never be equal to age; short-circuits the "age != -32768" check and allows
 		// items set to "invincible" to stack together
-		return fabrication$invincible ? itemAge -1 : orig;
+		return item instanceof ItemDespawn && ((ItemDespawn) item).fabrication$itemDespawn$invinc() ? orig -1 : orig;
 	}
-
+	public boolean fabrication$itemDespawn$invinc() {
+		return fabrication$invincible;
+	}
 	@Override
 	public void fabrication$setFromPlayerDeath(boolean b) {
 		fabrication$fromPlayerDeath = b;

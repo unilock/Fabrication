@@ -57,6 +57,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+
 @SuppressWarnings("MixinInnerClass")
 public class FeatureFabricationCommand implements Feature {
 
@@ -574,16 +575,24 @@ public class FeatureFabricationCommand implements Feature {
 			c.getSource().sendFeedback(()->Text.literal("Automatically switched "+key+" to TaggablePlayers because a player was tagged with it"), true);
 			FeatureTaggablePlayers.add(key, 0);
 		}
+		String keyName = key.substring(key.lastIndexOf('.')+1);
 		for (ServerPlayerEntity spe : players) {
-			((TaggablePlayer)spe).fabrication$setTag(key.substring(key.lastIndexOf('.')+1), true);
+			if (((TaggablePlayer)spe).fabrication$getTagOverride(keyName) != null) {
+				c.getSource().sendFeedback(()->Text.literal(players+" has an override, tag will be set but ignored"), true);
+			}
+			((TaggablePlayer)spe).fabrication$setTag(keyName, true);
 			c.getSource().sendFeedback(()->Text.literal("Added tag "+key+" to ").append(spe.getDisplayName()), true);
 		}
 		return 1;
 	}
 
 	private int removeTag(CommandContext<ServerCommandSource> c, Collection<ServerPlayerEntity> players, String pt) {
+		String keyName = pt.substring(pt.lastIndexOf('.')+1);
 		for (ServerPlayerEntity spe : players) {
-			((TaggablePlayer)spe).fabrication$setTag(pt.substring(pt.lastIndexOf('.')+1), false);
+			if (((TaggablePlayer)spe).fabrication$getTagOverride(keyName) != null) {
+				c.getSource().sendFeedback(()->Text.literal(players+" has an override, tag will be set but ignored"), true);
+			}
+			((TaggablePlayer)spe).fabrication$setTag(keyName, false);
 			c.getSource().sendFeedback(()->Text.literal("Removed tag "+pt+" from ").append(spe.getDisplayName()), true);
 		}
 		return 1;
@@ -611,8 +620,10 @@ public class FeatureFabricationCommand implements Feature {
 
 	public static void setAltKeys(String key, Consumer<String> set){
 		if(!key.contains(".")) return;
-		for (int i = key.indexOf('.'); i != -1; i = key.indexOf('.', i+1))
-			set.accept("*"+key.substring(i));
+		for (int i = key.indexOf('.'); i != -1; i = key.indexOf('.', i+1)) {
+			set.accept("*" + key.substring(i));
+			set.accept(key.substring(i));
+		}
 		if (key.lastIndexOf('.') != key.indexOf('.'))
 			set.accept(key.substring(0,key.indexOf('.'))+key.substring(key.lastIndexOf('.')));
 	}

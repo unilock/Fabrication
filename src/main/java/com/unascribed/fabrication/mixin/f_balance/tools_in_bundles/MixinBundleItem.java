@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBundleItem {
 
 
-	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/screen/slot/Slot;getStack()Lnet/minecraft/item/ItemStack;"),
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/screen/slot/Slot;getStack()Lnet/minecraft/item/ItemStack;"), cancellable=true,
 			method="onStackClicked(Lnet/minecraft/item/ItemStack;Lnet/minecraft/screen/slot/Slot;Lnet/minecraft/util/ClickType;Lnet/minecraft/entity/player/PlayerEntity;)Z")
 	public void onStackClicked(ItemStack bundle, Slot slot, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.tools_in_bundles")) {
@@ -30,7 +30,7 @@ public class MixinBundleItem {
 		}
 	}
 
-	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/component/type/BundleContentsComponent$Builder;add(Lnet/minecraft/item/ItemStack;)I"),
+	@Inject(at=@At(value="INVOKE", target="Lnet/minecraft/component/type/BundleContentsComponent$Builder;add(Lnet/minecraft/item/ItemStack;)I"), cancellable=true,
 		method="onClicked(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/screen/slot/Slot;Lnet/minecraft/util/ClickType;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/inventory/StackReference;)Z")
 	public void onClicked(ItemStack bundle, ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference, CallbackInfoReturnable<Boolean> cir) {
 		if (FabConf.isEnabled("*.tools_in_bundles")) {

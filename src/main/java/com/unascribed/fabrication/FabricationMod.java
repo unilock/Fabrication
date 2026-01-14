@@ -37,7 +37,8 @@ public class FabricationMod implements ModInitializer {
 	public static SoundEvent LEVELUP_LONG;
 	public static SoundEvent OOF;
 	public static SoundEvent ABSORPTION_HURT;
-
+	public static Identifier CONFIG_ID1 = Identifier.of("fabrication", "config");
+	public static Identifier CONFIG_ID2 = Identifier.of("fabrication", "config2");
 	@Override
 	public void onInitialize() {
 		MixinConfigPlugin.loadComplete = true;
@@ -128,14 +129,28 @@ public class FabricationMod implements ModInitializer {
 	}
 
 	public static void sendConfigUpdate(MinecraftServer server, String key) {
-		for (ServerPlayerEntity spe : server.getPlayerManager().getPlayerList()) {
-			if (spe instanceof SetFabricationConfigAware && ((SetFabricationConfigAware)spe).fabrication$getReqVer() > 0) {
-				sendConfigUpdate(server, key, spe, ((SetFabricationConfigAware) spe).fabrication$getReqVer());
+		PacketByteBuf data = null;
+		int lastVer = -1;
+		List<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
+		for (int i=0;i<players.size();i++) {
+			ServerPlayerEntity spe = players.get(i);
+			if (spe instanceof SetFabricationConfigAware) {
+				int reqVer = ((SetFabricationConfigAware) spe).fabrication$getReqVer();
+				if (reqVer >= 0) {
+					if (data == null || reqVer != lastVer) {
+						lastVer = reqVer;
+						data = createConfigUpdateBuf(server, key, reqVer);
+					}
+					spe.networkHandler.sendPacket(new CustomPayloadS2CPacket(new ByteBufCustomPayload(reqVer==0? CONFIG_ID1 : CONFIG_ID2, i+1==players.size()? data : new PacketByteBuf(data.copy()))));
+				}
 			}
 		}
 	}
 
 	public static void sendConfigUpdate(MinecraftServer server, String key, ServerPlayerEntity spe, int reqVer) {
+		spe.networkHandler.sendPacket(new CustomPayloadS2CPacket(new ByteBufCustomPayload(reqVer==0? CONFIG_ID1 : CONFIG_ID2, createConfigUpdateBuf(server, key, reqVer))));
+	}
+	private static PacketByteBuf createConfigUpdateBuf(MinecraftServer server, String key, int reqVer) {
 		if (key != null && key.startsWith("general.category")) key = null;
 		PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
 		if (reqVer > 0) {
@@ -165,12 +180,12 @@ public class FabricationMod implements ModInitializer {
 		}
 		data.writeString(EarlyAgnos.getModVersion());
 		data.writeVarInt(FabConf.getAllFailures().size());
-		if (reqVer == 1) {
+		if (reqVer > 0) {
 			for (Map.Entry<String, String> k : FabConf.getAllFailures().entrySet()) {
 				data.writeString(k.getKey());
 				data.writeString(k.getValue());
 			}
-		} else if (reqVer == 0) {
+		} else {
 			for (String k : FabConf.getAllFailures().keySet()) {
 				data.writeString(k);
 			}
@@ -179,8 +194,7 @@ public class FabricationMod implements ModInitializer {
 		for (String k : FabConf.getAllBanned()) {
 			data.writeString(k);
 		}
-		CustomPayloadS2CPacket pkt = new CustomPayloadS2CPacket(new ByteBufCustomPayload(Identifier.of("fabrication", reqVer > 0 ? "config2" :"config"), data));
-		spe.networkHandler.sendPacket(pkt);
+		return data;
 	}
 
 	private static final BlockPos.Mutable scratchpos1 = new BlockPos.Mutable();

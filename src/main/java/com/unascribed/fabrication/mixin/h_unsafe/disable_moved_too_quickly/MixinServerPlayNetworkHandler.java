@@ -1,26 +1,20 @@
 package com.unascribed.fabrication.mixin.h_unsafe.disable_moved_too_quickly;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.support.EligibleIf;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ServerPlayNetworkHandler.class)
 @EligibleIf(configAvailable="*.disable_moved_too_quickly")
 public abstract class MixinServerPlayNetworkHandler {
 
-	@ModifyConstant(constant={@Constant(floatValue=300.0F), @Constant(floatValue=100.0F)}, method="onPlayerMove(Lnet/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket;)V")
-	private float disableMoveTooQuick(float old) {
-		if (!FabConf.isEnabled("*.disable_moved_too_quickly")) return old;
-		return Float.MAX_VALUE;
-	}
-
-	@ModifyConstant(constant=@Constant(doubleValue=100.0), method="onVehicleMove(Lnet/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket;)V")
-	private double getMaxPlayerVehicleSpeed(double old) {
-		if (!FabConf.isEnabled("*.disable_moved_too_quickly")) return old;
-		return Double.MAX_VALUE;
+	@ModifyExpressionValue(method={"onPlayerMove(Lnet/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket;)V", "onVehicleMove(Lnet/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket;)V"},
+		at=@At(value="INVOKE", target="Lnet/minecraft/server/network/ServerPlayNetworkHandler;isHost()Z"))
+	private boolean disableMoveTooQuick(boolean old) {
+		return FabConf.isEnabled("*.disable_moved_too_quickly") || old;
 	}
 
 }

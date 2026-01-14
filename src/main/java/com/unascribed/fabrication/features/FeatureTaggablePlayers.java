@@ -3,6 +3,7 @@ package com.unascribed.fabrication.features;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.unascribed.fabrication.FabConf;
+import com.unascribed.fabrication.FabLog;
 import com.unascribed.fabrication.FeaturesFile;
 import com.unascribed.fabrication.interfaces.TaggablePlayer;
 import com.unascribed.fabrication.loaders.LoaderTaggablePlayers;
@@ -24,6 +25,9 @@ public class FeatureTaggablePlayers implements Feature {
 	public static final ImmutableMap<String, Integer> validTags;
 	public static final ImmutableSet<String> listTags;
 	public static Map<String, Integer> activeTags = new HashMap<>();
+	public static final Map<String, Map<String, Boolean>> playerNameOverrideMap = new HashMap<>();
+	public static final Map<UUID, Map<String, Boolean>> playerUUIDOverrideMap = new HashMap<>();
+
 
 	static {
 		Map<String, Integer> tags = new HashMap<>();
@@ -75,7 +79,12 @@ public class FeatureTaggablePlayers implements Feature {
 	}
 
 	public static void add(String key, int type, boolean save) {
-		type &= validTags.get(key);
+		try {
+			type &= validTags.get(key);
+		} catch (NullPointerException e) {
+			FabLog.error("Tried pushing '"+key+"' to taggable players, this feature either does not exist or does not support taggable players", e);
+			return;
+		}
 		if (FabConf.isEnabled("*.taggable_players")) {
 			set(key, type);
 		}

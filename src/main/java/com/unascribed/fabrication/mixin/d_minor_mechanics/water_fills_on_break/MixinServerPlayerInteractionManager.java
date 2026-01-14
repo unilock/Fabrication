@@ -4,7 +4,7 @@ import com.unascribed.fabrication.FabConf;
 import com.unascribed.fabrication.logic.WaterFillsOnBreak;
 import com.unascribed.fabrication.support.EligibleIf;
 import com.unascribed.fabrication.support.SpecialEligibility;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -27,8 +27,9 @@ public class MixinServerPlayerInteractionManager {
 	@Inject(at=@At("RETURN"), method="tryBreakBlock(Lnet/minecraft/util/math/BlockPos;)Z")
 	public void tryBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> ci) {
 		if (FabConf.isAnyEnabled("*.water_fills_on_break") && ci.getReturnValueZ()) {
-			if (WaterFillsOnBreak.shouldFill(world, pos) && world.getBlockState(pos).isAir()) {
-				world.setBlockState(pos, Fluids.WATER.getDefaultState().getBlockState());
+			if (world.getBlockState(pos).isAir()) {
+				FlowableFluid fluid = WaterFillsOnBreak.shouldFill(world, pos);
+				if (fluid != null) world.setBlockState(pos, fluid.getStill(false).getBlockState());
 			}
 		}
 	}
